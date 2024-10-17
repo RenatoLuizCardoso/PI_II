@@ -1,0 +1,700 @@
+{
+  "students": [
+    {
+      "id": "1",
+      "name": "Jose Marcio",
+      "password": "Marcio1234",
+      "email": "josemarcio@fatec.sp.gov.br",
+      "courseId": 5
+    },
+    {
+      "id": "4f59",
+      "name": "Carlos Eduardo",
+      "email": "carlos.eduardo@gmail.com",
+      "password": "carlos123",
+      "courseId": "engenharia"
+    },
+    {
+      "name": "Matheus Marques",
+      "email": "marques@fatec.sp.gov.br",
+      "password": "1234",
+      "courseId": "engenharia",
+      "id": "WkDw_-b"
+    },
+    {
+      "name": "Marcos Silva",
+      "email": "marcossilva@fatec.sp.gov.br",
+      "password": "marcos123",
+      "courseId": "medicina",
+      "id": "0rKXCMD"
+    }
+  ],
+  "courses": [
+    {
+      "id": "1",
+      "name": "Engenharia"
+    },
+    {
+      "id": "2",
+      "name": "Medicina"
+    },
+    {
+      "id": "3",
+      "name": "Direito"
+    },
+    {
+      "id": "4",
+      "name": "Administração"
+    },
+    {
+      "id": "5",
+      "name": "Desenvolvimento de sistemas"
+    },
+    {
+      "id": "6",
+      "name": "Eventos"
+    },
+    {
+      "id": "7",
+      "name": "Matemática"
+    },
+    {
+      "id": "8",
+      "name": "Física"
+    }
+  ],
+  "semesters": [
+    {
+      "id": "1",
+      "name": "1º"
+    },
+    {
+      "id": "2",
+      "name": "2º"
+    },
+    {
+      "id": "3",
+      "name": "3º"
+    },
+    {
+      "id": "4",
+      "name": "4º"
+    },
+    {
+      "id": "5",
+      "name": "5º"
+    },
+    {
+      "id": "6",
+      "name": "6º"
+    },
+    {
+      "id": "7",
+      "name": "7º"
+    },
+    {
+      "id": "8",
+      "name": "8º"
+    },
+    {
+      "id": "9",
+      "name": "9º"
+    },
+    {
+      "id": "10",
+      "name": "10º"
+    },
+    {
+      "id": "11",
+      "name": "11º"
+    },
+    {
+      "id": "12",
+      "name": "12º"
+    }
+  ],
+  "teachers": [
+    {
+      "id": "1",
+      "name": "Tadeu Maffeis"
+    },
+    {
+      "id": "2",
+      "name": "Renato Luis"
+    },
+    {
+      "id": "3",
+      "name": "Glauco Todesco"
+    },
+    {
+      "id": "4",
+      "name": "Claudia Souza"
+    },
+    {
+      "id": "5",
+      "name": "Fernanda Ribeiro"
+    },
+    {
+      "id": "6",
+      "name": "Carlos Alberto"
+    }
+  ],
+  "disciplines": [
+    {
+      "id": "1",
+      "name": "Cálculo"
+    },
+    {
+      "id": "2",
+      "name": "Estrutura de Dados"
+    },
+    {
+      "id": "3",
+      "name": "Linguagem de Programação"
+    },
+    {
+      "id": "4",
+      "name": "Computação em Nuvem"
+    },
+    {
+      "id": "5",
+      "name": "Física Teórica"
+    },
+    {
+      "id": "6",
+      "name": "Química Orgânica"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "1",
+      "name": "Sala 1"
+    },
+    {
+      "id": "2",
+      "name": "Sala 2"
+    },
+    {
+      "id": "3",
+      "name": "Sala 3"
+    },
+    {
+      "id": "4",
+      "name": "Sala 4"
+    },
+    {
+      "id": "5",
+      "name": "Sala 5"
+    },
+    {
+      "id": "6",
+      "name": "Sala 6"
+    },
+    {
+      "id": "7",
+      "name": "Sala 7"
+    },
+    {
+      "id": "8",
+      "name": "Sala 8"
+    },
+    {
+      "id": "9",
+      "name": "Sala 9"
+    },
+    {
+      "id": "10",
+      "name": "Sala 10"
+    },
+    {
+      "id": "11",
+      "name": "Sala 11"
+    },
+    {
+      "id": "12",
+      "name": "Sala 12"
+    },
+    {
+      "id": "13",
+      "name": "Laboratório 1"
+    },
+    {
+      "id": "14",
+      "name": "Laboratório 2"
+    },
+    {
+      "id": "15",
+      "name": "Laboratório 3"
+    },
+    {
+      "id": "16",
+      "name": "Laboratório 4"
+    },
+    {
+      "id": "17",
+      "name": "Laboratório 5"
+    },
+    {
+      "id": "18",
+      "name": "Laboratório 6"
+    },
+    {
+      "id": "19",
+      "name": "Laboratório 7"
+    },
+    {
+      "id": "20",
+      "name": "Laboratório 8"
+    }
+  ],
+  "reservations": [
+    {
+      "id": "11",
+      "courseId": 3,
+      "semesterId": 4,
+      "teacherId": 3,
+      "disciplineId": 3,
+      "roomId": 9,
+      "time": 3,
+      "day_id": 1
+    },
+    {
+      "id": "12",
+      "courseId": 4,
+      "semesterId": 5,
+      "teacherId": 4,
+      "disciplineId": 4,
+      "roomId": 8,
+      "time": 2,
+      "day_id": 2
+    },
+    {
+      "id": "13",
+      "courseId": 6,
+      "semesterId": 6,
+      "teacherId": 6,
+      "disciplineId": 1,
+      "roomId": 5,
+      "time": 1,
+      "day_id": 3
+    },
+    {
+      "id": "14",
+      "courseId": 5,
+      "semesterId": 2,
+      "teacherId": 1,
+      "disciplineId": 2,
+      "roomId": 10,
+      "time": 4,
+      "day_id": 5
+    },
+    {
+      "id": "15",
+      "courseId": 5,
+      "semesterId": 2,
+      "teacherId": 1,
+      "disciplineId": 2,
+      "roomId": 10,
+      "time": 2,
+      "day_id": 6
+    },
+    {
+      "id": "16",
+      "courseId": 2,
+      "semesterId": 1,
+      "teacherId": 2,
+      "disciplineId": 6,
+      "roomId": 13,
+      "time": 3,
+      "day_id": 1
+    },
+    {
+      "id": "17",
+      "courseId": 2,
+      "semesterId": 2,
+      "teacherId": 2,
+      "disciplineId": 6,
+      "roomId": 14,
+      "time": 2,
+      "day_id": 2
+    },
+    {
+      "id": "18",
+      "courseId": 8,
+      "semesterId": 1,
+      "teacherId": 6,
+      "disciplineId": 5,
+      "roomId": 4,
+      "time": 1,
+      "day_id": 3
+    },
+    {
+      "id": "19",
+      "courseId": 8,
+      "semesterId": 2,
+      "teacherId": 6,
+      "disciplineId": 5,
+      "roomId": 5,
+      "time": 4,
+      "day_id": 5
+    },
+    {
+      "id": "20",
+      "courseId": 7,
+      "semesterId": 1,
+      "teacherId": 5,
+      "disciplineId": 1,
+      "roomId": 2,
+      "time": 1,
+      "day_id": 6
+    },
+    {
+      "id": "21",
+      "courseId": 3,
+      "semesterId": 4,
+      "teacherId": 3,
+      "disciplineId": 3,
+      "roomId": 9,
+      "time": 2,
+      "day_id": 1
+    },
+    {
+      "id": "22",
+      "courseId": 4,
+      "semesterId": 5,
+      "teacherId": 4,
+      "disciplineId": 4,
+      "roomId": 8,
+      "time": 4,
+      "day_id": 2
+    },
+    {
+      "id": "23",
+      "courseId": 6,
+      "semesterId": 6,
+      "teacherId": 6,
+      "disciplineId": 1,
+      "roomId": 5,
+      "time": 1,
+      "day_id": 3
+    },
+    {
+      "id": "24",
+      "courseId": 5,
+      "semesterId": 2,
+      "teacherId": 1,
+      "disciplineId": 2,
+      "roomId": 10,
+      "time": 2,
+      "day_id": 5
+    },
+    {
+      "id": "25",
+      "courseId": 5,
+      "semesterId": 2,
+      "teacherId": 1,
+      "disciplineId": 2,
+      "roomId": 10,
+      "time": 4,
+      "day_id": 6
+    },
+    {
+      "id": "26",
+      "courseId": 2,
+      "semesterId": 1,
+      "teacherId": 2,
+      "disciplineId": 6,
+      "roomId": 13,
+      "time": 3,
+      "day_id": 1
+    },
+    {
+      "id": "27",
+      "courseId": 2,
+      "semesterId": 2,
+      "teacherId": 2,
+      "disciplineId": 6,
+      "roomId": 14,
+      "time": 1,
+      "day_id": 2
+    },
+    {
+      "id": "28",
+      "courseId": 8,
+      "semesterId": 1,
+      "teacherId": 6,
+      "disciplineId": 5,
+      "roomId": 4,
+      "time": 2,
+      "day_id": 3
+    },
+    {
+      "id": "29",
+      "courseId": 8,
+      "semesterId": 2,
+      "teacherId": 6,
+      "disciplineId": 5,
+      "roomId": 5,
+      "time": 4,
+      "day_id": 5
+    },
+    {
+      "id": "30",
+      "courseId": 7,
+      "semesterId": 1,
+      "teacherId": 5,
+      "disciplineId": 1,
+      "roomId": 2,
+      "time": 3,
+      "day_id": 6
+    },
+    {
+      "id": "31",
+      "courseId": 3,
+      "semesterId": 4,
+      "teacherId": 3,
+      "disciplineId": 3,
+      "roomId": 9,
+      "time": 1,
+      "day_id": 1
+    },
+    {
+      "id": "32",
+      "courseId": 4,
+      "semesterId": 5,
+      "teacherId": 4,
+      "disciplineId": 4,
+      "roomId": 8,
+      "time": 2,
+      "day_id": 2
+    },
+    {
+      "id": "33",
+      "courseId": 6,
+      "semesterId": 6,
+      "teacherId": 6,
+      "disciplineId": 1,
+      "roomId": 5,
+      "time": 4,
+      "day_id": 3
+    },
+    {
+      "id": "34",
+      "courseId": 5,
+      "semesterId": 2,
+      "teacherId": 1,
+      "disciplineId": 2,
+      "roomId": 10,
+      "time": 1,
+      "day_id": 5
+    },
+    {
+      "id": "35",
+      "courseId": 5,
+      "semesterId": 2,
+      "teacherId": 1,
+      "disciplineId": 2,
+      "roomId": 10,
+      "time": 2,
+      "day_id": 6
+    },
+    {
+      "id": "36",
+      "courseId": 2,
+      "semesterId": 1,
+      "teacherId": 2,
+      "disciplineId": 6,
+      "roomId": 13,
+      "time": 3,
+      "day_id": 1
+    },
+    {
+      "id": "37",
+      "courseId": 2,
+      "semesterId": 2,
+      "teacherId": 2,
+      "disciplineId": 6,
+      "roomId": 14,
+      "time": 4,
+      "day_id": 2
+    },
+    {
+      "id": "38",
+      "courseId": 8,
+      "semesterId": 1,
+      "teacherId": 6,
+      "disciplineId": 5,
+      "roomId": 4,
+      "time": 3,
+      "day_id": 3
+    },
+    {
+      "id": "39",
+      "courseId": 8,
+      "semesterId": 2,
+      "teacherId": 6,
+      "disciplineId": 5,
+      "roomId": 5,
+      "time": 1,
+      "day_id": 5
+    },
+    {
+      "id": "40",
+      "courseId": 7,
+      "semesterId": 1,
+      "teacherId": 5,
+      "disciplineId": 1,
+      "roomId": 2,
+      "time": 2,
+      "day_id": 6
+    },
+    {
+      "id": "41",
+      "courseId": 3,
+      "semesterId": 4,
+      "teacherId": 3,
+      "disciplineId": 3,
+      "roomId": 9,
+      "time": 3,
+      "day_id": 1
+    },
+    {
+      "id": "42",
+      "courseId": 4,
+      "semesterId": 5,
+      "teacherId": 4,
+      "disciplineId": 4,
+      "roomId": 8,
+      "time": 1,
+      "day_id": 2
+    },
+    {
+      "id": "43",
+      "courseId": 6,
+      "semesterId": 6,
+      "teacherId": 6,
+      "disciplineId": 1,
+      "roomId": 5,
+      "time": 2,
+      "day_id": 3
+    },
+    {
+      "id": "44",
+      "courseId": 5,
+      "semesterId": 2,
+      "teacherId": 1,
+      "disciplineId": 2,
+      "roomId": 10,
+      "time": 3,
+      "day_id": 5
+    },
+    {
+      "id": "45",
+      "courseId": 5,
+      "semesterId": 2,
+      "teacherId": 1,
+      "disciplineId": 2,
+      "roomId": 10,
+      "time": 1,
+      "day_id": 6
+    },
+    {
+      "id": "46",
+      "courseId": 2,
+      "semesterId": 1,
+      "teacherId": 2,
+      "disciplineId": 6,
+      "roomId": 13,
+      "time": 2,
+      "day_id": 1
+    },
+    {
+      "id": "47",
+      "courseId": 2,
+      "semesterId": 2,
+      "teacherId": 2,
+      "disciplineId": 6,
+      "roomId": 14,
+      "time": 4,
+      "day_id": 2
+    },
+    {
+      "id": "48",
+      "courseId": 8,
+      "semesterId": 1,
+      "teacherId": 6,
+      "disciplineId": 5,
+      "roomId": 4,
+      "time": 3,
+      "day_id": 3
+    },
+    {
+      "id": "49",
+      "courseId": 8,
+      "semesterId": 2,
+      "teacherId": 6,
+      "disciplineId": 5,
+      "roomId": 5,
+      "time": 2,
+      "day_id": 5
+    },
+    {
+      "id": "50",
+      "courseId": 7,
+      "semesterId": 1,
+      "teacherId": 5,
+      "disciplineId": 1,
+      "roomId": 2,
+      "time_id": 1,
+      "day_id": 6
+    }
+  ],
+  "time": [
+    {
+      "id": "1",
+      "time_info": "08:00 - 10:00"
+    },
+    {
+      "id": "2",
+      "time_info": "10:00 - 12:00"
+    },
+    {
+      "id": "3",
+      "time_info": "13:20 - 15:00"
+    },
+    {
+      "id": "4",
+      "time_info": "15:10 - 16:50"
+    },
+    {
+      "id": "5",
+      "time_info": "17:00 - 18:40"
+    }
+  ],
+  "day": [
+    {
+     "id": 1,
+     "day_name": "Segunda"
+    },
+    {
+      "id": 2,
+      "day_name": "Terça"
+     },
+     {
+      "id": 3,
+      "day_name": "Quarta"
+     },
+     {
+      "id": 4,
+      "day_name": "Quinta"
+     },
+     {
+      "id": 1,
+      "day_name": "Sexta"
+     },
+     {
+      "id": 1,
+      "day_name": "Sábado"
+     }
+  ]
+}

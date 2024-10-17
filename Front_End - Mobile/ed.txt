@@ -1,0 +1,39 @@
+import React, { useState } from 'react';
+import { View, TextInput, Button, Alert } from 'react-native';
+
+const ForgotPasswordScreen = () => {
+  const [email, setEmail] = useState('');
+
+  const sendNewPassword = () => {
+    // Aqui você geraria uma nova senha temporária (por exemplo, usando uma função de geração de senha aleatória)
+    const newPassword = generateRandomPassword();
+
+    // Aqui você atualizaria a senha do usuário no banco de dados com a nova senha temporária
+    // Isso depende da sua lógica de backend
+
+    // Aqui você enviaria um e-mail com a nova senha temporária para o endereço de e-mail do usuário
+    // Para simplificar, vamos apenas exibir um alerta com a nova senha
+    Alert.alert('Nova senha enviada', `Sua nova senha temporária é: ${newPassword}. Por favor, altere-a assim que possível.`);
+  };
+
+  const generateRandomPassword = () => {
+    // Lógica para gerar uma senha aleatória
+    return 'novaSenha123'; // Isso é apenas um exemplo
+  };
+
+  return (
+    <View>
+      <TextInput
+        placeholder="Digite seu e-mail"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <Button
+        title="Enviar nova senha"
+        onPress={sendNewPassword}
+      />
+    </View>
+  );
+};
+
+export default ForgotPasswordScreen;

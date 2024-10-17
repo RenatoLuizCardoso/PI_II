@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "ProjetoIntegrador",
+    "slug": "ProjetoIntegrador",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "g",
+      "resizeMode": "contain",
+      "backgroundColor": "white"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "",
+        "backgroundColor": "white"
+      }
+    },
+    "web": {
+      "favicon": "",
+      "backgroundColor": "white"
+    }
+  }
+}
