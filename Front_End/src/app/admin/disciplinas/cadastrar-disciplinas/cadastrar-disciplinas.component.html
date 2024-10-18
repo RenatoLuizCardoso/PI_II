@@ -1,0 +1,80 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <div class="card register">
+        <div class="card-body">
+          <h5 class="card-title text-center">Registro de Disciplina</h5>
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3 mt-3">
+              <label for="disciplineName" class="form-label">Nome da Disciplina</label>
+              <input type="text" class="form-control" id="disciplineName" formControlName="disciplineName"
+                placeholder="Insira o nome da disciplina" required>
+              <div *ngIf="f['disciplineName'].touched && f['disciplineName'].invalid" class="text-danger">
+                <small *ngIf="f['disciplineName'].errors?.['required']">Nome da disciplina é obrigatório.</small>
+                <small *ngIf="f['disciplineName'].errors?.['pattern']">Nome da disciplina deve conter apenas letras e espaços.</small>
+              </div>
+            </div>
+            <div class="mb-3 mt-3">
+              <label for="hour" class="form-label">Carga Horária</label>
+              <input type="text" class="form-control" id="hour" formControlName="hour"
+                placeholder="Insira a carga horária em aulas" required>
+              <div *ngIf="f['hour'].touched && f['hour'].invalid" class="text-danger">
+                <small *ngIf="f['hour'].errors?.['required']">Carga horária é obrigatória.</small>
+                <small *ngIf="f['hour'].errors?.['pattern']">Carga horária deve ser um número positivo.</small>
+              </div>
+            </div>
+            <div class="mb-3 mt-3">
+              <label for="description" class="form-label">Descrição</label>
+              <input type="text" class="form-control" id="description" formControlName="description"
+                placeholder="Insira a descrição" required>
+              <div *ngIf="f['description'].touched && f['description'].invalid" class="text-danger">
+                <small *ngIf="f['description'].errors?.['required']">Descrição é obrigatória.</small>
+                <small *ngIf="f['description'].errors?.['pattern']">Descrição deve conter apenas letras e espaços.</small>
+              </div>
+            </div>
+            <div class="mb-3 mt-3">
+              <label for="professor" class="form-label">Professor Responsável</label>
+              <select class="form-control" id="professor" formControlName="professor" required>
+                <option value="" disabled selected>Selecione o professor responsável</option>
+                <option *ngFor="let professor of professores" [value]="professor.name">
+                  {{ professor.name }}
+                </option>
+              </select>
+              <div *ngIf="f['professor'].touched && f['professor'].invalid" class="text-danger">
+                <small *ngIf="f['professor'].errors?.['required']">Selecione um professor.</small>
+              </div>
+            </div>
+            <div class="mb-3 mt-3">
+              <label for="objective" class="form-label">Objetivo</label>
+              <input type="text" class="form-control" id="objective" formControlName="objective"
+                placeholder="Insira o objetivo" required>
+              <div *ngIf="f['objective'].touched && f['objective'].invalid" class="text-danger">
+                <small *ngIf="f['objective'].errors?.['required']">Objetivo é obrigatório.</small>
+                <small *ngIf="f['objective'].errors?.['pattern']">Objetivo deve conter apenas letras e espaços.</small>
+              </div>
+            </div>
+            <div class="mb-3 mt-3">
+              <label for="syllabus" class="form-label">Ementa</label>
+              <input type="text" class="form-control" id="syllabus" formControlName="syllabus"
+                placeholder="Insira a ementa" required>
+              <div *ngIf="f['syllabus'].touched && f['syllabus'].invalid" class="text-danger">
+                <small *ngIf="f['syllabus'].errors?.['required']">Ementa é obrigatória.</small>
+                <small *ngIf="f['syllabus'].errors?.['pattern']">Ementa deve conter apenas letras e espaços.</small>
+              </div>
+            </div>
+            <div *ngIf="registerError" class="alert alert-danger mt-3" role="alert">
+              Erro ao registrar a disciplina!
+            </div>
+            <div *ngIf="registerSuccess" class="alert alert-success mt-3" role="alert">
+              Disciplina registrada com sucesso!
+            </div>
+            <div class="d-grid gap-2 mt-4 mb-3">
+              <button type="submit" class="btn btn-verde texto-branco">Registrar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<app-navbar></app-navbar>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-lg-10 crud">
+      <!-- Campo de pesquisa -->
+      <div class="text-center mb-4">
+        <input type="text" class="form-control col-md-12" placeholder="Pesquisar por tipo" [(ngModel)]="pesquisaTipo" (input)="filtrarSalas()" />
+      </div>
+
+      <h3 class="text-center">Lista de Salas</h3>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Capacidade Maxima</th>
+            <th>Andar</th>
+            <th>Disponibilidade</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let sala of salasPaginadas">
+            <td>{{ sala.id }}</td>
+            <td>{{ sala.type }}</td>
+            <td>{{ sala.capacity }}</td>
+            <td>{{ sala.floor }}</td>
+            <td>{{ sala.availability }}</td>
+            <td>
+              <button class="btn btn-primary" [routerLink]="['/admin/editar_sala', sala.id]"
+                aria-label="Editar Salas">
+                <i class="fas fa-pen"></i>
+              </button>
+              <button class="btn btn-danger" [disabled]="loading" (click)="excluirSalas(sala.id)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Navegação de páginas -->
+      <nav aria-label="Navegação de página">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="paginaAtual === 1">
+            <a class="page-link" (click)="irParaPagina(paginaAtual - 1)" aria-label="Anterior">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+
+          <li class="page-item" *ngFor="let page of paginas" [class.active]="paginaAtual === page">
+            <a class="page-link" (click)="irParaPagina(page)">{{ page }}</a>
+          </li>
+
+          <li class="page-item" [class.disabled]="paginaAtual === totalPaginas">
+            <a class="page-link" (click)="irParaPagina(paginaAtual + 1)" aria-label="Próximo">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="text-center mt-4">
+        <button class="btn btn-success col-md-12" routerLink="/admin/cadastrar_sala">Cadastrar Nova Sala</button>
+      </div>
+    </div>
+  </div>
+</div>

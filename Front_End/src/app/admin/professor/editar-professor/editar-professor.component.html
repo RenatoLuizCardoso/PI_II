@@ -1,0 +1,66 @@
+<app-navbar></app-navbar>
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+
+            <!-- Mensagem de sucesso -->
+            <div *ngIf="mensagemSucesso" class="alert alert-success">
+                Professor atualizado com sucesso!
+            </div>
+
+            <div class="card register">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Edição de Professor</h5>
+                    <form [formGroup]="professorForm" (ngSubmit)="salvar()">
+                        <div class="form-group">
+                            <label for="id">ID</label>
+                            <input id="id" class="form-control" formControlName="id" readonly>
+                        </div>
+                        <div class="form-group mb-3 mt-3">
+                            <label for="name">Nome</label>
+                            <input id="name" class="form-control" formControlName="name">
+                            <div *ngIf="professorForm.get('name')?.touched && professorForm.get('name')?.invalid" class="text-danger">
+                                <small *ngIf="professorForm.get('name')?.errors?.['required']">Nome é obrigatório.</small>
+                                <small *ngIf="professorForm.get('name')?.errors?.['pattern']">Nome deve conter apenas letras e espaços.</small>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3 mt-3">
+                            <label for="emailI">Email Institucional</label>
+                            <input id="emailI" class="form-control" formControlName="emailI">
+                            <div *ngIf="professorForm.get('emailI')?.touched && professorForm.get('emailI')?.invalid" class="text-danger">
+                                <small *ngIf="professorForm.get('emailI')?.errors?.['required']">Email institucional é obrigatório.</small>
+                                <small *ngIf="professorForm.get('emailI')?.errors?.['email']">Email institucional inválido.</small>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3 mt-3">
+                            <label for="senha">Senha</label>
+                            <input id="senha" type="password" class="form-control" formControlName="senha">
+                            <div *ngIf="professorForm.get('senha')?.touched && professorForm.get('senha')?.invalid" class="text-danger">
+                                <small *ngIf="professorForm.get('senha')?.errors?.['required']">Senha é obrigatória.</small>
+                                <small *ngIf="professorForm.get('senha')?.errors?.['minlength']">Senha deve ter pelo menos 6 caracteres.</small>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3 mt-3">
+                            <label for="emailP">Email Pessoal</label>
+                            <input id="emailP" class="form-control" formControlName="emailP">
+                            <div *ngIf="professorForm.get('emailP')?.touched && professorForm.get('emailP')?.invalid" class="text-danger">
+                                <small *ngIf="professorForm.get('emailP')?.errors?.['email']">Email pessoal inválido.</small>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3 mt-3">
+                            <label for="tel">Telefone</label>
+                            <input id="tel" class="form-control" formControlName="tel">
+                            <div *ngIf="professorForm.get('tel')?.touched && professorForm.get('tel')?.invalid" class="text-danger">
+                                <small *ngIf="professorForm.get('tel')?.errors?.['required']">Telefone é obrigatório.</small>
+                                <small *ngIf="professorForm.get('tel')?.errors?.['pattern']">Telefone deve conter apenas números.</small>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 mt-4 mb-3">
+                            <button type="submit" class="btn btn-verde texto-branco">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="perfil-container">
+  <h2>Perfil do Professor</h2>
+
+  <div class="foto-perfil">
+    <img [src]="professor.fotoUrl" alt="Foto de Perfil" />
+    <input type="file" (change)="onFileSelected($event)" />
+  </div>
+
+  <div class="informacoes-perfil">
+    <label>Nome:</label>
+    <input type="text" [(ngModel)]="professor.nome" />
+
+    <label>Email Institucional:</label>
+    <input type="email" [(ngModel)]="professor.emailInstitucional" />
+
+    <label>Email Pessoal:</label>
+    <input type="email" [(ngModel)]="professor.emailPessoal" />
+
+    <label>Telefone:</label>
+    <input type="tel" [(ngModel)]="professor.telefone" />
+  </div>
+
+  <button (click)="salvarPerfil()">Salvar</button>
+</div>

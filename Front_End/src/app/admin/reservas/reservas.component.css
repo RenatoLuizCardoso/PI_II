@@ -1,0 +1,259 @@
+/* Estilos gerais */
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* Remove a rolagem da página inteira */
+}
+
+/* Container geral */
+.container-fluid {
+  height: 81vh; /* Garante que o container preencha a altura da tela */
+  display: flex; /* Flexbox para layout */
+  flex-direction: row; /* Direção das colunas */
+  box-sizing: border-box; /* Inclui a borda e o padding na altura total */
+  overflow: hidden; /* Remove a rolagem interna do container */
+}
+
+/* Linha dentro do container */
+.row {
+  flex: 1; /* Flexível para preencher o espaço disponível */
+  display: flex; /* Flexbox para colunas internas */
+  flex-direction: row; /* Direção das colunas */
+  overflow: hidden; /* Remove a rolagem interna */
+}
+
+/* Coluna esquerda */
+.col-md-6.bg-light {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 2px solid black; /* Borda entre as colunas */
+  box-sizing: border-box; /* Inclui a borda no tamanho da coluna */
+  height: 100%; /* Garante que a coluna preencha a altura disponível */
+  background-color: #ffffff; /* Cor de fundo branca */
+}
+
+/* Estilos para a imagem dentro da coluna esquerda */
+.col-md-6.bg-light img {
+  width: 100%; /* Ocupa toda a largura disponível */
+  height: auto; /* Mantém a proporção da imagem */
+  object-fit: cover; /* Cobre o espaço disponível sem distorcer */
+}
+
+/* Estilos da barra de pesquisa e filtro */
+.search-bar {
+  display: flex; /* Alinha a barra de pesquisa e o filtro horizontalmente */
+  align-items: center; /* Alinha verticalmente os itens ao centro */
+  gap: 10px; /* Espaço entre a barra de pesquisa e o filtro */
+  width: 100%; /* Largura total disponível */
+  max-width: 500px; /* Largura máxima ajustada para centralizar */
+  margin: 0 auto; /* Centraliza a barra de pesquisa */
+}
+
+.search-bar input {
+  flex: 1; /* Faz com que o input ocupe todo o espaço disponível */
+  padding: 10px; /* Padding ajustado */
+  font-size: 14px; /* Fonte menor para a barra de pesquisa */
+}
+
+.search-bar .form-group {
+  display: flex; /* Alinha o label e o select verticalmente */
+  flex-direction: column; /* Disposição vertical do label e select */
+  width: auto; /* Ajusta a largura do filtro */
+}
+
+.search-bar select {
+  padding: 8px; /* Padding ajustado */
+  font-size: 14px; /* Fonte menor para o select */
+}
+
+/* Placeholder (imagem/mensagem quando nenhuma reserva está selecionada) */
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: #faf8f9; /* Cor de fundo clara para o placeholder */
+  border: 2px dashed #ccc; /* Borda pontilhada para o espaço vazio */
+  border-radius: 8px; /* Cantos arredondados */
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box; /* Inclui a borda e o padding na largura e altura total */
+  color: #000; /* Cor do texto do placeholder */
+}
+
+.placeholder-image {
+  width: 400px;
+  height: 400px;
+  margin-bottom: 10px; /* Espaço abaixo da imagem */
+}
+
+/* Estilos do quadrado externo */
+.outer-square {
+  width: 100%; /* Largura total */
+  max-width: 500px; /* Largura máxima ajustada */
+  background-color: #f8f9fa; /* Cor de fundo do quadrado maior */
+  position: relative;
+  direction: rtl;
+  overflow-x: hidden; /* Remove a rolagem horizontal */
+  overflow-y: auto; /* Adiciona rolagem vertical se o conteúdo exceder a altura */
+  padding: 10px; /* Espaçamento interno do quadrado */
+  box-sizing: border-box; /* Inclui a borda e o padding na largura e altura total */
+  margin: 10px auto; /* Margem ajustada para centralizar o quadrado */
+  height: 100%; /* Garante que o quadrado preencha a altura disponível */
+}
+
+/* Estilo de reserva */
+.reservations {
+  display: flex;
+  flex-direction: column; /* Coloca os itens em coluna */
+  gap: 8px; /* Espaço entre os itens ajustado */
+  width: 100%; /* Largura total */
+  box-sizing: border-box; /* Inclui o padding na largura total */
+}
+
+/* Estilo do item de reserva */
+.reservation-item {
+  display: flex;
+  align-items: center; /* Alinha os itens verticalmente */
+  padding: 8px; /* Padding ajustado */
+  border-bottom: 2px solid #880015; /* Borda inferior colorida */
+  background-color: #fff; /* Fundo branco para as reservas */
+  border-radius: 8px; /* Cantos arredondados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
+  overflow: hidden; /* Garante que o desfoque não vaze para fora do item */
+  box-sizing: border-box; /* Inclui o padding na largura total */
+  width: 100%; /* Garante que ocupe a largura total disponível */
+  cursor: pointer; /* Muda o cursor para indicar que é clicável */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transição suave para hover */
+  color: #000; /* Cor do texto dos itens de reserva */
+}
+
+.reservation-item:hover {
+  background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra mais pronunciada ao passar o mouse */
+}
+
+/* Data da reserva */
+.reservation-date {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 10px; /* Espaço à direita da data */
+  color: #000; /* Cor do texto da data */
+}
+
+/* Separador entre data e detalhes */
+.separator {
+  width: 2px;
+  height: 20px;
+  background-color: #880015; /* Cor do separador */
+  margin: 0 10px; /* Espaço ao redor do separador */
+}
+
+/* Detalhes da reserva */
+.reservation-details {
+  display: flex;
+  flex-direction: column; /* Disposição vertical dos detalhes */
+  color: #000; /* Cor do texto dos detalhes */
+}
+
+.reservation-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.reservation-time {
+  font-size: 14px;
+  color: #666; /* Cor do texto dos detalhes */
+}
+
+/* Coluna direita */
+.col-md-6.bg-secondary {
+  background-color: #ffffff; /* Altera a cor de fundo para branca */
+  color: #000; /* Ajusta a cor do texto para preto */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px; /* Espaçamento interno ajustado */
+  height: 100%;
+  box-sizing: border-box; /* Inclui o padding na altura total */
+  overflow-y: auto; /* Adiciona rolagem vertical se necessário */
+}
+
+/* Detalhes da reserva */
+.reservation-detail {
+
+  text-align: center; /* Centraliza o texto */
+  background-color: #f8f9fa; /* Fundo claro para os detalhes da reserva */
+  padding: 20px; /* Espaço interno ajustado */
+  border-radius: 8px; /* Cantos arredondados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
+  width: 100%; /* Largura total */
+  max-width: 500px; /* Largura máxima ajustada */
+
+  color: #000; /* Cor do texto nos detalhes da reserva */
+  margin-bottom: 10px; /* Espaço abaixo dos detalhes */
+  margin-top: 70px;
+}
+
+/* Botões no detalhe da reserva */
+.action-buttons {
+  display: flex;
+  gap: 10px; /* Espaço entre os botões */
+  justify-content: center; /* Centraliza os botões horizontalmente */
+}
+
+.action-buttons button {
+  padding: 10px 20px; /* Espaçamento interno dos botões */
+  border: none;
+  border-radius: 5px; /* Cantos arredondados dos botões */
+  cursor: pointer; /* Muda o cursor para indicar que é clicável */
+  font-size: 14px; /* Ajusta o tamanho da fonte */
+  transition: background-color 0.3s ease; /* Transição suave para hover */
+}
+
+.action-buttons .btn-edit {
+  background-color: #007bff; /* Cor de fundo azul para editar */
+  color: #fff; /* Cor do texto branca */
+}
+
+.action-buttons .btn-edit:hover {
+  background-color: #0056b3; /* Cor de fundo ao passar o mouse */
+}
+
+.action-buttons .btn-delete {
+  background-color: #dc3545; /* Cor de fundo vermelha para excluir */
+  color: #fff; /* Cor do texto branca */
+}
+
+.action-buttons .btn-delete:hover {
+  background-color: #c82333; /* Cor de fundo ao passar o mouse */
+}
+
+/* Confirmação de exclusão */
+.confirmation-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fundo escuro para o diálogo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirmation-dialog-content {
+  background-color: #fff; /* Cor de fundo do diálogo */
+  padding: 20px;
+  border-radius: 8px; /* Cantos arredondados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
+  text-align: center;
+  width: 300px; /* Largura do diálogo */
+}
+
+.confirmation-dialog-content button {
+  margin-top: 10px; /* Espaço acima dos botões */
+}

@@ -1,0 +1,72 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <div *ngIf="mensagemSucesso" class="alert alert-success">
+        Sala atualizada com sucesso!
+    </div>
+      <div class="card register">
+        <div class="card-body">
+          <h5 class="card-title text-center">Edição de Sala</h5>
+          <form [formGroup]="salaForm" (ngSubmit)="salvar()">
+            <div class="form-group">
+              <label for="id">ID</label>
+              <input id="id" class="form-control" formControlName="id" readonly>
+            </div>
+            <div class="mb-3 mt-3">
+              <label for="type" class="form-label">Tipo de Sala</label>
+              <select class="form-control" id="type" formControlName="type">
+                <option value="" disabled>Selecione o tipo de sala</option>
+                <option value="sala">Sala</option>
+                <option value="lab">Laboratório</option>
+              </select>
+              <div *ngIf="f['type'].touched && f['type'].invalid" class="text-danger">
+                <small *ngIf="f['type'].errors?.['required']">Tipo de sala é obrigatório.</small>
+              </div>
+            </div>
+            <div class="form-group mb-3 mt-3">
+              <label for="capacity">Capacidade</label>
+              <input id="capacity" class="form-control" formControlName="capacity">
+              <div *ngIf="f['capacity'].touched && f['capacity'].invalid" class="text-danger">
+                <small *ngIf="f['capacity'].errors?.['required']">Capacidade deve ser um número.</small>
+                <small *ngIf="f['capacity'].errors?.['min']">Capacidade deve ser um número positivo.</small>
+              </div>
+            </div>
+            <div class="form-group mb-3 mt-3">
+              <label for="floor">Andar</label>
+              <input id="floor" class="form-control" formControlName="floor">
+              <div *ngIf="f['floor'].touched && f['floor'].invalid" class="text-danger">
+                <small *ngIf="f['floor'].errors?.['required']">Andar é obrigatório.</small>
+                <small *ngIf="f['floor'].errors?.['min']">Andar deve ser um número não-negativo.</small>
+              </div>
+            </div>
+            <div class="form-group mb-3 mt-3">
+              <label for="resources">Recursos</label>
+              <input id="resources" class="form-control" formControlName="resources">
+              <div *ngIf="f['resources'].touched && f['resources'].invalid" class="text-danger">
+                <small *ngIf="f['resources'].errors?.['required']">Recursos são obrigatórios.</small>
+              </div>
+            </div>
+            <div class="mb-3 mt-3">
+              <label for="availability" class="form-label">Disponibilidade Da Sala</label>
+              <select class="form-control" id="availability" formControlName="availability">
+                <option value="" disabled>Selecione a disponibilidade da sala</option>
+                <option value="Disponível">Disponível</option>
+                <option value="Indisponível">Indisponível</option>
+              </select>
+              <div *ngIf="f['availability'].touched && f['availability'].invalid" class="text-danger">
+                <small *ngIf="f['availability'].errors?.['required']">Disponibilidade é obrigatória.</small>
+              </div>
+            </div>
+            <div *ngIf="registerError" class="alert alert-danger mt-3" role="alert">
+              Erro ao atualizar a sala!
+            </div>
+            <div class="d-grid gap-2 mt-4 mb-3">
+              <button type="submit" class="btn btn-verde texto-branco">Salvar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

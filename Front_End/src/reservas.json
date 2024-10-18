@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Reserva 1",
+    "date": "15-06",
+    "time": "14:00",
+    "shift": "Tarde",
+    "details": "Detalhes da reserva 1"
+  },
+  {
+    "id": 2,
+    "name": "Reserva 2",
+    "date": "2024-08-16",
+    "time": "15:00",
+    "details": "Detalhes da reserva 2"
+  },
+  {
+    "id": 3,
+    "name": "Reserva 3",
+    "date": "17-08",
+    "time": "16:00",
+    "details": "Detalhes da reserva 3"
+  },
+  {
+    "id": 4,
+    "name": "Reserva 4",
+    "date": "18-06",
+    "time": "17:00",
+    "details": "Detalhes da reserva 4"
+  },
+  {
+    "id": 5,
+    "name": "Reserva 5",
+    "date": "16-08",
+    "time": "18:00",
+    "details": "Detalhes da reserva 5"
+  }
+]

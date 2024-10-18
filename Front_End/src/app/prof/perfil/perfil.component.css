@@ -1,0 +1,24 @@
+
+  #perfil {
+    margin-top: 250px;
+  }
+
+
+  .shadow {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve para dar profundidade */
+  }
+  
+  p {
+    font-size: 1.1rem;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+  
+  img {
+    max-width: 200px; /* Limita o tamanho máximo da imagem */
+    max-height: 200px;
+  }
+  

@@ -1,0 +1,60 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <div class="card register">
+        <div class="card-body">
+          <h5 class="card-title text-center">Registro de Professor</h5>
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3 mt-3">
+              <label for="name" class="form-label">Nome completo</label>
+              <input type="text" class="form-control" id="name" formControlName="name" placeholder="Nome Completo" required>
+              <div *ngIf="f['name'].touched && f['name'].invalid" class="text-danger">
+                <small *ngIf="f['name'].errors?.['required']">Nome é obrigatório.</small>
+                <small *ngIf="f['name'].errors?.['pattern']">Nome deve conter apenas letras e espaços.</small>
+              </div>
+            </div>
+
+            <div class="mb-3 mt-3">
+              <label for="emailI" class="form-label">Email Institucional</label>
+              <input type="email" class="form-control" id="emailI" formControlName="emailI" placeholder="emaili@example.com" required>
+              <div *ngIf="f['emailI'].touched && f['emailI'].invalid" class="text-danger">
+                <small *ngIf="f['emailI'].errors?.['required']">Email institucional é obrigatório.</small>
+                <small *ngIf="f['emailI'].errors?.['email']">Formato de email inválido.</small>
+              </div>
+            </div>
+
+            <div class="mb-3 mt-3">
+              <label for="emailP" class="form-label">Email Pessoal (Opcional)</label>
+              <input type="email" class="form-control" id="emailP" formControlName="emailP" placeholder="emailp@example.com">
+              <div *ngIf="f['emailP'].touched && f['emailP'].invalid" class="text-danger">
+                <small *ngIf="f['emailP'].errors?.['email']">Formato de email inválido.</small>
+              </div>
+            </div>
+
+            <div class="mb-3 mt-3">
+              <label for="tel" class="form-label">Telefone</label>
+              <input type="text" class="form-control" id="tel" formControlName="tel" placeholder="(XX) XXXXX-XXXX" required>
+              <div *ngIf="f['tel'].touched && f['tel'].invalid" class="text-danger">
+                <small *ngIf="f['tel'].errors?.['required']">Telefone é obrigatório.</small>
+                <small *ngIf="f['tel'].errors?.['pattern']">Telefone deve conter apenas números.</small>
+              </div>
+            </div>
+
+            <div *ngIf="registerError" class="alert alert-danger mt-3" role="alert">
+              Erro ao registrar o professor!
+            </div>
+
+            <div *ngIf="registerSuccess" class="alert alert-success mt-3" role="alert">
+              Professor registrado com sucesso!
+            </div>
+
+            <div class="d-grid gap-2 mt-4 mb-3">
+              <button type="submit" class="btn btn-verde texto-branco">Registrar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,104 @@
+{
+  "reservas": [
+    {
+      "id": 1,
+      "name": "Programação Orientada a Objetos",
+      "date": "15-06",
+      "time": "14:00 - 14:50",
+      "shift": "Tarde",
+      "professor": "Ana Paula Silva",
+      "sala": 101,
+      "lab": null
+    },
+    {
+      "id": 2,
+      "name": "Algoritmos e Estruturas de Dados",
+      "date": "16-08",
+      "time": "15:00 - 15:50",
+      "shift": "Tarde",
+      "professor": "Carlos Almeida",
+      "sala": null,
+      "lab": 2
+    },
+    {
+      "id": 3,
+      "name": "Banco de Dados",
+      "date": "17-08",
+      "time": "16:00 - 16:50",
+      "shift": "Tarde",
+      "professor": "Fernanda Lima",
+      "sala": 202,
+      "lab": null
+    },
+    {
+      "id": 4,
+      "name": "Redes de Computadores",
+      "date": "18-06",
+      "time": "17:00 - 17:50",
+      "shift": "Tarde",
+      "professor": "João Pereira",
+      "sala": null,
+      "lab": 3
+    },
+    {
+      "id": 5,
+      "name": "Engenharia de Software",
+      "date": "16-08",
+      "time": "18:00 - 18:50",
+      "shift": "Tarde",
+      "professor": "Mariana Costa",
+      "sala": 303,
+      "lab": null
+    },
+    {
+      "id": 6,
+      "name": "Sistemas Operacionais",
+      "date": "19-06",
+      "time": "12:00 - 12:50",
+      "shift": "Manhã",
+      "professor": "Roberto Santos",
+      "sala": null,
+      "lab": 1
+    },
+    {
+      "id": 7,
+      "name": "Desenvolvimento Web",
+      "date": "20-08",
+      "time": "13:00 - 13:50",
+      "shift": "Manhã",
+      "professor": "Tatiane Oliveira",
+      "sala": 404,
+      "lab": null
+    },
+    {
+      "id": 8,
+      "name": "Inteligência Artificial",
+      "date": "21-08",
+      "time": "14:00 - 14:50",
+      "shift": "Tarde",
+      "professor": "Gustavo Martins",
+      "sala": null,
+      "lab": 4
+    },
+    {
+      "id": 9,
+      "name": "Arquitetura de Computadores",
+      "date": "22-06",
+      "time": "15:00 - 15:50",
+      "shift": "Tarde",
+      "professor": "Juliana Rocha",
+      "sala": 505,
+      "lab": null
+    },
+    {
+      "id": 10,
+      "name": "Segurança da Informação",
+      "date": "23-08",
+      "time": "16:00 - 16:50",
+      "shift": "Tarde",
+      "professor": "André Souza",
+      "sala": null,
+      "lab": 5
+    }
+  ]
+}

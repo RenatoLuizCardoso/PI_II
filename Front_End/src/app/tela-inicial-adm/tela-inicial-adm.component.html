@@ -1,0 +1,93 @@
+<app-navbar></app-navbar>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Utilize uma div 'row' para envolver as divs esquerda e direita -->
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12" style="background-color: rd;">
+      <div class="mt-5">
+        <h1>Boa Tarde, Coordenador</h1>
+        <hr class="linha col-md-12">
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <button type="button" routerLink="/admin/gerenciar_professor"
+              class="btn card col-md-12 position-relative marca">
+              <div class="card-body d-flex align-items-center">
+                <h1 class="card-title m-0 icone d-flex justify-content-center align-items-center">
+                  <i class="fa fa-user" style="font-size:36px"></i>
+                </h1>
+                <div class="vertical-line mx-3"></div>
+                <div class="d-flex justify-content-between align-items-center w-100">
+                  <h5 class="card-text m-0">Gerenciamento de Professores</h5>
+                </div>
+              </div>
+            </button>
+            <button type="button" routerLink="/admin/gerenciar_disc"
+              class="btn card col-md-12 position-relative marca mt-3">
+              <div class="card-body d-flex align-items-center">
+                <h1 class="card-title m-0 icone d-flex justify-content-center align-items-center"><i class="fa fa-book"
+                    style="font-size:36px"></i></h1>
+                <div class="vertical-line mx-3"></div>
+                <div class="d-flex justify-content-between align-items-center w-100">
+                  <h5 class="card-text m-0">Gerenciamento de Disciplinas</h5>
+                </div>
+              </div>
+            </button>
+            <button type="button" routerLink="/admin/gerenciar_curso"
+              class="btn card col-md-12 position-relative marca mt-3">
+              <div class="card-body d-flex align-items-center">
+                <h1 class="card-title m-0 icone d-flex justify-content-center align-items-center"><i class="fa fa-users"
+                    style="font-size:34px"></i>
+                </h1>
+                <div class="vertical-line mx-3"></div>
+                <div class="d-flex justify-content-between align-items-center w-100">
+                  <h5 class="card-text m-0">Gerenciamento dos Cursos</h5>
+                </div>
+              </div>
+            </button>
+          </div>
+          <div class="col-md-6">
+            <button type="button" routerLink="/admin/gerenciar_sala" class="btn card col-md-12 position-relative marca">
+              <div class="card-body d-flex align-items-center">
+                <h1 class="card-title m-0 icone d-flex justify-content-center align-items-center"><i
+                    class="fa fa-television" style="font-size:34px"></i></h1>
+                <div class="vertical-line mx-3"></div>
+                <div class="d-flex justify-content-between align-items-center w-100">
+                  <h5 class="card-text m-0">Gerenciamento das Salas e Laboratórios</h5>
+                </div>
+              </div>
+            </button>
+            <button type="button" routerLink="/admin/gerenciar_reservas"
+              class="btn card col-md-12 position-relative marca mt-3">
+              <div class="card-body d-flex align-items-center">
+                <h1 class="card-title m-0 icone d-flex justify-content-center align-items-center"><i
+                    class="fa fa-map-marker" style="font-size:36px"></i></h1>
+                <div class="vertical-line mx-3"></div>
+                <div class="d-flex justify-content-between align-items-center w-100">
+                  <h5 class="card-text m-0">Gerenciamento de Reservas</h5>
+                </div>
+              </div>
+            </button>
+            <button type="button" routerLink="/admin/gerenciar_horario"
+              class="btn card col-md-12 position-relative marca mt-3">
+              <div class="card-body d-flex align-items-center">
+                <h1 class="card-title m-0 icone d-flex justify-content-center align-items-center"><i class="fa fa-table"
+                    style="font-size:36px"></i></h1>
+                <div class="vertical-line mx-3"></div>
+                <div class="d-flex justify-content-between align-items-center w-100">
+                  <h5 class="card-text m-0">Visualização de Horários</h5>
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Adicione o Bootstrap JS (opcional, para funcionalidades avançadas) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,0 +1,52 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <div class="card register">
+        <div class="card-body">
+          <h5 class="card-title text-center">Registro de Curso</h5>
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3 mt-3">
+              <label for="nameCourse" class="form-label">Nome do Curso</label>
+              <input type="text" class="form-control" id="nameCourse" formControlName="nameCourse" placeholder="Nome do Curso">
+              <div *ngIf="f['nameCourse'].touched && f['nameCourse'].invalid" class="text-danger">
+                <small *ngIf="f['nameCourse'].errors?.['required']">Nome do curso é obrigatório.</small>
+                <small *ngIf="f['nameCourse'].errors?.['pattern']">Nome do curso deve conter apenas letras e espaços.</small>
+              </div>
+            </div>
+            <div class="mb-3 mt-3">
+              <label for="semester" class="form-label">Semestres</label>
+              <input type="text" class="form-control" id="semester" formControlName="semester" placeholder="Semestres em números">
+              <div *ngIf="f['semester'].touched && f['semester'].invalid" class="text-danger">
+                <small *ngIf="f['semester'].errors?.['required']">Número de semestres é obrigatório.</small>
+                <small *ngIf="f['semester'].errors?.['pattern']">Número de semestres deve ser um número positivo.</small>
+              </div>
+            </div>
+            <div class="mb-3 mt-3">
+              <label for="period" class="form-label">Período</label>
+              <select class="form-control" id="period" formControlName="period">
+                <option value="" disabled>Selecione o período</option>
+                <option value="manha">Manhã</option>
+                <option value="tarde">Tarde</option>
+                <option value="noite">Noite</option>
+              </select>
+              <div *ngIf="f['period'].touched && f['period'].invalid" class="text-danger">
+                <small *ngIf="f['period'].errors?.['required']">Período é obrigatório.</small>
+              </div>
+            </div>
+
+            <div *ngIf="registerError" class="alert alert-danger mt-3" role="alert">
+              Erro ao registrar o curso!
+            </div>
+            <div *ngIf="registerSuccess" class="alert alert-success mt-3" role="alert">
+              Curso registrado com sucesso!
+            </div>
+            <div class="d-grid gap-2 mt-4 mb-3">
+              <button type="submit" class="btn btn-verde texto-branco">Registrar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

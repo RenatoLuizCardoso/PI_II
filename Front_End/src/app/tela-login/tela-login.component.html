@@ -1,0 +1,29 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+      <div class="card login">
+        <div class="card-body">
+          <h5 class="card-title text-center">Login do Professor</h5>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3 mt-3">
+              <label for="emaili" class="form-label">emaili</label>
+              <input type="text" class="form-control" id="emaili" formControlName="emaili" required>
+            </div>
+            <div class="mb-3 mt-4">
+              <label for="passwd" class="form-label">Senha</label>
+              <input type="passwd" class="form-control" id="passwd" formControlName="passwd" required>
+            </div>
+            <div *ngIf="loginError" class="alert alert-danger mt-3" role="alert">
+              Usuário ou senha incorretos!
+            </div>
+            <div class="d-grid gap-2 mt-4 mb-3">
+              <button type="submit" class="btn btn-verde texto-branco">Entrar</button>
+            </div>
+            <a routerLink="/recuperar-senha"><p>Recuperar a senha</p></a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

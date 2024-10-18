@@ -1,0 +1,89 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <div class="card register">
+        <div class="card-body">
+          <h5 class="card-title text-center">Registro de Sala</h5>
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3 mt-3">
+              <label for="type" class="form-label">Tipo de Sala</label>
+              <select class="form-control" id="type" formControlName="type">
+                <option value="" disabled>Selecione o tipo de sala</option>
+                <option value="sala">Sala</option>
+                <option value="lab">Laboratório</option>
+              </select>
+              <div *ngIf="f['type'].touched && f['type'].invalid" class="text-danger">
+                <small *ngIf="f['type'].errors?.['required']">Tipo de sala é obrigatório.</small>
+              </div>
+            </div>
+            <div class="mb-3 mt-3">
+              <label for="capacity" class="form-label">Capacidade</label>
+              <input type="number" class="form-control" id="capacity" formControlName="capacity" placeholder="Capacidade de Alunos">
+              <div *ngIf="f['capacity'].touched && f['capacity'].invalid" class="text-danger">
+                <small *ngIf="f['capacity'].errors?.['required']">Capacidade é obrigatória.</small>
+                <small *ngIf="f['capacity'].errors?.['min']">Capacidade deve ser um número positivo.</small>
+              </div>
+            </div>
+            <div class="mb-3 mt-3">
+              <label for="floor" class="form-label">Andar</label>
+              <input type="number" class="form-control" id="floor" formControlName="floor" placeholder="Andar...">
+              <div *ngIf="f['floor'].touched && f['floor'].invalid" class="text-danger">
+                <small *ngIf="f['floor'].errors?.['required']">Andar é obrigatório.</small>
+                <small *ngIf="f['floor'].errors?.['min']">Andar deve ser um número positivo.</small>
+              </div>
+            </div>
+            <div class="mb-3 mt-3">
+              <label class="form-label">Recursos</label>
+              <div class="d-flex flex-wrap">
+                <div class="form-check me-3">
+                  <input class="form-check-input" type="checkbox" (change)="onResourceChange($event, 'TV')">
+                  <label class="form-check-label">
+                    TV
+                  </label>
+                </div>
+                <div class="form-check me-3">
+                  <input class="form-check-input" type="checkbox" (change)="onResourceChange($event, 'Projetor')">
+                  <label class="form-check-label">
+                    Projetor
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" (change)="onResourceChange($event, 'Ventilador')">
+                  <label class="form-check-label">
+                    Ventilador
+                  </label>
+                </div>
+              </div>
+              <div *ngIf="f['resources'].touched && f['resources'].invalid" class="text-danger">
+                <small *ngIf="f['resources'].errors?.['required']">Pelo menos um recurso deve ser selecionado.</small>
+              </div>
+            </div>
+
+            <div class="mb-3 mt-3">
+              <label for="availability" class="form-label">Disponibilidade Da Sala</label>
+              <select class="form-control" id="availability" formControlName="availability">
+                <option value="" disabled>Selecione a disponibilidade da sala</option>
+                <option value="Disponível">Disponível</option>
+                <option value="Indisponível">Indisponível</option>
+              </select>
+              <div *ngIf="f['availability'].touched && f['availability'].invalid" class="text-danger">
+                <small *ngIf="f['availability'].errors?.['required']">Disponibilidade é obrigatória.</small>
+              </div>
+            </div>
+
+            <div *ngIf="registerError" class="alert alert-danger mt-3" role="alert">
+              Erro ao registrar a sala!
+            </div>
+            <div *ngIf="registerSuccess" class="alert alert-success mt-3" role="alert">
+              Sala registrada com sucesso!
+            </div>
+            <div class="d-grid gap-2 mt-4 mb-3">
+              <button type="submit" class="btn btn-verde texto-branco">Registrar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Coluna esquerda -->
+    <div class="col-md-6 bg-light d-flex flex-column align-items-center justify-content-center">
+      <!-- Barra de pesquisa e filtro -->
+      <div class="search-bar mb-4 mt-3">
+        <input type="text" class="form-control search-input" placeholder="Pesquisar reservas..." [(ngModel)]="searchTerm">
+        <div class="select-container">
+          <select id="shiftFilter" class="form-control" [(ngModel)]="selectedShift">
+            <option value="">Turno<span class="select-icon">&#9662;</span> <!-- Seta para baixo --></option>
+            <option value="manha">Manhã</option>
+            <option value="tarde">Tarde</option>
+            <option value="noite">Noite</option>
+          </select>
+
+        </div>
+      </div>
+
+      <!-- Quadrado que contém as reservas -->
+      <div *ngIf="filteredReservations.length > 0" class="outer-square">
+        <div class="reservations" style="direction: ltr;">
+          <div *ngFor="let reservation of filteredReservations" class="reservation-item" (click)="moveReservationToRight(reservation)">
+            <span class="reservation-date">{{ reservation.date }}</span>
+            <span class="separator"></span>
+            <div class="reservation-details">
+              <div class="reservation-name">{{ reservation.name }}</div>
+              <div class="reservation-time">{{ reservation.time }} - {{ reservation.shift }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   <!-- Coluna direita -->
+<div class="col-md-6 bg-secondary text-white d-flex flex-column align-items-center p-3">
+  <!-- Imagem ou mensagem padrão quando nenhuma reserva está selecionada -->
+  <div *ngIf="!selectedReservation" class="placeholder text-center">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1XzEE1HUztwllAwhcCT6aSNWo5w9zQ-yKLA&s" alt="Nenhuma reserva selecionada" class="placeholder-image img-fluid">
+    <p>Selecione uma reserva para ver os detalhes.</p>
+  </div>
+
+  <!-- Conteúdo da coluna direita -->
+  <div *ngIf="selectedReservation" class="reservation-detail card p-4">
+    <h2 class="card-title mb-3">Detalhes da Reserva</h2>
+    <p><strong>Data:</strong> {{ selectedReservation.date }}</p>
+    <p><strong>Nome:</strong> {{ selectedReservation.name }}</p>
+    <p><strong>Hora:</strong> {{ selectedReservation.time }}</p>
+    <p><strong>Turno:</strong> {{ selectedReservation.shift }}</p>
+    <p><strong>Professor responsável:</strong> {{ selectedReservation.professor }}</p>
+
+    <!-- Exibe "Sala" se não for null -->
+    <p *ngIf="selectedReservation.sala !== null"><strong>Sala:</strong> {{ selectedReservation.sala }}</p>
+
+    <!-- Exibe "Lab" se não for null -->
+    <p *ngIf="selectedReservation.lab !== null"><strong>Lab:</strong> {{ selectedReservation.lab }}</p>
+
+    <!-- Botões de ação -->
+    <div class="action-buttons mt-4">
+      <button class="btn btn-primary" (click)="editReservation()">Editar</button>
+      <button class="btn btn-danger" (click)="confirmDelete()">Excluir</button>
+    </div>
+  </div>
+
+
+</div>
+  </div>
+</div>
+
+<!-- Diálogo de confirmação de exclusão -->
+<div *ngIf="showConfirmDialog" class="confirmation-dialog">
+  <div class="confirmation-dialog-content">
+    <p>Tem certeza de que deseja excluir esta reserva?</p>
+    <button class="btn btn-secondary" (click)="cancelDelete()">Cancelar</button>
+    <button class="btn btn-danger" (click)="deleteReservation()">Excluir</button>
+  </div>
+</div>

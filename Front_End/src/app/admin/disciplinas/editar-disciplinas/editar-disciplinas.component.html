@@ -1,0 +1,48 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <div *ngIf="mensagemSucesso" class="alert alert-success">
+        Disciplina atualizada com sucesso!
+      </div>
+      <div class="card register">
+        <div class="card-body">
+          <h5 class="card-title text-center">Edição de Disciplina</h5>
+          <form [formGroup]="disciplinaForm" (ngSubmit)="salvar()">
+            <div class="form-group">
+              <label for="id">ID</label>
+              <input id="id" class="form-control" formControlName="id" readonly>
+            </div>
+            <div class="form-group mb-3 mt-3">
+              <label for="disciplineName">Nome</label>
+              <input id="disciplineName" class="form-control" formControlName="disciplineName">
+              <div *ngIf="f['disciplineName'].touched && f['disciplineName'].invalid" class="text-danger">
+                <small *ngIf="f['disciplineName'].errors?.['required']">Nome é obrigatório.</small>
+                <small *ngIf="f['disciplineName'].errors?.['pattern']">Nome deve conter apenas letras, números e
+                  espaços.</small>
+              </div>
+            </div>
+            <div class="form-group mb-3 mt-3">
+              <label for="hour">Carga Horária</label>
+              <input id="hour" class="form-control" formControlName="hour">
+              <div *ngIf="f['hour'].touched && f['hour'].invalid" class="text-danger">
+                <small *ngIf="f['hour'].errors?.['required']">Carga Horária é obrigatória.</small>
+                <small *ngIf="f['hour'].errors?.['pattern']">Carga Horária deve ser um número positivo.</small>
+              </div>
+            </div>
+            <div class="form-group mb-3 mt-3">
+              <label for="professor">Professor Responsável</label>
+              <input id="professor" class="form-control" formControlName="professor">
+              <div *ngIf="f['professor'].touched && f['professor'].invalid" class="text-danger">
+                <small *ngIf="f['professor'].errors?.['required']">Professor Responsável é obrigatório.</small>
+              </div>
+            </div>
+            <div class="d-grid gap-2 mt-4 mb-3">
+              <button type="submit" class="btn btn-verde texto-branco">Salvar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

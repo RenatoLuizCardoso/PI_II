@@ -1,0 +1,332 @@
+{
+  "professores": [
+    {
+      "id": "56b1",
+      "name": "Carlos Mendes",
+      "emailI": "carlos.mendes@escola.com",
+      "senha": "c_jF_3tC8!}vR4)",
+      "emailP": "carlos.mendes@escola.com",
+      "tel": "118855779944"
+    },
+    {
+      "id": "cc53",
+      "name": "Ana Silva",
+      "emailI": "ana.silva@escola.com",
+      "senha": "qwerty",
+      "emailP": "",
+      "tel": "1222222"
+    },
+    {
+      "id": "8f77",
+      "name": "Leandro Lima",
+      "emailI": "leandro.lima@fatec.sp.gov.br",
+      "senha": "123478",
+      "emailP": "leandro.lima@fatec.sp.gov.br",
+      "tel": "123456789"
+    },
+    {
+      "id": "9a1b",
+      "name": "Juliana Santos",
+      "emailI": "juliana.santos@wildcats.com",
+      "senha": "wild1234",
+      "emailP": "juliana.santos@wildcats.com",
+      "tel": "987654321"
+    },
+    {
+      "id": "2b4d",
+      "name": "Ricardo Pereira",
+      "emailI": "ricardo.pereira@exoticbirds.com",
+      "senha": "bluebird1!",
+      "emailP": "ricardo.pereira@exoticbirds.com",
+      "tel": "1122334455"
+    },
+    {
+      "id": "4e6f",
+      "name": "Fernanda Costa",
+      "emailI": "fernanda.costa@bigcats.org",
+      "senha": "stripes_2024",
+      "emailP": "fernanda.costa@bigcats.org",
+      "tel": "5566778899"
+    },
+    {
+      "id": "7c8d",
+      "name": "Rodrigo Almeida",
+      "emailI": "rodrigo.almeida@antarctica.edu",
+      "senha": "coldwater!2024",
+      "emailP": "rodrigo.almeida@antarctica.edu",
+      "tel": "4433221100"
+    },
+    {
+      "name": "Glauco Todesco",
+      "emailI": "glauco@abutua.com",
+      "senha": "2werfghnm5tyujk,",
+      "emailP": "",
+      "tel": "5678987654567",
+      "id": "a38NE_d"
+    },
+    {
+      "name": "Mango",
+      "emailI": "mango@mango.com",
+      "passwd": "$),5a6l+",
+      "emailP": "mango@mango.com",
+      "tel": "2321433545",
+      "id": "LLKVBQ9"
+    },
+    {
+      "emaili": "glauco@abutua.com",
+      "passwd": "2werfghnm5tyujk,",
+      "id": "qV4fLYm"
+    }
+  ],
+
+
+
+  "reservas":[
+    {
+      "id": 1,
+      "name": "Programação Orientada a Objetos",
+      "date": "15-06",
+      "time": "14:00 - 14:50",
+      "shift": "Tarde",
+      "professor": "Ana Paula Silva",
+      "sala": 101,
+      "lab": null
+    },
+    {
+      "id": 2,
+      "name": "Algoritmos e Estruturas de Dados",
+      "date": "16-08",
+      "time": "15:00 - 15:50",
+      "shift": "Tarde",
+      "professor": "Carlos Almeida",
+      "sala": null,
+      "lab": 2
+    },
+    {
+      "id": 3,
+      "name": "Banco de Dados",
+      "date": "17-08",
+      "time": "16:00 - 16:50",
+      "shift": "Tarde",
+      "professor": "Fernanda Lima",
+      "sala": 202,
+      "lab": null
+    },
+    {
+      "id": 4,
+      "name": "Redes de Computadores",
+      "date": "18-06",
+      "time": "17:00 - 17:50",
+      "shift": "Tarde",
+      "professor": "João Pereira",
+      "sala": null,
+      "lab": 3
+    },
+    {
+      "id": 5,
+      "name": "Engenharia de Software",
+      "date": "16-08",
+      "time": "18:00 - 18:50",
+      "shift": "Tarde",
+      "professor": "Mariana Costa",
+      "sala": 303,
+      "lab": null
+    },
+    {
+      "id": 6,
+      "name": "Sistemas Operacionais",
+      "date": "19-06",
+      "time": "12:00 - 12:50",
+      "shift": "Manhã",
+      "professor": "Roberto Santos",
+      "sala": null,
+      "lab": 1
+    },
+    {
+      "id": 7,
+      "name": "Desenvolvimento Web",
+      "date": "20-08",
+      "time": "13:00 - 13:50",
+      "shift": "Manhã",
+      "professor": "Tatiane Oliveira",
+      "sala": 404,
+      "lab": null
+    },
+    {
+      "id": 8,
+      "name": "Inteligência Artificial",
+      "date": "21-08",
+      "time": "14:00 - 14:50",
+      "shift": "Tarde",
+      "professor": "Gustavo Martins",
+      "sala": null,
+      "lab": 4
+    },
+    {
+      "id": 9,
+      "name": "Arquitetura de Computadores",
+      "date": "22-06",
+      "time": "15:00 - 15:50",
+      "shift": "Tarde",
+      "professor": "Juliana Rocha",
+      "sala": 505,
+      "lab": null
+    },
+    {
+      "id": 10,
+      "name": "Segurança da Informação",
+      "date": "23-08",
+      "time": "16:00 - 16:50",
+      "shift": "Noite",
+      "professor": "André Souza",
+      "sala": null,
+      "lab": 5
+    }
+  ],
+  "salas": [
+    {
+      "id": "1379",
+      "type": "sala",
+      "capacity": "30",
+      "floor": "1",
+      "resources": "Projetor, TV",
+      "availability": "Disponível"
+    },
+    {
+      "id": "852b",
+      "type": "sala",
+      "capacity": "60",
+      "floor": 2,
+      "resources": "Lousa, Cadeiras",
+      "availability": "Indisponível"
+    },
+    {
+      "id": "248f",
+      "type": "lab",
+      "capacity": "20",
+      "floor": 2,
+      "resources": "Computadores, Equipamentos de laboratório",
+      "availability": "Disponível"
+    },
+    {
+      "id": "fd66",
+      "type": "lab",
+      "capacity": "50",
+      "floor": "0",
+      "resources": "Microscópios, Bancadas",
+      "availability": "Indisponível"
+    }
+  ],
+  "disciplinas": [
+    {
+      "disciplineName": "Engenharia de Software",
+      "description": "Texto",
+      "hour": "140",
+      "professor": "Carlos Mendes",
+      "objective": "Texto",
+      "syllabus": "Texto",
+      "id": "1"
+    },
+    {
+      "disciplineName": "Matemática",
+      "description": "Texto",
+      "hour": "20",
+      "professor": "Rodrigo Almeida",
+      "objective": "Texto",
+      "syllabus": "Texto",
+      "id": "2"
+    },
+    {
+      "disciplineName": "Inteligência Artificial",
+      "description": "Texto",
+      "hour": "90",
+      "professor": "Ricardo Pereira",
+      "objective": "Texto",
+      "syllabus": "Texto",
+      "id": "3"
+    },
+    {
+      "disciplineName": "Cloud Computing",
+      "description": "Texto",
+      "hour": "120",
+      "professor": "Glauco Todesco",
+      "objective": "Texto",
+      "syllabus": "Texto",
+      "id": "4"
+    }
+  ],
+  "cursos": [
+    {
+      "id": "a1b2",
+      "nameCourse": "Engenharia Ambiental",
+      "semester": "3",
+      "period": "manha"
+    },
+    {
+      "id": "c3d4",
+      "nameCourse": "Biologia Marinha",
+      "semester": "2",
+      "period": "tarde"
+    },
+    {
+      "id": "e5f6",
+      "nameCourse": "Tecnologia da Informação",
+      "semester": "6",
+      "period": "noite"
+    },
+    {
+      "id": "g7h8",
+      "nameCourse": "Ecologia e Conservação",
+      "semester": "6",
+      "period": "manha"
+    },
+    {
+      "id": "i9j0",
+      "nameCourse": "Matemática Aplicada",
+      "semester": "2",
+      "period": "tarde"
+    },
+    {
+      "id": "k1l2",
+      "nameCourse": "Sistemas de Informação",
+      "semester": "6",
+      "period": "noite"
+    },
+    {
+      "id": "17ad",
+      "nameCourse": "Sistemático",
+      "semester": "5",
+      "period": "tarde"
+    }
+  ],
+  "turmas": {
+    "curso": "i9j0",
+    "dia": "Segunda-feira",
+    "aulas": [
+      {
+        "materia": "Comportamento Animal",
+        "professor": "cc53"
+      },
+      {
+        "materia": "Anatomia Comparada",
+        "professor": "8f77"
+      },
+      {
+        "materia": "Comportamento Animal",
+        "professor": "56b1"
+      },
+      {
+        "materia": "",
+        "professor": ""
+      },
+      {
+        "materia": "",
+        "professor": ""
+      },
+      {
+        "materia": "",
+        "professor": ""
+      }
+    ]
+  }
+}

@@ -1,0 +1,86 @@
+import { Component, OnInit } from '@angular/core';
+import { CsalasService } from '../../../serv/admin/csalas.service';
+
+@Component({
+  selector: 'app-gerenciar-salas',
+  templateUrl: './gerenciar-salas.component.html',
+  styleUrls: ['./gerenciar-salas.component.css']
+})
+export class GerenciarSalasComponent implements OnInit {
+  sala: any[] = [];
+  salasFiltradas: any[] = []; // Salas filtradas após a pesquisa
+  salasPaginadas: any[] = []; // Salas exibidas na página atual
+  pesquisaTipo: string = ''; // Valor do campo de pesquisa
+  loading: boolean = false;
+  paginaAtual: number = 1;
+  totalPaginas: number = 1;
+  itensPorPagina: number = 8;
+  paginas: number[] = [];
+
+  constructor(private csalasService: CsalasService) { }
+
+  ngOnInit(): void {
+    this.carregarSalas();
+  }
+
+  carregarSalas() {
+    this.csalasService.getSalas().subscribe(
+      data => {
+        this.sala = data;
+        this.salasFiltradas = this.sala; // Inicialmente, todas as salas estão na lista filtrada
+        this.calcularPaginas();
+        this.atualizarSalasPaginadas();
+      },
+      error => {
+        console.error('Erro ao carregar salas: ', error);
+      }
+    );
+  }
+
+  calcularPaginas() {
+    this.totalPaginas = Math.ceil(this.salasFiltradas.length / this.itensPorPagina);
+    this.paginas = Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
+  }
+
+  atualizarSalasPaginadas() {
+    const inicio = (this.paginaAtual - 1) * this.itensPorPagina;
+    const fim = inicio + this.itensPorPagina;
+    this.salasPaginadas = this.salasFiltradas.slice(inicio, fim);
+  }
+
+  irParaPagina(pagina: number) {
+    if (pagina >= 1 && pagina <= this.totalPaginas) {
+      this.paginaAtual = pagina;
+      this.atualizarSalasPaginadas();
+    }
+  }
+
+  // Função de filtragem por tipo
+  filtrarSalas() {
+    this.salasFiltradas = this.sala.filter(sala =>
+      sala.type.toLowerCase().includes(this.pesquisaTipo.toLowerCase())
+    );
+    this.paginaAtual = 1; // Resetar para a primeira página ao filtrar
+    this.calcularPaginas();
+    this.atualizarSalasPaginadas();
+  }
+
+  excluirSalas(id: number) {
+    if (confirm('Tem certeza que deseja excluir esta sala?')) {
+      this.loading = true;
+      this.csalasService.deleteSala(id).subscribe(
+        () => {
+          this.sala = this.sala.filter(sala => sala.id !== id);
+          this.filtrarSalas(); // Reaplica o filtro após a exclusão
+          this.loading = false;
+          alert('Sala excluída com sucesso!');
+        },
+        error => {
+          console.error('Erro ao excluir sala: ', error);
+          this.loading = false;
+          alert('Ocorreu um erro ao excluir a sala.');
+        }
+      );
+    }
+  }
+}
