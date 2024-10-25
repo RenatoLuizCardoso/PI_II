@@ -1,8 +1,13 @@
 package com.projeto_integrador.projeto_integrador.modules.student.controller;
 
 import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +19,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import com.projeto_integrador.projeto_integrador.modules.student.dto.ResetPasswordRequest;
 import com.projeto_integrador.projeto_integrador.modules.student.entity.StudentEntity;
 import com.projeto_integrador.projeto_integrador.modules.student.repository.StudentRepository;
 import com.projeto_integrador.projeto_integrador.modules.student.usecases.CreateStudentUseCase;
 import com.projeto_integrador.projeto_integrador.modules.student.usecases.DeleteStudentUseCase;
+import com.projeto_integrador.projeto_integrador.modules.student.usecases.ForgotPasswordService;
 import com.projeto_integrador.projeto_integrador.modules.student.usecases.GetAllStudents;
 import com.projeto_integrador.projeto_integrador.modules.student.usecases.GetStudentById;
 import com.projeto_integrador.projeto_integrador.modules.student.usecases.PutStudentById;
+import com.projeto_integrador.projeto_integrador.modules.student.usecases.ResetPasswordService;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -31,24 +39,28 @@ import jakarta.validation.Valid;
 public class StudentController {
     
     @Autowired
-    StudentRepository repository;
+    private StudentRepository studentRepository;
 
     @Autowired
-    CreateStudentUseCase createStudent;
+    private CreateStudentUseCase createStudent;
 
     @Autowired
-    GetAllStudents getAllStudents;
+    private GetAllStudents getAllStudents;
 
     @Autowired
-    GetStudentById getStudentById;
+    private GetStudentById getStudentById;
 
     @Autowired
-    PutStudentById putStudentById;
+    private PutStudentById putStudentById;
 
     @Autowired
-    DeleteStudentUseCase deleteStudentById;
+    private DeleteStudentUseCase deleteStudentById;
 
-    
+    @Autowired
+    private ForgotPasswordService forgotPasswordService;
+
+    @Autowired
+    private ResetPasswordService resetPasswordService;
 
     @PostMapping("/")
     public ResponseEntity<Object> create(@Valid @RequestBody StudentEntity studentEntity) {
@@ -98,5 +110,30 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
+    private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
+    
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestBody Map<String, String> request) {
+        String email = request.get("institutionalEmail");
+        try {
+            forgotPasswordService.generateResetToken(email);
+            return ResponseEntity.ok("Reset token sent to email");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Student not found");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing request");
+        }
+    }
+
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequest request) {
+        try {
+            resetPasswordService.resetPassword(request.getToken(), request.getNewPassword());
+            return ResponseEntity.ok("Password successfully reset.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Invalid token or password.");
+        }
+    }
     
 }

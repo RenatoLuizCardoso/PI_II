@@ -20,7 +20,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.projeto_integrador.projeto_integrador.modules.student.dto.AuthStudentRequestDTO;
 import com.projeto_integrador.projeto_integrador.modules.student.dto.AuthStudentResponseDTO;
-
 import com.projeto_integrador.projeto_integrador.modules.student.repository.StudentRepository;
 
 

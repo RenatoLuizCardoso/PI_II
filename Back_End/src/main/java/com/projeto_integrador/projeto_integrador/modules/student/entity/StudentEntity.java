@@ -1,5 +1,6 @@
 package com.projeto_integrador.projeto_integrador.modules.student.entity;
 
+
 import org.hibernate.validator.constraints.Length;
 
 import jakarta.persistence.Column;
