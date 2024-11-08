@@ -24,7 +24,7 @@ export class GerenciarDisciplinaComponent implements OnInit {
   }
 
   carregarDisciplinas() {
-    this.cdisciplinaService.getDisciplinas().subscribe(
+    this.cdisciplinaService.getDisciplines().subscribe(
       data => {
         this.disciplinas = data;
         this.disciplinasFiltradas = this.disciplinas; // Inicialmente, todas as disciplinas estão na lista filtrada
@@ -68,7 +68,7 @@ export class GerenciarDisciplinaComponent implements OnInit {
   excluirDisciplina(id: number) {
     if (confirm('Tem certeza que deseja excluir esta disciplina?')) {
       this.loading = true;
-      this.cdisciplinaService.deleteDisciplina(id).subscribe(
+      this.cdisciplinaService.deleteDiscipline(id).subscribe(
         () => {
           this.disciplinas = this.disciplinas.filter(disciplina => disciplina.id !== id);
           this.filtrarDisciplinas(); // Reaplica o filtro após a exclusão

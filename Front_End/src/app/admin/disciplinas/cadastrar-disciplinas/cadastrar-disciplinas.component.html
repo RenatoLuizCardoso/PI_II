@@ -33,18 +33,7 @@
                 <small *ngIf="f['description'].errors?.['pattern']">Descrição deve conter apenas letras e espaços.</small>
               </div>
             </div>
-            <div class="mb-3 mt-3">
-              <label for="professor" class="form-label">Professor Responsável</label>
-              <select class="form-control" id="professor" formControlName="professor" required>
-                <option value="" disabled selected>Selecione o professor responsável</option>
-                <option *ngFor="let professor of professores" [value]="professor.name">
-                  {{ professor.name }}
-                </option>
-              </select>
-              <div *ngIf="f['professor'].touched && f['professor'].invalid" class="text-danger">
-                <small *ngIf="f['professor'].errors?.['required']">Selecione um professor.</small>
-              </div>
-            </div>
+          
             <div class="mb-3 mt-3">
               <label for="objective" class="form-label">Objetivo</label>
               <input type="text" class="form-control" id="objective" formControlName="objective"

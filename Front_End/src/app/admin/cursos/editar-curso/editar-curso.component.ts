@@ -22,7 +22,8 @@ export class EditarCursoComponent implements OnInit {
       id: [{ value: '', disabled: true }],
       nameCourse: ['', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$')]], // Letras e espaços
       semester: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], // Números apenas
-      period: ['', Validators.required]
+      period: ['', Validators.required],
+      disciplina: ['', Validators.required]
     });
   }
 

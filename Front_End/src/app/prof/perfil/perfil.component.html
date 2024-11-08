@@ -1,18 +1,72 @@
 <app-navbar-prof></app-navbar-prof>
-<div class="container d-flex justify-content-center align-items-center" id="perfil">
-    <div class="row w-75 shadow p-4 bg-white rounded">
-      <!-- Coluna da esquerda: Texto -->
-      <div class="col-md-6 d-flex flex-column justify-content-center">
-        <h2>Maria Oliveira</h2>
-        <p><strong>Email Institucional:</strong> maria.oliveiraauniversidade.edu.br</p>
-        <p><strong>Email Pessoal:</strong> mariaoliveiraagmail.com</p>
-        <p><strong>Telefone:</strong> (21) 91234-5678</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="esquerda col-md-3 left-side d-flex align-items-center justify-content-center">
+      <div class="frame-container">
+        <div class="frame btn " (click)="triggerFileInput()">
+          <img [src]="selectedImage" alt="Perfil" class="profile-img" *ngIf="selectedImage">
+          <span *ngIf="!selectedImage" class="placeholder-text">Adicione uma imagem</span>
+        </div>
+        <input type="file" id="fileInput" accept="image/*" (change)="onImageSelected($event)" hidden>
+        <div class="profile-bar">
+          <span class="profile-name">Nome do Usuário</span>
+        </div>
       </div>
-  
-      <!-- Coluna da direita: Foto -->
-      <div class="col-md-6 d-flex justify-content-center align-items-center">
-        <img src="https://via.placeholder.com/200" class="img-fluid rounded-circle" alt="Foto de perfil">
-      </div>
+
     </div>
+    <div class="col-md-9 right-side d-flex align-items-center justify-content-center">
+      <form class="form-container">
+        <div class="form-group">
+          <label for="emailInst">Email Institucional</label>
+          <input type="email" class="form-control" id="emailInst" value="exemplo@institucional.com" disabled>
+        </div>
+
+        <!-- Campo de Email Pessoal (também desabilitado por padrão) -->
+        <div class="form-group">
+          <label for="emailPessoal" class="me-2">Email Pessoal</label>
+<div class="d-flex align-items-center">
+          <input type="email" class="form-control me-2" id="emailPessoal" value="email@pessoal.com" disabled>
+          <button type="button" class="btn " (click)="toggleEmailDropdown()"><i class="fas fa-pen"></i></button>
+</div>
+        </div>
+
+        <div class="form-group dropdown-container" *ngIf="showDropdown">
+          <label for="newEmail">Cadastrar Novo Email:</label>
+          <input type="email" class="form-control" id="newEmail" placeholder="Digite seu novo email">
+          <button type="button" class="btn btn-success mt-2" (click)="registerNewEmail()">Salvar Email</button>
+
+          <!-- Exibe a mensagem de erro se o email for inválido -->
+          <div *ngIf="emailErrorMessage" class="text-danger mt-2">
+            {{ emailErrorMessage }}
+          </div>
+        </div>
+
+        <!-- Outros campos do formulário -->
+        <div class="form-group">
+          <label for="telefone">Telefone</label>
+          <input type="text" class="form-control" id="telefone" placeholder="Insira seu telefone" disabled>
+        </div>
+        <div class="form-group">
+          <label for="senha">Senha</label>
+          <input type="password" class="form-control" id="senha" placeholder="Insira sua senha" disabled>
+        </div>
+      </form>
+    </div>
+
+
   </div>
-  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">

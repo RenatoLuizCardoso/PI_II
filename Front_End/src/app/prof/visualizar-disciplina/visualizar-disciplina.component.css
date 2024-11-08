@@ -1,0 +1,30 @@
+.linha {
+    border-width: 7px;
+    border-color: #C00c0c !important;
+    opacity: 1;
+  }
+  
+  .vertical-line {
+    width: 1px;
+    height: 40px; /* ajuste conforme necessário */
+    background-color: black;
+  }
+  
+  .scrollable-content {
+    overflow-y: auto; /* Adiciona rolagem vertical */
+    max-height: 50vh; /* Limita a altura da área scrollable */
+    padding: 10px; /* Espaçamento interno */
+  }
+  
+  .scrollable-content::-webkit-scrollbar {
+    width: 8px; /* Largura da barra de rolagem */
+  }
+  
+  .scrollable-content::-webkit-scrollbar-thumb {
+    background-color: #C00c0c; /* Cor da barra de rolagem */
+    border-radius: 10px; /* Cantos arredondados */
+  }
+  
+  .scrollable-content::-webkit-scrollbar-track {
+    background: #f8f9fa; /* Cor */
+  }

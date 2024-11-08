@@ -1,0 +1,38 @@
+{
+  "curso": "Desenvolvimento Web",
+  "semestre": "1º Semestre",
+  "dias": {
+    "segunda": [
+      {
+        "materia": "HTML e CSS",
+        "aula": "Aula 1",
+        "horario": "13:20 - 14:10"
+      },
+      {
+        "materia": "HTML e CSS",
+        "aula": "Aula 2",
+        "horario": "14:10 - 15:00"
+      },
+      {
+        "materia": "JavaScript",
+        "aula": "Aula 1",
+        "horario": "15:00 - 15:50"
+      },
+      {
+        "materia": "JavaScript",
+        "aula": "Aula 2",
+        "horario": "15:50 - 16:40"
+      },
+      {
+        "materia": "Angular",
+        "aula": "Aula 1",
+        "horario": "16:40 - 17:30"
+      },
+      {
+        "materia": "Angular",
+        "aula": "Aula 2",
+        "horario": "17:30 - 18:20"
+      }
+    ]
+  }
+}

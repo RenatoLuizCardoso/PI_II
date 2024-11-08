@@ -11,6 +11,7 @@ import { ProfessoresService } from '../../../serv/admin/professores.service';
 export class EditarProfessorComponent implements OnInit {
   professorForm: FormGroup;
   mensagemSucesso: boolean = false;
+  cursos: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -25,12 +26,14 @@ export class EditarProfessorComponent implements OnInit {
       senha: ['', [Validators.required, Validators.minLength(6)]],
       emailP: ['', [Validators.email]],
       tel: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], // Permite apenas números
+      curso: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
     this.carregarProfessor();
   }
+  
 
   carregarProfessor() {
     const id = this.route.snapshot.paramMap.get('id');

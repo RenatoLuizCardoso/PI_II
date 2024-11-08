@@ -1,22 +1,636 @@
 .vermeio {
-    background-color: #c00c0c;
+  background-color: #c00c0c;
+}
+
+.texto-branco {
+  color: white;
+}
+
+.login {
+  height: 400px;
+  /* Defina a altura desejada em pixels (por exemplo, 300px) */
+
+}
+
+.btn-verde {
+  background-color: #0b9247;
+}
+
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap);
+
+.govsp-blue {
+  background: #034ea2
+}
+
+.govsp-black {
+  background: #000
+  
+}
+
+.govsp-gray {
+  background: #4d4d4f
+}
+
+.govsp-white {
+  background: #fff
+}
+
+img.govsp-icon-social {
+  margin-left: 4px
+}
+
+img.govsp-icon-social:hover {
+  filter: drop-shadow(1);
+  box-shadow: inset 0 0 0 20px #e6e4e4;
+  border-radius: 3px
+}
+
+.govsp-link:hover {
+  background: #444 !important;
+  color: #fff;
+  border-color: #444;
+  text-decoration: none !important
+}
+
+.govsp-link.digital:hover {
+  background: #808080 !important;
+  color: #fff !important;
+  text-decoration: none !important
+}
+
+p.govsp-social {
+  color: #444;
+  font-size: 12px !important;
+  margin-top: 0;
+  height: 0;
+  padding-right: 20px;
+  margin-bottom: 10px;
+  padding-left: 8px;
+  display: flex
+}
+
+div#separador-nav {
+  background-color: gray;
+  margin: 0 25px 0 10px;
+  height: 25px;
+  width: 1px !important
+}
+
+::-moz-selection {
+  background: #666;
+  text-shadow: none;
+  color: #fff
+}
+
+::selection {
+  background: #666;
+  text-shadow: none;
+  color: #fff
+}
+
+.govsp-link {
+  font-size: 12px;
+  color: gray;
+  border: 1px solid;
+  border-radius: 16px;
+  padding: 6px 10px;
+  margin-right: 80px;
+  text-decoration: none
+}
+
+.govsp-link.digital {
+  font-size: 14px;
+  color: #000;
+  padding: 3px 10px;
+  font-weight: 500
+}
+
+@media only screen {
+  #govsp-topbarGlobal {
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    z-index: 0;
+    position: relative
   }
-  
-  .texto-branco {
-    color: white;
+
+  #govsp-topbarGlobal * {
+    box-sizing: border-box;
+    font-family: 'Montserrat', verdana, sans-serif
   }
-  
-  .login {
-    height: 400px; /* Defina a altura desejada em pixels (por exemplo, 300px) */
-  
+
+  #govsp-topbarGlobal.blu-e {
+    background-color: #fff
   }
-  
-  .btn-verde {
-    background-color: #0b9247;
+
+  #govsp-topbarGlobal.gre-y {
+    background-color: #ccc
   }
-  
-  .cps-header__logo {
-    margin-right: 43.5%;
-    margin-top: 7px;
+
+  #govsp-topbarGlobal.yello-w {
+    background-color: #fc0
   }
-  
+
+  #govsp-topbarGlobal.re-d {
+    background-color: red
+  }
+
+  #govsp-topbarGlobal.blac-k {
+    background-color: #11161d
+  }
+
+  #govsp-topbarGlobal #topbarGlobal {
+    width: 100%;
+    max-width: 968px;
+    margin: auto;
+    font-size: 0;
+    text-align: right
+  }
+
+  #govsp-topbarGlobal #topbarLink {
+    font-size: 20px;
+    font-weight: 700;
+    width: auto;
+    text-align: left
+  }
+
+  #govsp-topbarGlobal #topbarLink a {
+    text-decoration: none;
+    padding: 5px
+  }
+
+  #govsp-topbarGlobal #topbarLink a:active,
+  #govsp-topbarGlobal #topbarLink a:visited {
+    color: inherit
+  }
+
+  #govsp-topbarGlobal #topbarLink a:hover {
+    cursor: pointer;
+    text-decoration: underline
+  }
+
+  #govsp-topbarGlobal.blac-k #topbarLink a,
+  #govsp-topbarGlobal.blu-e #topbarLink a,
+  #govsp-topbarGlobal.re-d #topbarLink a {
+    color: #fff
+  }
+
+  #govsp-topbarGlobal.blac-k #topbarLink a,
+  #govsp-topbarGlobal.re-d #topbarLink a,
+  #govsp-topbarGlobal.whit-e #topbarLink a {
+    color: #000
+  }
+
+  #govsp-topbarGlobal.gre-y #topbarLink a,
+  #govsp-topbarGlobal.yello-w #topbarLink a {
+    color: #000
+  }
+
+  #govsp-topbarGlobal #topbarMenu,
+  #govsp-topbarGlobal #topbarOpen {
+    font-size: 13px;
+    color: #fff;
+    padding: 0;
+    margin: 0
+  }
+
+  #govsp-topbarGlobal #topbarMenu li,
+  #govsp-topbarGlobal #topbarOpen li {
+    display: block
+  }
+
+  #govsp-topbarGlobal #topbarMenu br+li,
+  #govsp-topbarGlobal #topbarOpen br+li {
+    padding: 4px 8px;
+    margin-top: -8px;
+    cursor: default;
+    font-weight: 700
+  }
+
+  #govsp-topbarGlobal #topbarMenu a,
+  #govsp-topbarGlobal #topbarOpen a {
+    display: block;
+    width: 100%;
+    color: #fff;
+    text-decoration: none;
+    line-height: 1.3;
+    padding: 4px 8px
+  }
+
+  #govsp-topbarGlobal #topbarMenu a:hover,
+  #govsp-topbarGlobal #topbarOpen a:hover {
+    background-color: rgba(166, 166, 166, .6)
+  }
+
+  #govsp-topbarGlobal #topbarOpen>li {
+    position: relative;
+    margin: 0 10px 0 0
+  }
+
+  #govsp-topbarGlobal #topbarOpen>li span {
+    font-size: 22px;
+    line-height: 0;
+    font-weight: 400;
+    display: inline-block;
+    vertical-align: text-top;
+    margin-top: 4px;
+    width: 13px
+  }
+
+  #govsp-topbarGlobal #topbarOpen.topbarOpening #topbarMenu {
+    display: block !important
+  }
+
+  #govsp-topbarGlobal #topbarMenu {
+    margin-left: 0;
+    overflow-y: auto;
+    position: absolute;
+    left: 0;
+    height: 450px;
+    width: 350px;
+    text-align: left;
+    background-color: #999;
+    background: -webkit-gradient(linear, left top, left bottom, from(#999), to(#11161d));
+    background: -webkit-linear-gradient(top, #999, #11161d);
+    background: -moz-linear-gradient(top, #999, #11161d);
+    background: -ms-linear-gradient(top, #999, #11161d);
+    background: -o-linear-gradient(top, #999, #11161d);
+    background: linear-gradient(to bottom, #999, #11161d);
+    border-radius: 0 10px 10px 0
+  }
+
+  #govsp-topbarGlobal #topbarMenu::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    border-radius: 10px;
+    background-color: #a6a6a6
+  }
+
+  #govsp-topbarGlobal #topbarMenu::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 10px;
+    background-color: #f2f2f2
+  }
+
+  #govsp-topbarGlobal #topbarMenu::-webkit-scrollbar-thumb {
+    background-color: #d9d9d9
+  }
+}
+
+@media only screen and (max-width:968px) {
+  #govsp-topbarGlobal #topbarMenu {
+    left: inherit;
+    right: 0
+  }
+
+  #govsp-topbarGlobal #topbarLink {
+    width: 47%
+  }
+}
+
+@media only screen and (min-width:769px) {
+  #govsp-topbarGlobal {
+    padding: 0
+  }
+
+  #govsp-topbarGlobal #topbarGlobal {
+    min-width: 84px;
+    min-height: 80px
+  }
+
+  #govsp-topbarGlobal #topbarLink,
+  #govsp-topbarGlobal #topbarLogo,
+  #govsp-topbarGlobal #topbarOpen {
+    display: inline-block;
+    vertical-align: middle
+  }
+
+  #govsp-topbarGlobal #topbarLogo {
+    background-repeat: no-repeat;
+    min-width: 84px;
+    min-height: 60px;
+    background-position: center right;
+    padding: 16.5px 0;
+    width: 18%
+  }
+}
+
+@media only screen and (max-width:480px) {
+  #govsp-topbarGlobal #topbarLink.govsp-blue {
+    padding: 20px 16px 0 2% !important
+  }
+}
+
+@media only screen and (max-width:460px) {
+  a.govsp-link {
+    margin-right: 10px
+  }
+
+  a.govsp-link:hover {
+    background: #444 !important;
+    text-decoration: none !important
+  }
+}
+
+@media only screen and (max-width:400px) {
+  a.govsp-link {
+    margin-left: 10px;
+    margin-right: 10px
+  }
+
+  a.govsp-link:hover {
+    background: #444 !important;
+    text-decoration: none !important
+  }
+
+  .govsp-portal {
+    font-size: 16px;
+    margin-top: 4px
+  }
+}
+
+@media only screen and (min-width:769px) {
+  .govsp-kebab {
+    display: none
+  }
+
+  div#govsp-topbarGlobal div#topbarGlobal {
+    max-width: 100% !important;
+    display: flex;
+    position: relative;
+    justify-content: flex-end;
+    border: none
+  }
+
+  div#govsp-topbarGlobal div#topbarGlobal #topbarLink {
+    position: absolute;
+    width: 305px;
+    height: 80px;
+    top: 0;
+    left: 0;
+    padding: 22px 0 20px 20px;
+    border-radius: 0 50px 50px 0
+  }
+
+  .govsp-portal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 0 auto
+  }
+
+  .govsp-portal a {
+    padding: 0 !important
+  }
+}
+
+@media only screen and (max-width:768px) {
+  .govsp-navbar .govsp-navbar-expand-lg {
+    display: none !important;
+  }
+
+  .govsp-social {
+    margin-top: 8px;
+    margin-right: 2px
+  }
+
+  .govsp-link.digital {
+    font-size: 10px
+  }
+
+  .govsp-social img {
+    width: 100%;
+  }
+
+  .govsp-link {
+    font-size: 10px;
+    color: #444;
+    border: 1px solid;
+    border-radius: 16px;
+    padding: 6px 10px;
+    margin-top: 10px;
+    margin-left: 20px
+  }
+
+  .govsp-portal img {
+    max-width: 209px
+  }
+
+  .govsp-link.digital {
+    margin-right: 18px !important;
+    padding: 0 10px
+  }
+
+  a.govsp-link.digital {
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center
+  }
+
+  #govsp-topbarGlobal #topbarLink.govsp-black,
+  #govsp-topbarGlobal #topbarLink.govsp-blue,
+  #govsp-topbarGlobal #topbarLink.govsp-gray,
+  #govsp-topbarGlobal #topbarLink.govsp-white {
+    width: 76%;
+    text-align: left
+  }
+
+  nav.govsp-navbar.govsp-navbar-expand-lg {
+    display: none
+  }
+
+  div#govsp-topbarGlobal {
+    border-bottom: 0
+  }
+
+  .govsp-kebab {
+    cursor: pointer;
+    position: absolute;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0;
+    top: 20px;
+    right: 30px;
+    width: 7px;
+    height: 26px
+  }
+
+  .govsp-kebab.govsp-active {
+    display: -webkit-box;
+    top: 28px;
+    margin-right: 10px
+  }
+}
+
+.govsp-kebab figure {
+  width: 6px;
+  height: 6px;
+  border-radius: 5px;
+  background: #444;
+  margin: 3px 0
+}
+
+.govsp-middle {
+  transform: scale(1);
+  position: relative;
+  box-shadow: 0 .1px .1px 0 rgba(0, 0, 0, .16), 0 .1px .3px 0 rgba(0, 0, 0, .12);
+  -webkit-filter: blur(.1px);
+  filter: blur(.1px)
+}
+
+.govsp-middle.govsp-active {
+  margin-left: 3px;
+  margin-right: 3px;
+  padding-left: 3px;
+  padding-right: 3px;
+  box-shadow: 0 .1px .1px 0 rgba(0, 0, 0, .16), 0 .1px .3px 0 rgba(0, 0, 0, .12)
+}
+
+.govsp-cross {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  margin-top: -1px;
+  font-family: Nunito, sans-serif;
+  color: #fff;
+  transition: all .2s cubic-bezier(.72, 1.2, .71, .72);
+  font-size: 22px;
+  user-select: none
+}
+
+.govsp-cross.govsp-active {
+  transform: translate(-50%, -50%) scale(1);
+  transition: all .15s cubic-bezier(.32, 2.04, .85, .54)
+}
+
+.govsp-dropdown {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  padding: 0 0 10px;
+  border-bottom: solid 1px #444;
+  transform: scale(0)
+}
+
+.govsp-dropdown li {
+  display: block
+}
+
+.govsp-dropdown li a,
+.govsp-dropdown li p {
+  display: inline-block;
+  white-space: pre;
+  box-sizing: border-box
+}
+
+.govsp-dropdown li a:hover {
+  background: #ebebeb
+}
+
+.govsp-dropdown:hover ul {
+  transform: scale(1)
+}
+
+.govsp-dropdown.govsp-active {
+  position: fixed;
+  display: inline-flex;
+  transform: scale(1);
+  transition: all .25s cubic-bezier(.5, 1.8, .9, .8);
+  background: #fff;
+  top: 100px
+}
+
+@media (min-width:992px) {
+  .govsp-navbar-expand-lg {
+    -ms-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    -ms-flex-pack: start;
+    justify-content: flex-start
+  }
+}
+
+.govsp-navbar {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 1.3rem 1rem
+}
+
+ul.govsp-dropdown.govsp-active.hide-dropdown {
+  display: none
+}
+
+.govsp-acessibilidade {
+  margin-right: 2px;
+  margin-top: 2px
+}
+
+a.govsph-pasta {
+  padding: 0 !important
+}
+
+a.govsph-pasta:hover {
+  text-decoration: none !important
+}
+
+@media (max-width:798px) {
+  .govsp-portal {
+    border-radius: 0 50px 50px 0;
+    margin: 0 auto;
+  }
+
+  .govsp-black {
+    border-radius: 0 50px 50px 0 !important;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+
+  }
+
+  p.govsp-social {
+    margin: 2px;
+  }
+}
+
+@media (max-width:980px) {
+  .govsp-link {
+    margin-right: 0
+  }
+}
+
+.govsp-topo a:focus,
+.govsp-topo a:hover {
+  border: 1px dotted #cccccc52;
+}
+
+#topbarGlobal.govsp-active {
+  height: 106px;
+}
+
+.govsp-dropdown.govsp-active li:last-child {
+  display: none;
+  visibility: hidden;
+}
+
+#topbarGlobal {
+  display: flex;
+  align-items: center;
+}
+
+.cps-header__logo {
+  width: 64%;                /* Garante que o logo ocupe toda a largura disponível */
+  box-sizing: border-box;     /* Inclui padding e border na largura total */
+}
+
+.custom-logo-link {
+  float: left;                /* Faz o link flutuar à esquerda */
+}

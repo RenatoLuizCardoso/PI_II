@@ -15,22 +15,21 @@
             <th>ID</th>
             <th>Nome</th>
             <th>Carga horária</th>
-            <th>Professor Responsável</th>
             <th>Ações</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let disciplina of disciplinasPaginadas">
-            <td>{{ disciplina.id }}</td>
-            <td>{{ disciplina.disciplineName }}</td>
-            <td>{{ disciplina.hour }}</td>
-            <td>{{ disciplina.professor }}</td>
+          <tr *ngFor="let discipline of disciplinasPaginadas">
+            <td>{{ discipline.id }}</td>
+            <td>{{ discipline.disciplineName }}</td>
+            <td>{{ discipline.hour }}</td>
+      
             <td>
-              <button class="btn btn-primary" [routerLink]="['/admin/editar_disc', disciplina.id]"
+              <button class="btn btn-primary" [routerLink]="['/admin/editar_disc', discipline.id]"
                 aria-label="Editar Disciplina">
                 <i class="fas fa-pen"></i>
               </button>
-              <button class="btn btn-danger" [disabled]="loading" (click)="excluirDisciplina(disciplina.id)">
+              <button class="btn btn-danger" [disabled]="loading" (click)="excluirDisciplina(discipline.id)">
                 <i class="fas fa-trash"></i>
               </button>
             </td>

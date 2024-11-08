@@ -20,25 +20,15 @@ export class CadastrarDisciplinasComponent implements OnInit {
       disciplineName: ['', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$')]], // Letras e espaços
       description: ['', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$')]], // Letras e espaços
       hour: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], // Números apenas
-      professor: ['', Validators.required],
+     
       objective: ['', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$')]], // Letras e espaços
       syllabus: ['', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$')]] // Letras e espaços
     });
 
-    this.loadProfessores();
+    
   }
 
-  private loadProfessores(): void {
-    this.cdisciplinaService.getProfessores().subscribe(
-      data => {
-        this.professores = data || []; // Verifique se a estrutura do JSON está correta
-      },
-      error => {
-        console.error('Erro ao buscar professores', error);
-      }
-    );
-  }
-
+  
   get f() { return this.registerForm.controls; }
 
   onSubmit(): void {
@@ -48,7 +38,7 @@ export class CadastrarDisciplinasComponent implements OnInit {
       return;
     }
 
-    this.cdisciplinaService.registerDisciplina(this.registerForm.value).subscribe(
+    this.cdisciplinaService.registerDisciplines(this.registerForm.value).subscribe(
       response => {
         console.log('Formulário enviado com sucesso', response);
         this.registerSuccess = true;

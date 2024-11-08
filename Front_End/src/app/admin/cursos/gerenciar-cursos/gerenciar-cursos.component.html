@@ -15,6 +15,7 @@
           <tr>
             <th>ID</th>
             <th>Nome</th>
+            <th>Disciplinas</th>
             <th>Período</th>
             <th>Semestres</th>
             <th>Ações</th>
@@ -24,6 +25,7 @@
           <tr *ngFor="let curso of cursosPaginados">
             <td>{{ curso.id }}</td>
             <td>{{ curso.nameCourse }}</td>
+            <td>{{ curso.disciplina }}</td>
             <td>{{ curso.period }}</td>
             <td>{{ curso.semester }}</td>
             <td>

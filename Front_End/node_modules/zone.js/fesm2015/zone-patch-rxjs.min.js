@@ -1,0 +1,6 @@
+"use strict";
+/**
+ * @license Angular v<unknown>
+ * (c) 2010-2024 Google LLC. https://angular.io/
+ * License: MIT
+ */import{patchRxJs}from"./rxjs";patchRxJs(Zone);

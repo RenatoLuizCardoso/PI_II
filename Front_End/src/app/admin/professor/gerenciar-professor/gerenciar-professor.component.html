@@ -17,8 +17,8 @@
           <tr>
             <th>ID</th>
             <th>Nome</th>
+            <th>Cursos Responsável</th>
             <th>Email Institucional</th>
-            <th>Email Pessoal</th>
             <th>Telefone</th>
             <th>Ações</th>
           </tr>
@@ -27,8 +27,8 @@
           <tr *ngFor="let professor of professoresPaginados">
             <td>{{ professor.id }}</td>
             <td>{{ professor.name }}</td>
+            <td>{{ professor.curso }}</td>
             <td>{{ professor.emailI }}</td>
-            <td>{{ professor.emailP }}</td>
             <td>{{ professor.tel }}</td>
             <td>
               <button class="btn btn-primary" [routerLink]="['/admin/editar_professores', professor.id]"

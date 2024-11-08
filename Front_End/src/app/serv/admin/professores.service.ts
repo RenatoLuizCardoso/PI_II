@@ -6,7 +6,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProfessoresService {
-  private apiUrl = 'http://localhost:3000/professores';
+   private apiUrl = 'http://localhost:3000/professores';
+  private cursosUrl = 'http://localhost:3000/cursos';
+  // private apiUrl = 'https://projeto-integrador-1v4i.onrender.com/teachers';
+  // private cursosUrl = 'https://projeto-integrador-1v4i.onrender.com/courses';
+
+  // https://projeto-integrador-1v4i.onrender.com
 
   constructor(private http: HttpClient) { }
 
@@ -18,6 +23,9 @@ export class ProfessoresService {
   // Método para obter a lista de professores
   getProfessores(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
+  }
+  getCursos(): Observable<any> {
+    return this.http.get<any[]>(this.cursosUrl);
   }
 
   getProfessorById(id: string): Observable<any> {

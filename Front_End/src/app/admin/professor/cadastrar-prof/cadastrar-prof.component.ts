@@ -12,17 +12,31 @@ export class CadastrarProfComponent implements OnInit {
   registerError: boolean = false;
   registerSuccess: boolean = false;
   passwdGerada!: string; // Variável para armazenar a passwd gerada
+  cursos: any[] = [];
 
   constructor(private formBuilder: FormBuilder, private professoresService: ProfessoresService) {}
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$')]], // Nome: letras e espaços apenas
+      curso: ['', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$')]], // Letras e espaços
       emailI: ['', [Validators.required, Validators.email]], // Email institucional: obrigatório e formato válido
       passwd: [''],
       emailP: ['', [Validators.email]], // Email pessoal: formato válido (opcional)
       tel: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], // Telefone: números apenas
     });
+    this.loadCursos();
+  }
+
+  private loadCursos(): void {
+    this.professoresService.getCursos().subscribe(
+      data => {
+        this.cursos = data || []; // Verifique se a estrutura do JSON está correta
+      },
+      error => {
+        console.error('Erro ao buscar professores', error);
+      }
+    );
   }
 
   get f() { return this.registerForm.controls; }

@@ -41,10 +41,11 @@
                             </div>
                         </div>
                         <div class="form-group mb-3 mt-3">
-                            <label for="emailP">Email Pessoal</label>
-                            <input id="emailP" class="form-control" formControlName="emailP">
-                            <div *ngIf="professorForm.get('emailP')?.touched && professorForm.get('emailP')?.invalid" class="text-danger">
-                                <small *ngIf="professorForm.get('emailP')?.errors?.['email']">Email pessoal inválido.</small>
+                            <label for="disciplina">Disciplina</label>
+                            <input id="disciplina" type="disciplina" class="form-control" formControlName="disciplina">
+                            
+                            <div *ngIf="professorForm.get('disciplina')?.touched && professorForm.get('disciplina')?.invalid" class="text-danger">
+                                <small *ngIf="professorForm.get('disciplina')?.errors?.['required']">Disciplina é obrigatória.</small>
                             </div>
                         </div>
                         <div class="form-group mb-3 mt-3">

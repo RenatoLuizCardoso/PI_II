@@ -14,6 +14,18 @@
                 <small *ngIf="f['name'].errors?.['pattern']">Nome deve conter apenas letras e espaços.</small>
               </div>
             </div>
+            <div class="mb-3 mt-3">
+              <label for="curso" class="form-label">Curso Responsável</label>
+              <select class="form-control" id="curso" formControlName="curso" required>
+                <option value="" disabled selected>Selecione a disciplinas responsável</option>
+                <option *ngFor="let curso of cursos" [value]="curso.nameCourse">
+                  {{ curso.nameCourse }}
+                </option>
+              </select>
+              <div *ngIf="f['curso'].touched && f['curso'].invalid" class="text-danger">
+                <small *ngIf="f['curso'].errors?.['required']">Selecione um professor.</small>
+              </div>
+            </div>
 
             <div class="mb-3 mt-3">
               <label for="emailI" class="form-label">Email Institucional</label>

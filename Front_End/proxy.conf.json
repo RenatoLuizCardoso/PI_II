@@ -1,0 +1,8 @@
+{
+  "/auth": {
+    "target": "https://projeto-integrador-1v4i.onrender.com",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

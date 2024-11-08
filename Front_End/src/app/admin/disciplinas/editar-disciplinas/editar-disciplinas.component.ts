@@ -27,13 +27,13 @@ export class EditarDisciplinasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.carregarDisciplina();
+    this.carregarDiscipline();
   }
 
-  carregarDisciplina() {
+  carregarDiscipline() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.cdisciplinaService.getDisciplinaById(id).subscribe(
+      this.cdisciplinaService.getDisciplineById(id).subscribe(
         data => {
           this.disciplinaForm.patchValue(data);
         },
@@ -47,7 +47,7 @@ export class EditarDisciplinasComponent implements OnInit {
   salvar() {
     if (this.disciplinaForm.valid) {
       const disciplinaAtualizada = this.disciplinaForm.getRawValue();
-      this.cdisciplinaService.updateDisciplina(disciplinaAtualizada).subscribe(
+      this.cdisciplinaService.updateDiscipline(disciplinaAtualizada).subscribe(
         () => {
           this.mensagemSucesso = true;
           setTimeout(() => {

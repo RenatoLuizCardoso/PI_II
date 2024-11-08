@@ -22,6 +22,14 @@
               </div>
             </div>
             <div class="form-group mb-3 mt-3">
+              <label for="disciplina">Disciplina</label>
+              <input id="disciplina" class="form-control" formControlName="disciplina" placeholder="Nome do curso">
+              <div *ngIf="f['disciplina'].touched && f['disciplina'].invalid" class="text-danger">
+                <small *ngIf="f['disciplina'].errors?.['required']">Nome do curso é obrigatório.</small>
+                <small *ngIf="f['disciplina'].errors?.['pattern']">Nome do curso deve conter apenas letras e espaços.</small>
+              </div>
+            </div>
+            <div class="form-group mb-3 mt-3">
               <label for="semester">Semestres</label>
               <input id="semester" class="form-control" formControlName="semester" placeholder="Número de semestres">
               <div *ngIf="f['semester'].touched && f['semester'].invalid" class="text-danger">

@@ -1,0 +1,164 @@
+[
+  {
+    "curso": "Desenvolvimento Web",
+    "semestre": "1º Semestre",
+    "dias": {
+      "segunda": [
+        { "materia": "ISSO", "aula": "Aula 1", "horario": "13:20 - 14:10" },
+        { "materia": "ISSO", "aula": "Aula 2", "horario": "14:10 - 15:00" },
+        { "materia": "Marketing", "aula": "Aula 1", "horario": "15:00 - 15:50" },
+        { "materia": "Gestão de Pessoas", "aula": "Aula 1", "horario": "15:50 - 16:40" },
+        { "materia": "Statistics", "aula": "Aula 1", "horario": "16:40 - 17:30" },
+        { "materia": "Statistics", "aula": "Aula 2", "horario": "17:30 - 18:20" }
+      ],
+      "terca": [
+        { "materia": "Introdução à Administração", "aula": "Aula 1", "horario": "13:20 - 14:10" },
+        { "materia": "Contabilidade Básica", "aula": "Aula 1", "horario": "14:10 - 15:00" },
+        { "materia": "Marketing", "aula": "Aula 1", "horario": "15:00 - 15:50" },
+        { "materia": "Gestão de Pessoas", "aula": "Aula 1", "horario": "15:50 - 16:40" },
+        { "materia": "Statistics", "aula": "Aula 1", "horario": "16:40 - 17:30" },
+        { "materia": "Statistics", "aula": "Aula 2", "horario": "17:30 - 18:20" }
+      ],
+      "quarta": [
+        { "materia": "Introdução à Administração", "aula": "Aula 1", "horario": "13:20 - 14:10" },
+        { "materia": "Contabilidade Básica", "aula": "Aula 1", "horario": "14:10 - 15:00" },
+        { "materia": "Marketing", "aula": "Aula 1", "horario": "15:00 - 15:50" },
+        { "materia": "Gestão de Pessoas", "aula": "Aula 1", "horario": "15:50 - 16:40" },
+        { "materia": "Statistics", "aula": "Aula 1", "horario": "16:40 - 17:30" },
+        { "materia": "Statistics", "aula": "Aula 2", "horario": "17:30 - 18:20" }
+      ],
+      "quinta": [
+        { "materia": "Introdução à Administração", "aula": "Aula 1", "horario": "13:20 - 14:10" },
+        { "materia": "Contabilidade Básica", "aula": "Aula 1", "horario": "14:10 - 15:00" },
+        { "materia": "Marketing", "aula": "Aula 1", "horario": "15:00 - 15:50" },
+        { "materia": "Gestão de Pessoas", "aula": "Aula 1", "horario": "15:50 - 16:40" },
+        { "materia": "Statistics", "aula": "Aula 1", "horario": "16:40 - 17:30" },
+        { "materia": "Statistics", "aula": "Aula 2", "horario": "17:30 - 18:20" }
+      ],
+      "sexta": [
+        { "materia": "Introdução à Administração", "aula": "Aula 1", "horario": "13:20 - 14:10" },
+        { "materia": "Contabilidade Básica", "aula": "Aula 1", "horario": "14:10 - 15:00" },
+        { "materia": "Marketing", "aula": "Aula 1", "horario": "15:00 - 15:50" },
+        { "materia": "Gestão de Pessoas", "aula": "Aula 1", "horario": "15:50 - 16:40" },
+        { "materia": "Statistics", "aula": "Aula 1", "horario": "16:40 - 17:30" },
+        { "materia": "Statistics", "aula": "Aula 2", "horario": "17:30 - 18:20" }
+      ],
+      "sabado": [
+        { "materia": "Introdução à Administração", "aula": "Aula 1", "horario": "13:20 - 14:10" },
+        { "materia": "Contabilidade Básica", "aula": "Aula 1", "horario": "14:10 - 15:00" },
+        { "materia": "Marketing", "aula": "Aula 1", "horario": "15:00 - 15:50" },
+        { "materia": "Gestão de Pessoas", "aula": "Aula 1", "horario": "15:50 - 16:40" },
+        { "materia": "Statistics", "aula": "Aula 1", "horario": "16:40 - 17:30" },
+        { "materia": "Statistics", "aula": "Aula 2", "horario": "17:30 - 18:20" }
+      ]
+    }
+  },  
+  {
+    "curso": "Gestão Empresarial",
+    "semestre": "1º Semestre",
+    "dias": {
+      "segunda": [
+        { "materia": "Introdução à Administração", "aula": "Aula 1", "horario": "13:20 - 14:10" },
+        { "materia": "Contabilidade Básica", "aula": "Aula 1", "horario": "14:10 - 15:00" },
+        { "materia": "Marketing", "aula": "Aula 1", "horario": "15:00 - 15:50" },
+        { "materia": "Gestão de Pessoas", "aula": "Aula 1", "horario": "15:50 - 16:40" },
+        { "materia": "Statistics", "aula": "Aula 1", "horario": "16:40 - 17:30" },
+        { "materia": "Statistics", "aula": "Aula 2", "horario": "17:30 - 18:20" }
+      ],
+      "terca": [
+        { "materia": "Introdução à Administração", "aula": "Aula 1", "horario": "13:20 - 14:10" },
+        { "materia": "Contabilidade Básica", "aula": "Aula 1", "horario": "14:10 - 15:00" },
+        { "materia": "Marketing", "aula": "Aula 1", "horario": "15:00 - 15:50" },
+        { "materia": "Gestão de Pessoas", "aula": "Aula 1", "horario": "15:50 - 16:40" },
+        { "materia": "Statistics", "aula": "Aula 1", "horario": "16:40 - 17:30" },
+        { "materia": "Statistics", "aula": "Aula 2", "horario": "17:30 - 18:20" }
+      ],
+      "quarta": [
+        { "materia": "Introdução à Administração", "aula": "Aula 1", "horario": "13:20 - 14:10" },
+        { "materia": "Contabilidade Básica", "aula": "Aula 1", "horario": "14:10 - 15:00" },
+        { "materia": "Marketing", "aula": "Aula 1", "horario": "15:00 - 15:50" },
+        { "materia": "Gestão de Pessoas", "aula": "Aula 1", "horario": "15:50 - 16:40" },
+        { "materia": "Statistics", "aula": "Aula 1", "horario": "16:40 - 17:30" },
+        { "materia": "Statistics", "aula": "Aula 2", "horario": "17:30 - 18:20" }
+      ],
+      "quinta": [
+        { "materia": "Introdução à Administração", "aula": "Aula 1", "horario": "13:20 - 14:10" },
+        { "materia": "Contabilidade Básica", "aula": "Aula 1", "horario": "14:10 - 15:00" },
+        { "materia": "Marketing", "aula": "Aula 1", "horario": "15:00 - 15:50" },
+        { "materia": "Gestão de Pessoas", "aula": "Aula 1", "horario": "15:50 - 16:40" },
+        { "materia": "Statistics", "aula": "Aula 1", "horario": "16:40 - 17:30" },
+        { "materia": "Statistics", "aula": "Aula 2", "horario": "17:30 - 18:20" }
+      ],
+      "sexta": [
+        { "materia": "Introdução à Administração", "aula": "Aula 1", "horario": "13:20 - 14:10" },
+        { "materia": "Contabilidade Básica", "aula": "Aula 1", "horario": "14:10 - 15:00" },
+        { "materia": "Marketing", "aula": "Aula 1", "horario": "15:00 - 15:50" },
+        { "materia": "Gestão de Pessoas", "aula": "Aula 1", "horario": "15:50 - 16:40" },
+        { "materia": "Statistics", "aula": "Aula 1", "horario": "16:40 - 17:30" },
+        { "materia": "Statistics", "aula": "Aula 2", "horario": "17:30 - 18:20" }
+      ],
+      "sabado": [
+        { "materia": "Introdução à Administração", "aula": "Aula 1", "horario": "13:20 - 14:10" },
+        { "materia": "Contabilidade Básica", "aula": "Aula 1", "horario": "14:10 - 15:00" },
+        { "materia": "Marketing", "aula": "Aula 1", "horario": "15:00 - 15:50" },
+        { "materia": "Gestão de Pessoas", "aula": "Aula 1", "horario": "15:50 - 16:40" },
+        { "materia": "Statistics", "aula": "Aula 1", "horario": "16:40 - 17:30" },
+        { "materia": "Statistics", "aula": "Aula 2", "horario": "17:30 - 18:20" }
+      ]
+    }
+  },  
+  {
+    "curso": "Técnicas de Táxistas Apocalípticos",
+    "semestre": "1º Semestre",
+    "dias": {
+      "segunda": [
+        { "materia": "Sobrevivência em Ambientes Hostis", "aula": "Aula 1", "horario": "13:20 - 14:10" },
+        { "materia": "Navegação e Orientação", "aula": "Aula 2", "horario": "14:10 - 15:00" },
+        { "materia": "Táticas de Transporte Eficiente", "aula": "Aula 3", "horario": "15:00 - 15:50" },
+        { "materia": "Comunicação em Situações Críticas", "aula": "Aula 4", "horario": "15:50 - 16:40" },
+        { "materia": "Gestão de Crises", "aula": "Aula 5", "horario": "16:40 - 17:30" },
+        { "materia": "Análise de Cenários Apocalípticos", "aula": "Aula 6", "horario": "17:30 - 18:20" }
+      ],
+      "terca": [
+        { "materia": "Estratégias de Evasão", "aula": "Aula 1", "horario": "13:20 - 14:10" },
+        { "materia": "Mecânica Básica de Veículos", "aula": "Aula 2", "horario": "14:10 - 15:00" },
+        { "materia": "Análise de Risco e Segurança", "aula": "Aula 3", "horario": "15:00 - 15:50" },
+        { "materia": "Gestão de Recursos", "aula": "Aula 4", "horario": "15:50 - 16:40" },
+        { "materia": "Técnicas de Negociação", "aula": "Aula 5", "horario": "16:40 - 17:30" },
+        { "materia": "Estratégias de Combate", "aula": "Aula 6", "horario": "17:30 - 18:20" }
+      ],
+      "quarta": [
+        { "materia": "Preparação de Emergência", "aula": "Aula 1", "horario": "13:20 - 14:10" },
+        { "materia": "Técnicas de Resgate", "aula": "Aula 2", "horario": "14:10 - 15:00" },
+        { "materia": "Táticas de Combate", "aula": "Aula 3", "horario": "15:00 - 15:50" },
+        { "materia": "Estudo de Casos", "aula": "Aula 4", "horario": "15:50 - 16:40" },
+        { "materia": "Treinamento Físico", "aula": "Aula 5", "horario": "16:40 - 17:30" },
+        { "materia": "Uso de Tecnologia em Crises", "aula": "Aula 6", "horario": "17:30 - 18:20" }
+      ],
+      "quinta": [
+        { "materia": "Psicologia do Apocalipse", "aula": "Aula 1", "horario": "13:20 - 14:10" },
+        { "materia": "Tráfego em Situações Críticas", "aula": "Aula 2", "horario": "14:10 - 15:00" },
+        { "materia": "Logística de Transporte", "aula": "Aula 3", "horario": "15:00 - 15:50" },
+        { "materia": "Estratégias de Sobrevivência", "aula": "Aula 4", "horario": "15:50 - 16:40" },
+        { "materia": "Gestão de Recursos de Emergência", "aula": "Aula 5", "horario": "16:40 - 17:30" },
+        { "materia": "Ética no Apocalipse", "aula": "Aula 6", "horario": "17:30 - 18:20" }
+      ],
+      "sexta": [
+        { "materia": "Estudos de Mobilidade", "aula": "Aula 1", "horario": "13:20 - 14:10" },
+        { "materia": "Fuga em Grupo", "aula": "Aula 2", "horario": "14:10 - 15:00" },
+        { "materia": "Aperfeiçoamento de Habilidades", "aula": "Aula 3", "horario": "15:00 - 15:50" },
+        { "materia": "Exercícios Práticos", "aula": "Aula 4", "horario": "15:50 - 16:40" },
+        { "materia": "Planejamento de Rotas", "aula": "Aula 5", "horario": "16:40 - 17:30" },
+        { "materia": "Preparação para Emergências", "aula": "Aula 6", "horario": "17:30 - 18:20" }
+      ],
+      "sabado": [
+        { "materia": "Planejamento Estratégico", "aula": "Aula 1", "horario": "13:20 - 14:10" },
+        { "materia": "Simulações de Cenários", "aula": "Aula 2", "horario": "14:10 - 15:00" },
+        { "materia": "Capacitação em Crises", "aula": "Aula 3", "horario": "15:00 - 15:50" },
+        { "materia": "Avaliação de Desempenho", "aula": "Aula 4", "horario": "15:50 - 16:40" },
+        { "materia": "Oficina de Sobrevivência", "aula": "Aula 5", "horario": "16:40 - 17:30" },
+        { "materia": "Táticas de Infiltração", "aula": "Aula 6", "horario": "17:30 - 18:20" }
+      ]
+    }
+  }  
+]

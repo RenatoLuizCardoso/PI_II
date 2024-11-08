@@ -4,4 +4,5 @@ export interface Cursos {
   nameCourse: string;
   semester: string;
   period: string;
+  disciplineName: string; 
 }
