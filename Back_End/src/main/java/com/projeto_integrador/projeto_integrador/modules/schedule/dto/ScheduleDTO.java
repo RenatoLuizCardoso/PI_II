@@ -21,4 +21,5 @@ public class ScheduleDTO {
 
     @Schema(example = "1", requiredMode = RequiredMode.REQUIRED, description = "Curso do horário")
     private Long course;
+
 }

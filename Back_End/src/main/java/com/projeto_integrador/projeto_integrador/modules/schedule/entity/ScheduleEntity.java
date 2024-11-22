@@ -29,7 +29,7 @@ public class ScheduleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "schedule_id")
-    private Long ScheduleId;
+    private Long scheduleId;
 
     @NotNull
     @Column(name = "teacher")
@@ -54,6 +54,11 @@ public class ScheduleEntity {
     @Column(name = "course")
     @Schema(example = "1", requiredMode = RequiredMode.REQUIRED, description = "Curso do horário")
     private Long course;
+
+    @NotNull
+    @Column(name = "weekday")
+    @Schema(example = "Segunda-Feira", requiredMode = RequiredMode.REQUIRED, description = "Dia da semana")
+    private String weekDay;
 
     @CreationTimestamp
     private LocalDateTime create_at;

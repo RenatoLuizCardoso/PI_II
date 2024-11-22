@@ -58,7 +58,7 @@ export class GerenciarCursosComponent implements OnInit {
   // Função de filtragem por nome
   filtrarCursos() {
     this.cursosFiltrados = this.cursos.filter(curso =>
-      curso.nameCourse.toLowerCase().includes(this.pesquisaNome.toLowerCase())
+      curso.courseName.toLowerCase().includes(this.pesquisaNome.toLowerCase())
     );
     this.paginaAtual = 1; // Resetar para a primeira página ao filtrar
     this.calcularPaginas();
@@ -70,7 +70,7 @@ export class GerenciarCursosComponent implements OnInit {
       this.loading = true;
       this.ccursoService.deleteCurso(id).subscribe(
         () => {
-          this.cursos = this.cursos.filter(curso => curso.id !== id);
+          this.cursos = this.cursos.filter(curso => curso.courseId !== id);
           this.filtrarCursos(); // Reaplica o filtro após a exclusão
           this.loading = false;
           alert('Curso excluído com sucesso!');

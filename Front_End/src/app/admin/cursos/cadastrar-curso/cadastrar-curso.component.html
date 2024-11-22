@@ -7,43 +7,37 @@
           <h5 class="card-title text-center">Registro de Curso</h5>
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="mb-3 mt-3">
-              <label for="nameCourse" class="form-label">Nome do Curso</label>
-              <input type="text" class="form-control" id="nameCourse" formControlName="nameCourse" placeholder="Nome do Curso">
-              <div *ngIf="f['nameCourse'].touched && f['nameCourse'].invalid" class="text-danger">
-                <small *ngIf="f['nameCourse'].errors?.['required']">Nome do curso é obrigatório.</small>
-                <small *ngIf="f['nameCourse'].errors?.['pattern']">Nome do curso deve conter apenas letras e espaços.</small>
+              <label for="courseName" class="form-label">Nome do Curso</label>
+              <input type="text" class="form-control" id="courseName" formControlName="courseName" placeholder="Nome do Curso">
+              <div *ngIf="f['courseName'].touched && f['courseName'].invalid" class="text-danger">
+                <small *ngIf="f['courseName'].errors?.['required']">Nome do curso é obrigatório.</small>
+                <small *ngIf="f['courseName'].errors?.['pattern']">Nome do curso deve conter apenas letras e espaços.</small>
               </div>
             </div>
             <div class="mb-3 mt-3">
-              <label for="discipline" class="form-label">Disciplina Responsável</label>
-              <select class="form-control" id="discipline" formControlName="discipline" required>
-                <option value="" disabled selected>Selecione a disciplina</option>
-                <option *ngFor="let discipline of disciplines" [value]="discipline.disciplineName">
-                  {{ discipline.disciplineName }}
-                </option>
-              </select>
-              <div *ngIf="f['discipline'].touched && f['discipline'].invalid" class="text-danger">
-                <small *ngIf="f['discipline'].errors?.['required']">Selecione um professor.</small>
+              <label for="courseSemester" class="form-label">Semestre</label>
+              <input type="text" class="form-control" id="courseSemester" formControlName="courseSemester" placeholder="Semestre (Ex: 1° Semestre)">
+              <div *ngIf="f['courseSemester'].touched && f['courseSemester'].invalid" class="text-danger">
+                <small *ngIf="f['courseSemester'].errors?.['required']">Semestre é obrigatório.</small>
               </div>
             </div>
             <div class="mb-3 mt-3">
-              <label for="semester" class="form-label">Semestres</label>
-              <input type="text" class="form-control" id="semester" formControlName="semester" placeholder="Semestres em números">
-              <div *ngIf="f['semester'].touched && f['semester'].invalid" class="text-danger">
-                <small *ngIf="f['semester'].errors?.['required']">Número de semestres é obrigatório.</small>
-                <small *ngIf="f['semester'].errors?.['pattern']">Número de semestres deve ser um número positivo.</small>
-              </div>
-            </div>
-            <div class="mb-3 mt-3">
-              <label for="period" class="form-label">Período</label>
-              <select class="form-control" id="period" formControlName="period">
+              <label for="coursePeriod" class="form-label">Período</label>
+              <select class="form-control" id="coursePeriod" formControlName="coursePeriod">
                 <option value="" disabled>Selecione o período</option>
-                <option value="manha">Manhã</option>
-                <option value="tarde">Tarde</option>
-                <option value="noite">Noite</option>
+                <option value="Manha">Manhã</option>
+                <option value="Tarde">Tarde</option>
+                <option value="Noite">Noite</option>
               </select>
-              <div *ngIf="f['period'].touched && f['period'].invalid" class="text-danger">
-                <small *ngIf="f['period'].errors?.['required']">Período é obrigatório.</small>
+              <div *ngIf="f['coursePeriod'].touched && f['coursePeriod'].invalid" class="text-danger">
+                <small *ngIf="f['coursePeriod'].errors?.['required']">Período é obrigatório.</small>
+              </div>
+            </div>
+            <div class="mb-3 mt-3">
+              <label for="courseSubjects" class="form-label">Matérias</label>
+              <input type="text" class="form-control" id="courseSubjects" formControlName="courseSubjects" placeholder="Matérias (Ex: Matemática, Física)">
+              <div *ngIf="f['courseSubjects'].touched && f['courseSubjects'].invalid" class="text-danger">
+                <small *ngIf="f['courseSubjects'].errors?.['required']">Matérias são obrigatórias.</small>
               </div>
             </div>
 

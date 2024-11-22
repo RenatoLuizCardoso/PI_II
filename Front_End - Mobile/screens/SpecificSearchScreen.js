@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   View,
   Image,
@@ -12,7 +13,7 @@ import {
 } from "react-native";
 import { useFonts } from "expo-font";
 
-const API_URL = "http://192.168.11.174:8080";
+const API_URL = "https://projeto-integrador-1v4i.onrender.com";
 
 export default function SpecificSearchScreen({ navigation }) {
   const [fontsLoaded] = useFonts({
@@ -29,18 +30,45 @@ export default function SpecificSearchScreen({ navigation }) {
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState(null);
-  const [currentDayIndex, setCurrentDayIndex] = useState(0);
+  const [selectedWeek, setSelectedWeek] = useState(0);
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
+  const [accessToken, setAccessToken] = useState(null);
 
   const daysOfWeek = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+  const weeks = Array.from({ length: 4 }, (_, i) => `Semana ${i + 1}`);
+  const months = Array.from({ length: 12 }, (_, i) => ({
+    label: new Date(0, i).toLocaleString('default', { month: 'long' }),
+    value: i,
+  }));
 
   useEffect(() => {
+
+    const getToken = async () => {
+      const token = await AsyncStorage.getItem("userToken");
+      console.log('teste', token);
+      setAccessToken(token);  // Armazenando o token
+    }
+
+
+    getToken();
     fetchFilters();
-    fetchData(); // Fetch all data initially
-  }, []);
+    fetchData();
+  }, [accessToken]);
 
   const fetchData = async () => {
+    console.log('fera', accessToken)
+    if (!accessToken) {
+      return setErrorMessage("Token não encontrado. Por favor, faça login novamente.");
+    }
+
     try {
-      const timetableResponse = await axios.get(`${API_URL}/schedule/`);
+      const timetableResponse = await axios.get(`${API_URL}/schedule/`, {
+
+        headers: {
+          'Authorization': `Bearer ${accessToken}`, // Adicionando o token nas requisições
+        }
+      });
+
       setTimetable(timetableResponse.data);
     } catch (error) {
       console.error(error);
@@ -49,10 +77,27 @@ export default function SpecificSearchScreen({ navigation }) {
   };
 
   const fetchFilters = async () => {
+    if (!accessToken) {
+      return setErrorMessage("Token não encontrado. Por favor, faça login novamente.");
+    }
+
     try {
-      const teachersResponse = await axios.get(`${API_URL}/teacher/`);
-      const subjectsResponse = await axios.get(`${API_URL}/subject/`);
-      const coursesResponse = await axios.get(`${API_URL}/course/`);
+      console.log('marcio: ', accessToken);
+      const teachersResponse = await axios.get(`${API_URL}/teacher/`, {
+        headers: {
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJqYXZhZ2FzIiwiZXhwIjoxNzMyMjQ0OTA1LCJzdWIiOiIyIiwicm9sZXMiOlsiQURNSU4iXX0.oakpsPY38p8JK2VO_jNiHp5axs1OUhmMu41i34OSptE`,
+        },
+      });
+      const subjectsResponse = await axios.get(`${API_URL}/subject/`, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      });
+      const coursesResponse = await axios.get(`${API_URL}/course/`, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      });
 
       const formattedTeachers = teachersResponse.data.map((teacher) => ({
         label: teacher.teacherName,
@@ -86,20 +131,12 @@ export default function SpecificSearchScreen({ navigation }) {
     });
   };
 
-  const handleDayChange = (direction) => {
-    if (direction === "prev") {
-      setCurrentDayIndex((prevIndex) =>
-        prevIndex === 0 ? daysOfWeek.length - 1 : prevIndex - 1
-      );
-    } else {
-      setCurrentDayIndex((prevIndex) =>
-        prevIndex === daysOfWeek.length - 1 ? 0 : prevIndex + 1
-      );
-    }
-  };
-
-  const getDayTimetable = (day) => {
-    return filterTimetable().filter((item) => item.time.includes(day));
+  const getWeekTimetable = () => {
+    const startOfWeek = selectedWeek * 7;
+    return filterTimetable().filter((item) => {
+      const dayIndex = new Date(item.date).getDay();
+      return dayIndex >= startOfWeek && dayIndex < startOfWeek + 7;
+    });
   };
 
   const renderTimetableItem = ({ item }) => (
@@ -116,47 +153,59 @@ export default function SpecificSearchScreen({ navigation }) {
     return null;
   }
 
-  const currentDay = daysOfWeek[currentDayIndex];
-  const dayTimetable = getDayTimetable(currentDay);
+  const weekTimetable = getWeekTimetable();
 
   return (
-    
     <ScrollView style={styles.container}>
-      <Image source={require("../assets/fatec-logo.png")} style={styles.logo} />
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("HomeScreen")}>
-        <Text style={styles.voltar}>Voltar</Text>
-      </TouchableOpacity>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("HomeScreen")}>
+          <Text style={styles.voltar}>Voltar</Text>
+        </TouchableOpacity>
+        <Image source={require("../assets/fatec-logo.png")} style={styles.logo} />
+      </View>
+
       <Text style={styles.title}>Filtro Específico</Text>
 
       <RNPickerSelect
-        onValueChange={(value) => {
-          setSelectedTeacher(value);
-        }}
+        onValueChange={(value) => setSelectedMonth(value)}
+        items={months}
+        placeholder={{ label: "Selecione um Mês", value: undefined }} // Use undefined ao invés de null
+        value={selectedMonth || ""} // Garantir que o valor não seja null
+        style={pickerSelectStyles}
+      />
+
+      <RNPickerSelect
+        onValueChange={(value) => setSelectedWeek(value)}
+        items={weeks.map((week, index) => ({ label: week, value: index }))}
+        placeholder={{ label: "Selecione uma Semana", value: undefined }} // Use undefined ao invés de null
+        value={selectedWeek || ""} // Garantir que o valor não seja null
+        style={pickerSelectStyles}
+      />
+
+      <RNPickerSelect
+        onValueChange={(value) => setSelectedTeacher(value)}
         items={teachers}
-        placeholder={{ label: "Selecione um Professor", value: null }}
-        value={selectedTeacher}
+        placeholder={{ label: "Selecione um Professor", value: undefined }} // Use undefined ao invés de null
+        value={selectedTeacher || ""} // Garantir que o valor não seja null
         style={pickerSelectStyles}
       />
 
       <RNPickerSelect
-        onValueChange={(value) => {
-          setSelectedCourse(value);
-        }}
+        onValueChange={(value) => setSelectedCourse(value)}
         items={courses}
-        placeholder={{ label: "Selecione um curso", value: null }}
-        value={selectedCourse}
+        placeholder={{ label: "Selecione um Curso", value: undefined }} // Use undefined ao invés de null
+        value={selectedCourse || ""} // Garantir que o valor não seja null
         style={pickerSelectStyles}
       />
 
       <RNPickerSelect
-        onValueChange={(value) => {
-          setSelectedSubject(value);
-        }}
+        onValueChange={(value) => setSelectedSubject(value)}
         items={subjects}
-        placeholder={{ label: "Selecione uma Disciplina", value: null }}
-        value={selectedSubject}
+        placeholder={{ label: "Selecione uma Disciplina", value: undefined }} // Use undefined ao invés de null
+        value={selectedSubject || ""} // Garantir que o valor não seja null
         style={pickerSelectStyles}
       />
+
 
       <View style={styles.table}>
         <View style={styles.tableHeader}>
@@ -166,33 +215,15 @@ export default function SpecificSearchScreen({ navigation }) {
           <Text style={styles.tableHeaderText}>Disciplina</Text>
           <Text style={styles.tableHeaderText}>Horário</Text>
         </View>
-        {dayTimetable.length > 0 ? (
+        {weekTimetable.length > 0 ? (
           <FlatList
-            data={dayTimetable}
+            data={weekTimetable}
             renderItem={renderTimetableItem}
             keyExtractor={(item) => item.scheduleId.toString()}
           />
         ) : (
-          <Text style={styles.emptyMessage}>Nenhum horário encontrado para {currentDay}</Text>
+          <Text style={styles.emptyMessage}>Nenhum horário encontrado para a semana selecionada.</Text>
         )}
-      </View>
-
-      <View style={styles.navigation}>
-        <TouchableOpacity onPress={() => handleDayChange("prev")}>
-          <Text style={styles.navigationText}>{"<"}</Text>
-        </TouchableOpacity>
-        <Text style={styles.navigationText}>{currentDay}</Text>
-        <TouchableOpacity onPress={() => handleDayChange("next")}>
-          <Text style={styles.navigationText}>{">"}</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.navbar}>
-        <TouchableOpacity
-          style={styles.navItem}
-          onPress={() => navigation.navigate("HomeScreen")}
-        >
-          <Text style={styles.navText}>Home</Text>
-        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -204,12 +235,15 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#fff",
   },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 20,
+  },
   logo: {
     width: 100,
     height: 50,
-    alignSelf: "center",
-    marginVertical: 20,
-    marginTop: 50,
+    marginLeft: 150,
   },
   title: {
     fontSize: 24,
@@ -218,69 +252,47 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   table: {
-    marginBottom: 20,
-  },
-  voltar:{   
-    color: "#f1f1f1",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    overflow: "hidden",
   },
   tableHeader: {
     flexDirection: "row",
-    backgroundColor: "#f1f1f1",
+    backgroundColor: "#B20000",
     padding: 10,
   },
   tableHeaderText: {
     flex: 1,
     fontWeight: "bold",
+    color: "#fff",
+    textAlign: "center",
   },
   tableRow: {
     flexDirection: "row",
     padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
   },
   tableCell: {
     flex: 1,
+    textAlign: "center",
+    paddingVertical: 5,
   },
   emptyMessage: {
     textAlign: "center",
     marginTop: 20,
   },
   button: {
-    width: "100%",
+    width: 100,
     height: 40,
     backgroundColor: "#B20000",
     justifyContent: "center",
-   
     alignItems: "center",
     borderRadius: 5,
-    width: 100, 
-    margintop: 50,
   },
-  navigation: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  navbar: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    backgroundColor: "#B20000",
-    width: "100%",
-    position: "absolute",
-    bottom: 0,
-    height: 60,
-  },
-  navItem: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  navText: {
+  voltar: {
     color: "#fff",
-    fontFamily: "Roboto-Regular",
-    fontSize: 16,
-  },
-  navigationText: {
-    fontSize: 20,
   },
 });
 

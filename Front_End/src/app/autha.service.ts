@@ -7,12 +7,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthaService {
-  private apiUrl = 'https://projeto-integrador-1v4i.onrender.com/auth/admin';
+  private apiUrl = 'https://projeto-integrador-1v4i.onrender.com/admin/auth';
 
   constructor(private http: HttpClient) {}
 
-  login(payload: string): Observable<string> {
+  login(payload: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(this.apiUrl, payload, { headers, responseType: 'text' });
+    return this.http.post<any>(this.apiUrl, payload, { headers });
   }
 }

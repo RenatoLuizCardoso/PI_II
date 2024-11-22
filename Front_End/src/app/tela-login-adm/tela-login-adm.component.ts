@@ -18,8 +18,8 @@ export class TelaLoginAdmComponent {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      adminEmail: ['', [Validators.required, Validators.email]], // Alterado para adminEmail
-      adminPassword: ['', Validators.required] // Alterado para adminPassword
+      adminEmail: ['', [Validators.required, Validators.email]],
+      adminPassword: ['', Validators.required]
     });
   }
 
@@ -31,17 +31,26 @@ export class TelaLoginAdmComponent {
       console.log("Dados enviados:", payload);
 
       this.authaService.login(payload).subscribe({
-        next: (token) => {
-          console.log("Token recebido:", token);
+        next: (response) => {
+          if (response && response.access_token) {
+            console.log("Token recebido:", response.access_token);
 
-          // Armazena o token no localStorage (ou sessionStorage) para uso posterior
-          localStorage.setItem('authToken', token);
+            // Armazenar o token no localStorage
+            localStorage.setItem('authToken', response.access_token);
 
-          // Redireciona para a página inicial do administrador
-          this.router.navigate(['admin']);
+            // Opcional: Armazenar outras informações, como tempo de expiração
+            localStorage.setItem('expires_in', response.expires_in.toString());
+
+            // Redirecionar para a página inicial do administrador
+            this.router.navigate(['admin']);
+          } else {
+            // Exibe erro se o token não foi encontrado
+            this.loginError = true;
+            console.error("Autenticação falhou: Token não encontrado.");
+          }
         },
         error: (err) => {
-          this.loginError = true; // Mostrar erro se a autenticação falhar
+          this.loginError = true;
           console.error("Erro de autenticação:", err);
         }
       });

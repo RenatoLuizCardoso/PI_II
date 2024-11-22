@@ -19,13 +19,14 @@ export class EditarSalasComponent implements OnInit {
     private router: Router,
     private csalasService: CsalasService
   ) {
+    // Altere o nome do campo de 'id' para 'roomId'
     this.salaForm = this.fb.group({
-      id: [{ value: '', disabled: true }],
-      type: ['', Validators.required],
-      capacity: ['', [Validators.required, Validators.min(1), Validators.pattern('^[0-9]+$')]],
-      floor: ['', [Validators.required, Validators.min(0)]],
-      resources: ['', Validators.required],
-      availability: ['', Validators.required]
+      roomId: [''],  // Altere 'id' para 'roomId'
+      roomType: ['', Validators.required],
+      roomCapacity: ['', [Validators.required, Validators.min(1), Validators.pattern('^[0-9]+$')]],
+      roomFloor: ['', [Validators.required, Validators.min(0)]],
+      roomResources: ['', Validators.required],
+      roomAvailability: ['', Validators.required]
     });
   }
 
@@ -34,22 +35,37 @@ export class EditarSalasComponent implements OnInit {
   }
 
   carregarSala() {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');  // Pegue o id da URL
+
     if (id) {
       this.csalasService.getSalaById(id).subscribe(
         data => {
-          this.salaForm.patchValue(data);
+          // Aqui, estamos agora preenchendo o campo 'roomId'
+          this.salaForm.get('roomId')?.setValue(data.roomId);  // Defina o roomId
+          this.salaForm.patchValue(data);  // Preenche os outros campos
         },
         error => {
           console.error('Erro ao carregar sala: ', error);
         }
       );
+    } else {
+      console.error('ID não encontrado na rota.');
     }
   }
 
   salvar() {
     if (this.salaForm.valid) {
       const salaAtualizada = this.salaForm.getRawValue();
+
+      // Exibe o objeto que será enviado
+      console.log('JSON enviado para atualização:', JSON.stringify(salaAtualizada));
+
+      // Verifique se o roomId está correto
+      if (!salaAtualizada.roomId) {
+        console.error("ID da sala não encontrado!");
+        return;
+      }
+
       this.csalasService.updateSala(salaAtualizada).subscribe(
         () => {
           this.mensagemSucesso = true;

@@ -1,13 +1,9 @@
 package com.projeto_integrador.projeto_integrador.modules.student.usecases;
 
-
-
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
-
 import javax.security.sasl.AuthenticationException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,21 +11,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.projeto_integrador.projeto_integrador.modules.student.dto.AuthStudentRequestDTO;
 import com.projeto_integrador.projeto_integrador.modules.student.dto.AuthStudentResponseDTO;
 import com.projeto_integrador.projeto_integrador.modules.student.repository.StudentRepository;
 
-
 @Service
 public class AuthStudent {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthStudent.class);
 
-    @Value("${security.token.secret.student}")
-    private String secretKey;
+    @Value("${security.token.secret}")
+    private String secretKeyStudent;
 
     @Autowired 
     private StudentRepository studentRepository;
@@ -62,21 +56,21 @@ public class AuthStudent {
 
         logger.info("Password matches for email {}", authStudentRequestDTO.institutionalEmail());
 
-        Algorithm algorithm = Algorithm.HMAC256(secretKey);
-        var expires_in = Instant.now().plus(Duration.ofHours(7));
+        var roles = Arrays.asList("STUDENT");
 
+        Algorithm algorithm = Algorithm.HMAC256(secretKeyStudent);
+        var expiresIn = Instant.now().plus(Duration.ofMinutes(10));
         var token = JWT.create()
-            .withIssuer("cps")
+            .withIssuer("javagas")
             .withSubject(student.getStudentId().toString())
-            .withClaim("roles", Arrays.asList("student"))
-            .withExpiresAt(expires_in)
+            .withClaim("roles", roles)
+            .withExpiresAt(expiresIn)
             .sign(algorithm);
-
-        logger.info("Token generated for email {}", authStudentRequestDTO.institutionalEmail());
 
         var authStudentResponse = AuthStudentResponseDTO.builder()
             .access_token(token)
-            .expires_in(expires_in.toEpochMilli())
+            .expires_in(expiresIn.toEpochMilli())
+            .roles(roles)
             .build();
 
         return authStudentResponse;

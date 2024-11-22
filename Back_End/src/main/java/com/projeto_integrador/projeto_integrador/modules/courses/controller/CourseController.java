@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -55,6 +57,7 @@ public class CourseController {
     DeleteCourseById deleteCourseById;
 
     @PostMapping("/")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Cadastro de curso", description = "Essa função é responsável por cadastrar um curso")
     @ApiResponses({
       @ApiResponse(responseCode = "200", content = {
@@ -62,6 +65,7 @@ public class CourseController {
       }),
       @ApiResponse(responseCode = "400", description = "Curso já existe")
     })
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<Object> create(@Valid @RequestBody CourseEntity courseEntity) {
         try {
             var result = this.createCourse.execute(courseEntity);
@@ -72,6 +76,7 @@ public class CourseController {
     }
 
     @GetMapping("/")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT')")
     @Operation(summary = "Listar cursos", description = "Essa função é responsável por listar todos os cursos")
     @ApiResponses({
       @ApiResponse(responseCode = "200", content = {
@@ -79,6 +84,7 @@ public class CourseController {
       }),
       @ApiResponse(responseCode = "400", description = "Curso não existe")
     })
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<?> getAllCourses() {
         try {
             List<Map<String, Object>> courses = getAllCourses.execute();
@@ -89,6 +95,7 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT')")
     @Operation(summary = "Listar curso por ID", description = "Essa função é responsável por listar um curso filtrado por ID")
     @ApiResponses({
       @ApiResponse(responseCode = "200", content = {
@@ -96,6 +103,7 @@ public class CourseController {
       }),
       @ApiResponse(responseCode = "400", description = "Curso não existe")
     })
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<Map<String, Object>> getById(@PathVariable long id) {
         try {
             var courseMap = this.getCourseById.execute(id);
@@ -106,6 +114,7 @@ public class CourseController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Alterar um curso", description = "Essa função é responsável por alterar/editar um curso")
     @ApiResponses({
       @ApiResponse(responseCode = "200", content = {
@@ -113,6 +122,7 @@ public class CourseController {
       }),
       @ApiResponse(responseCode = "400", description = "Curso não existe")
     })
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<?> putCourse(@Valid @RequestBody CourseEntity courseEntity, @PathVariable Long id) {
         try {
             var updatedCourse = this.putCourseById.execute(id, courseEntity);
@@ -124,15 +134,22 @@ public class CourseController {
 
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Exclusão de um curso", description = "Essa função é responsável pela exclusão de um curso")
     @ApiResponses({
       @ApiResponse(responseCode = "200", content = {
       }),
       @ApiResponse(responseCode = "400", description = "Curso não existe")
     })
-    public ResponseEntity<Void> deleteCourse(@Valid @PathVariable Long id) {
-        this.deleteCourseById.execute(id);
-        return ResponseEntity.ok().build();
+    @SecurityRequirement(name = "jwt_auth")
+    public ResponseEntity<Object> deleteCourse(@Valid @PathVariable Long id) {
+
+        try {
+            this.deleteCourseById.execute(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 

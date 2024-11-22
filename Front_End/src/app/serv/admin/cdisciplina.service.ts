@@ -1,38 +1,55 @@
-// cdisciplina.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CdisciplinaService {
-  private apiUrl = 'http://localhost:3000/disciplines';
+  private apiUrl = 'https://projeto-integrador-1v4i.onrender.com/subject/';
 
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
+  // Função para obter os headers com o token de autenticação
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      throw new Error('Token de autenticação não encontrado.');
+    }
 
-  // Método para registrar uma nova disciplina
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+  }
+
+  // Método para registrar uma nova disciplina com autenticação
   registerDisciplines(disciplineData: any): Observable<any> {
-    return this.http.post(this.apiUrl, disciplineData);
+    const headers = this.getAuthHeaders();
+    return this.http.post<any>(this.apiUrl, disciplineData, { headers });
   }
 
-
-  getDisciplines(): Observable<any> {
-    return this.http.get<any[]>(this.apiUrl);
+  // Método para obter todas as disciplinas com autenticação
+  getDisciplines(): Observable<any[]> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<any[]>(this.apiUrl, { headers });
   }
 
+  // Método para obter uma disciplina por ID com autenticação
   getDisciplineById(id: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
+    const headers = this.getAuthHeaders();
+    return this.http.get<any>(`${this.apiUrl}${id}`, { headers });
   }
 
+  // Método para atualizar uma disciplina com autenticação
   updateDiscipline(discipline: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${discipline.id}`, discipline);
+    const headers = this.getAuthHeaders();
+    return this.http.put<any>(`${this.apiUrl}${discipline.subjectId}`, discipline, { headers });
   }
 
-  // cdisciplina.service.ts
+  // Método para excluir uma disciplina com autenticação
   deleteDiscipline(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+    const headers = this.getAuthHeaders();
+    return this.http.delete<any>(`${this.apiUrl}${id}`, { headers });
   }
-
 }

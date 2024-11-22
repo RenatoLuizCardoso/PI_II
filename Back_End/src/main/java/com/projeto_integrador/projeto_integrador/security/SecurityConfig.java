@@ -18,6 +18,12 @@ public class SecurityConfig {
     @Autowired
     SecurityFilter securityFilter;
 
+    @Autowired
+    SecurityStudentFilter securityStudentFilter;
+
+    @Autowired
+    SecurityTeacherFilter securityTeacherFilter;
+
     private static final String[] PERMIT_ALL_LIST = {
         "/swagger-ui/**",
         "/v3/api-docs/**",
@@ -40,18 +46,23 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/admin/").permitAll()
-                .requestMatchers("/auth/admin").permitAll()
+            auth.requestMatchers("/admin/auth").permitAll()
                 .requestMatchers("/teacher/auth").permitAll()
                 .requestMatchers("/student/auth").permitAll()
+                .requestMatchers("/student/register").permitAll()
+                .requestMatchers("/student/forgot-password").permitAll()
+                .requestMatchers("/student/reset-password").permitAll()
                 .requestMatchers("/student/").permitAll()
                 .requestMatchers(PERMIT_ALL_LIST).permitAll()
                 .requestMatchers(PERMIT_TEMPORARILY).permitAll();
 
             auth.anyRequest().authenticated();
-        }).addFilterBefore(securityFilter, BasicAuthenticationFilter.class);;
-    
-    return http.build();
+        })
+        .addFilterBefore(securityStudentFilter, BasicAuthenticationFilter.class)
+        .addFilterBefore(securityTeacherFilter, BasicAuthenticationFilter.class)
+        .addFilterBefore(securityFilter, BasicAuthenticationFilter.class);
+               
+        return http.build();
     }
 
     @Bean

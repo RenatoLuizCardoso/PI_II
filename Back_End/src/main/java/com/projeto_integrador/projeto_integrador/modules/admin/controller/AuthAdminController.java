@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/admin")
 @Tag(name = "Login Administrador", description = "Login do Administrador")
 public class AuthAdminController {
 
@@ -38,7 +38,7 @@ public class AuthAdminController {
       }),
       @ApiResponse(responseCode = "400", description = "Administrador já existe")
     })
-    @PostMapping("/admin")
+    @PostMapping("/auth")
     public ResponseEntity<Object> create(@RequestBody AuthAdminDTO authAdminDTO) {
         logger.debug("Received login request for email: {}", authAdminDTO.getAdminEmail());
 

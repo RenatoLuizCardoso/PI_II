@@ -7,71 +7,63 @@
           <h5 class="card-title text-center">Registro de Sala</h5>
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="mb-3 mt-3">
-              <label for="type" class="form-label">Tipo de Sala</label>
-              <select class="form-control" id="type" formControlName="type">
+              <label for="roomType" class="form-label">Tipo de Sala</label>
+              <select class="form-control" id="roomType" formControlName="roomType">
                 <option value="" disabled>Selecione o tipo de sala</option>
-                <option value="sala">Sala</option>
-                <option value="lab">Laboratório</option>
+                <option value=1>Sala</option>
+                <option value=2>Laboratório</option>
               </select>
-              <div *ngIf="f['type'].touched && f['type'].invalid" class="text-danger">
-                <small *ngIf="f['type'].errors?.['required']">Tipo de sala é obrigatório.</small>
+              <div *ngIf="f['roomType'].touched && f['roomType'].invalid" class="text-danger">
+                <small *ngIf="f['roomType'].errors?.['required']">Tipo de sala é obrigatório.</small>
               </div>
             </div>
             <div class="mb-3 mt-3">
-              <label for="capacity" class="form-label">Capacidade</label>
-              <input type="number" class="form-control" id="capacity" formControlName="capacity" placeholder="Capacidade de Alunos">
-              <div *ngIf="f['capacity'].touched && f['capacity'].invalid" class="text-danger">
-                <small *ngIf="f['capacity'].errors?.['required']">Capacidade é obrigatória.</small>
-                <small *ngIf="f['capacity'].errors?.['min']">Capacidade deve ser um número positivo.</small>
+              <label for="roomCapacity" class="form-label">Capacidade</label>
+              <input type="number" class="form-control" id="roomCapacity" formControlName="roomCapacity" placeholder="Capacidade de Alunos">
+              <div *ngIf="f['roomCapacity'].touched && f['roomCapacity'].invalid" class="text-danger">
+                <small *ngIf="f['roomCapacity'].errors?.['required']">Capacidade é obrigatória.</small>
+                <small *ngIf="f['roomCapacity'].errors?.['min']">Capacidade deve ser um número positivo.</small>
               </div>
             </div>
             <div class="mb-3 mt-3">
-              <label for="floor" class="form-label">Andar</label>
-              <input type="number" class="form-control" id="floor" formControlName="floor" placeholder="Andar...">
-              <div *ngIf="f['floor'].touched && f['floor'].invalid" class="text-danger">
-                <small *ngIf="f['floor'].errors?.['required']">Andar é obrigatório.</small>
-                <small *ngIf="f['floor'].errors?.['min']">Andar deve ser um número positivo.</small>
+              <label for="roomFloor" class="form-label">Andar</label>
+              <input type="number" class="form-control" id="roomFloor" formControlName="roomFloor" placeholder="Andar...">
+              <div *ngIf="f['roomFloor'].touched && f['roomFloor'].invalid" class="text-danger">
+                <small *ngIf="f['roomFloor'].errors?.['required']">Andar é obrigatório.</small>
+                <small *ngIf="f['roomFloor'].errors?.['min']">Andar deve ser um número positivo.</small>
               </div>
             </div>
             <div class="mb-3 mt-3">
               <label class="form-label">Recursos</label>
               <div class="d-flex flex-wrap">
                 <div class="form-check me-3">
-                  <input class="form-check-input" type="checkbox" (change)="onResourceChange($event, 'TV')">
-                  <label class="form-check-label">
-                    TV
-                  </label>
+                  <input class="form-check-input" type="checkbox" (change)="onResourceChange($event, 'Computadores')">
+                  <label class="form-check-label">Computadores</label>
                 </div>
                 <div class="form-check me-3">
                   <input class="form-check-input" type="checkbox" (change)="onResourceChange($event, 'Projetor')">
-                  <label class="form-check-label">
-                    Projetor
-                  </label>
+                  <label class="form-check-label">Projetor</label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" (change)="onResourceChange($event, 'Ventilador')">
-                  <label class="form-check-label">
-                    Ventilador
-                  </label>
+                  <input class="form-check-input" type="checkbox" (change)="onResourceChange($event, 'Ventiladores')">
+                  <label class="form-check-label">Ventiladores</label>
                 </div>
               </div>
-              <div *ngIf="f['resources'].touched && f['resources'].invalid" class="text-danger">
-                <small *ngIf="f['resources'].errors?.['required']">Pelo menos um recurso deve ser selecionado.</small>
-              </div>
             </div>
-
+            <div *ngIf="f['roomResources'].touched && f['roomResources'].invalid" class="text-danger">
+              <small *ngIf="f['roomResources'].errors?.['required']">Pelo menos um recurso deve ser selecionado.</small>
+            </div>
             <div class="mb-3 mt-3">
-              <label for="availability" class="form-label">Disponibilidade Da Sala</label>
-              <select class="form-control" id="availability" formControlName="availability">
-                <option value="" disabled>Selecione a disponibilidade da sala</option>
-                <option value="Disponível">Disponível</option>
-                <option value="Indisponível">Indisponível</option>
+              <label for="roomAvailability" class="form-label">Disponibilidade da Sala</label>
+              <select class="form-control" id="roomAvailability" formControlName="roomAvailability">
+                <option value="" disabled>Selecione a disponibilidade</option>
+                <option value="L">Livre</option>
+                <option value="I">Indisponível</option>
               </select>
-              <div *ngIf="f['availability'].touched && f['availability'].invalid" class="text-danger">
-                <small *ngIf="f['availability'].errors?.['required']">Disponibilidade é obrigatória.</small>
+              <div *ngIf="f['roomAvailability'].touched && f['roomAvailability'].invalid" class="text-danger">
+                <small *ngIf="f['roomAvailability'].errors?.['required']">Disponibilidade é obrigatória.</small>
               </div>
             </div>
-
             <div *ngIf="registerError" class="alert alert-danger mt-3" role="alert">
               Erro ao registrar a sala!
             </div>

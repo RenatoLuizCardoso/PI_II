@@ -29,6 +29,7 @@
     "react-dom": "18.2.0",
     "react-native": "^0.74.5",
     "react-native-awesome-alerts": "^2.0.0",
+    "react-native-calendars": "^1.1307.0",
     "react-native-check-box": "^2.1.7",
     "react-native-global-props": "^1.1.5",
     "react-native-picker-select": "^9.1.3",

@@ -1,14 +1,11 @@
 package com.projeto_integrador.projeto_integrador.modules.student.controller;
 
-import java.util.List;
 import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,25 +18,27 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.projeto_integrador.projeto_integrador.modules.student.dto.ResetPasswordRequest;
 import com.projeto_integrador.projeto_integrador.modules.student.entity.StudentEntity;
-import com.projeto_integrador.projeto_integrador.modules.student.repository.StudentRepository;
 import com.projeto_integrador.projeto_integrador.modules.student.usecases.CreateStudentUseCase;
 import com.projeto_integrador.projeto_integrador.modules.student.usecases.DeleteStudentUseCase;
 import com.projeto_integrador.projeto_integrador.modules.student.usecases.ForgotPasswordService;
 import com.projeto_integrador.projeto_integrador.modules.student.usecases.GetAllStudents;
 import com.projeto_integrador.projeto_integrador.modules.student.usecases.GetStudentById;
+import com.projeto_integrador.projeto_integrador.modules.student.usecases.ProfileStudentUseCase;
 import com.projeto_integrador.projeto_integrador.modules.student.usecases.PutStudentById;
 import com.projeto_integrador.projeto_integrador.modules.student.usecases.ResetPasswordService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/student") // Ajuste aqui, adicione barra inicial
+@RequestMapping("/student")
 @CrossOrigin
+@Tag(name = "Estudante", description = "Gerenciamento de estudantes no sistema")
 public class StudentController {
-    
-    @Autowired
-    private StudentRepository studentRepository;
 
     @Autowired
     private CreateStudentUseCase createStudent;
@@ -62,7 +61,12 @@ public class StudentController {
     @Autowired
     private ResetPasswordService resetPasswordService;
 
+    @Autowired
+    private ProfileStudentUseCase profileStudentUseCase;
+
+    @Operation(summary = "Criar um novo estudante", description = "Endpoint para criação de estudantes no sistema")
     @PostMapping("/")
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<Object> create(@Valid @RequestBody StudentEntity studentEntity) {
         try {
             var result = this.createStudent.execute(studentEntity);
@@ -72,46 +76,71 @@ public class StudentController {
         }
     }
 
+    @Operation(summary = "Listar todos os estudantes", description = "Retorna todos os estudantes registrados (somente administradores)")
     @GetMapping("/")
-    public ResponseEntity<List<StudentEntity>> getAllStudents() {
-       try {
-            var result = this.getAllStudents.execute();
-            return ResponseEntity.ok().body(result);
-       } catch (Exception e) {
-            throw new EntityNotFoundException("Student not Register");
-       }
+    @SecurityRequirement(name = "jwt_auth")
+    @PreAuthorize("hasRole('STUDENT') or hasRole('ADMIN')")
+    public ResponseEntity<Object> getAllStudents(HttpServletRequest request) {
+        try {
+            if (request.isUserInRole("ADMIN")) {
+                var allStudents = this.getAllStudents.execute();
+                return ResponseEntity.ok().body(allStudents);
+            } else if (request.isUserInRole("STUDENT")) {
+                var idStudent = request.getAttribute("student_id");
+                if (idStudent != null) {
+                    var profile = this.profileStudentUseCase.execute(Long.parseLong(idStudent.toString()));
+                    return ResponseEntity.ok().body(profile);
+                } else {
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Student ID not found in request.");
+                }
+            } else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
     }
 
+    @Operation(summary = "Buscar estudante por ID", description = "Retorna os dados de um estudante específico pelo ID")
     @GetMapping("/{id}")
-    public ResponseEntity<StudentEntity> getById(@Valid @PathVariable Long id){
-       try {
-        var student = this.getStudentById.execute(id);
-        return ResponseEntity.ok().body(student);
-       } catch (Exception e) {
-            throw new EntityNotFoundException("Student not found");
-       }
-        
+    @SecurityRequirement(name = "jwt_auth")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> getById(@Valid @PathVariable Long id) {
+        try {
+            var student = this.getStudentById.execute(id);
+            return ResponseEntity.ok().body(student);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
+    @Operation(summary = "Atualizar dados do estudante", description = "Atualiza informações de um estudante pelo ID")
     @PutMapping("/{id}")
-    public ResponseEntity<StudentEntity> putStudent(@Valid @RequestBody StudentEntity studentEntity, @PathVariable Long id) {
+    @SecurityRequirement(name = "jwt_auth")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> putStudent(@Valid @RequestBody StudentEntity studentEntity, @PathVariable Long id) {
         try {
             var updatedStudent = this.putStudentById.execute(id, studentEntity);
             return ResponseEntity.ok().body(updatedStudent);
         } catch (Exception e) {
-            throw new EntityNotFoundException("Student not found");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        
     }
 
+    @Operation(summary = "Deletar estudante", description = "Remove um estudante do sistema pelo ID")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteStudent(@Valid @PathVariable Long id) {
-        this.deleteStudentById.execute(id);
-        return ResponseEntity.ok().build();
+    @SecurityRequirement(name = "jwt_auth")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> deleteStudent(@Valid @PathVariable Long id) {
+        try {
+            this.deleteStudentById.execute(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
-    
+    @Operation(summary = "Solicitar redefinição de senha", description = "Gera um token para redefinição de senha do estudante")
     @PostMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestBody Map<String, String> request) {
         String email = request.get("institutionalEmail");
@@ -125,7 +154,7 @@ public class StudentController {
         }
     }
 
-
+    @Operation(summary = "Redefinir senha", description = "Atualiza a senha do estudante usando um token de redefinição")
     @PostMapping("/reset-password")
     public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequest request) {
         try {
@@ -135,5 +164,4 @@ public class StudentController {
             return ResponseEntity.badRequest().body("Invalid token or password.");
         }
     }
-    
 }

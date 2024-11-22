@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -59,6 +61,8 @@ public class ScheduleController {
     DeleteScheduleById deleteScheduleById;
 
     @PostMapping("/")
+    @SecurityRequirement(name = "jwt_auth")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Cadastro de horário", description = "Essa função é responsável por cadastrar um horário")
     @ApiResponses({
       @ApiResponse(responseCode = "200", content = {
@@ -76,6 +80,8 @@ public class ScheduleController {
     }
 
     @GetMapping("/")
+    @SecurityRequirement(name = "jwt_auth")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER') or hasRole('STUDENT')")
     @Operation(summary = "Lista de horário", description = "Essa função é responsável por listar todos os horários")
     @ApiResponses({
       @ApiResponse(responseCode = "200", content = {
@@ -93,6 +99,8 @@ public class ScheduleController {
     }
 
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "jwt_auth")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER') or hasRole('STUDENT')")
     @Operation(summary = "Lista de um horário por ID", description = "Essa função é responsável por listar um horário por ID")
     @ApiResponses({
       @ApiResponse(responseCode = "200", content = {
@@ -110,6 +118,8 @@ public class ScheduleController {
     }
 
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "jwt_auth")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Alterar um horário", description = "Essa função é responsável por alterar um horário")
     @ApiResponses({
       @ApiResponse(responseCode = "200", content = {
@@ -128,6 +138,8 @@ public class ScheduleController {
     }
 
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "jwt_auth")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Exclusão de horário", description = "Essa função é responsável por excluir um horário")
     @ApiResponses({
       @ApiResponse(responseCode = "200", content = {
@@ -135,9 +147,13 @@ public class ScheduleController {
       }),
       @ApiResponse(responseCode = "400", description = "Horário não existe")
     })
-    public ResponseEntity<Void> deleteSchedule(@Valid @PathVariable Long id) {
-        this.deleteScheduleById.execute(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Object> deleteSchedule(@Valid @PathVariable Long id) {
+        try {
+            this.deleteScheduleById.execute(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 

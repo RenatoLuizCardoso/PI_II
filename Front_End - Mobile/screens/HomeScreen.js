@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, Image, StyleSheet, Text, Dimensions, TouchableOpacity, ScrollView } from "react-native";
 import { useFonts } from "expo-font";
-import Swiper from 'react-native-swiper';
 import AwesomeAlert from "react-native-awesome-alerts";
-import { Ionicons } from '@expo/vector-icons';
+import axios from "axios";
+
+
 
 const { width } = Dimensions.get('window');
+
 export default function HomeScreen({ navigation, route }) {
   const [fontsLoaded] = useFonts({
     "Roboto-Light": require("../assets/fonts/Roboto-Light.ttf"),
@@ -14,22 +16,41 @@ export default function HomeScreen({ navigation, route }) {
     "Roboto-Medium": require("../assets/fonts/Roboto-Medium.ttf"),
   });
 
-  const [user, setUser] = useState(null); 
+  const [userName, setUserName] = useState("");
   const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
-    if (route.params && route.params.user) {
-      setUser(route.params.user);
-    }
-  }, [route.params]);
+    const fetchUserName = async () => {
+      try {
+        
+        const token = await AsyncStorage.getItem("userToken");
+
+        const response = await axios.get('https://projeto-integrador-1v4i.onrender.com/student/',{
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+
+        username = response.data.studentName;
+
+        if (response.status === 200) {
+          setUserName(username);
+        } else {
+          setUserName('Usuário');
+        }
+      } catch (error) {
+        console.error("Erro ao obter nome de usuário: ", error);
+        setUserName("Usuário");
+      }
+    };
+
+    fetchUserName();
+  }, []);
+  
 
   const logout = async () => {
-    try {
-      await AsyncStorage.removeItem("rememberedLogin");
-      navigation.navigate("Login");
-    } catch (error) {
-      console.error("Erro ao tentar fazer logout", error);
-    }
+    await AsyncStorage.removeItem("userToken");
+    navigation.navigate("Login");
   };
 
   const handleLogout = () => {
@@ -45,9 +66,15 @@ export default function HomeScreen({ navigation, route }) {
     setShowAlert(false);
   };
 
-  if (!fontsLoaded || !user) {
-    return null;
-  }
+  // Verifique se user ou fontsLoaded são falsos
+if (!fontsLoaded || !userName) {
+  console.log("Carregando... fontsLoaded:", fontsLoaded, "user:", userName);
+  return (
+    <View style={styles.container}>
+      <Text>Carregando...</Text>
+    </View>
+  );
+}
 
   return (
     <View style={styles.container}>
@@ -59,11 +86,9 @@ export default function HomeScreen({ navigation, route }) {
           <Image source={require("../assets/fatec-logo.png")} style={styles.logo} />
         </View>
 
-        <Text style={styles.title}>Seja Bem-Vindo, {user.name}</Text>
+        <Text style={styles.title}>Seja Bem-Vindo, {userName}!</Text>
 
         <Text style={styles.textnovidade}>Destaques</Text>
-
-      
 
         {/* Cards com informações */}
         <View style={styles.cardContainer}>
@@ -152,26 +177,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: "#333",
   },
-  swiper: {
-    height: 200,
-  },
   textnovidade: {
     marginTop: 30,
     fontSize: 28,
     fontFamily: "Roboto-Medium",
     color: "black",
-  },
-  swiperImage: {
-    width: width * 0.9,
-    height: 200,
-    borderRadius: 10,
-  },
-  buttonWrapper: {
-    backgroundColor: 'transparent',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
-    paddingVertical: 20,
   },
   cardContainer: {
     marginTop: 30,
@@ -182,11 +192,9 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     marginBottom: 15,
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 5,
-    elevation: 3,
+    // A sombra no iOS
+    boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)", // Adicionando boxShadow
+    elevation: 3, // Mantém a sombra no Android com o elevation
   },
   cardTitle: {
     fontSize: 18,
@@ -211,6 +219,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
+    marginBottom: 50,
   },
   buttonText: {
     fontSize: 18,

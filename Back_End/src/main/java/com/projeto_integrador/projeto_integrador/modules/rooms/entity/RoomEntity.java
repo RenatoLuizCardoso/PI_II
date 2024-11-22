@@ -53,7 +53,7 @@ public class RoomEntity {
     private String roomResources;
 
     @NotBlank
-    @Length(max = 1, message = "o máximo de caracteres do campo [roomAvailability] são 1")
+    @Length(max = 30, message = "o máximo de caracteres do campo [roomAvailability] são 1")
     @Column(name = "room_availability")
     @Schema(example = "Livre", requiredMode = RequiredMode.REQUIRED, description = "Capacidade da sala/labóratorio")
     private String roomAvailability;

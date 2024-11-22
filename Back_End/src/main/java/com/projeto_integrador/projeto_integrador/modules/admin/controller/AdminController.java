@@ -1,9 +1,9 @@
 package com.projeto_integrador.projeto_integrador.modules.admin.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,8 +27,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 
 @RestController
@@ -57,6 +57,7 @@ public class AdminController {
     
 
     @PostMapping("/")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Cadastro de administrador", description = "Essa função é responsável por cadastrar um administrador")
     @ApiResponses({
       @ApiResponse(responseCode = "200", content = {
@@ -64,6 +65,7 @@ public class AdminController {
       }),
       @ApiResponse(responseCode = "400", description = "Administrador já existe")
     })
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<Object> create(@Valid @RequestBody AdminEntity adminEntity) {
         try {
             var result = this.createAdmin.execute(adminEntity);
@@ -74,6 +76,7 @@ public class AdminController {
     }
 
     @GetMapping("/")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Perfil do Administrador", description = "Essa função é responsável por buscar as informações do perfil do administrador")
     @ApiResponses({
       @ApiResponse(responseCode = "200", content = {
@@ -81,17 +84,19 @@ public class AdminController {
       }),
       @ApiResponse(responseCode = "400", description = "Admin not Found")
     })
-    public ResponseEntity<List<AdminEntity>> getAllAdmins() {
+    @SecurityRequirement(name = "jwt_auth")
+    public ResponseEntity<Object> getAllAdmins() {
        try {
             var result = this.getAllAdmins.execute();
             return ResponseEntity.ok().body(result);
        } catch (Exception e) {
-            throw new EntityNotFoundException("Admin not Register");
+            return ResponseEntity.badRequest().body(e.getMessage());
        }
     }
 
     
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Perfil do Administrador por ID", description = "Essa função é responsável por buscar as informações do perfil do administrador filtrado por ID")
     @ApiResponses({
       @ApiResponse(responseCode = "200", content = {
@@ -99,18 +104,20 @@ public class AdminController {
       }),
       @ApiResponse(responseCode = "400", description = "Admin not found")
     })
-    public ResponseEntity<AdminEntity> getById(@Valid @PathVariable Long id){
+    @SecurityRequirement(name = "jwt_auth")
+    public ResponseEntity<Object> getById(@Valid @PathVariable Long id){
        try {
         var admin = this.getAdminById.execute(id);
         return ResponseEntity.ok().body(admin);
        } catch (Exception e) {
-            throw new EntityNotFoundException("Admin not found");
+            return ResponseEntity.badRequest().body(e.getMessage());
        }
         
     }
 
     
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Alteração do Administrador", description = "Essa função é responsável por alterar/editar as informações de um administrador por ID")
     @ApiResponses({
       @ApiResponse(responseCode = "200", content = {
@@ -118,26 +125,33 @@ public class AdminController {
       }),
       @ApiResponse(responseCode = "400", description = "Admin not found")
     })
-    public ResponseEntity<AdminEntity> putAdmin(@Valid @RequestBody AdminEntity adminEntity, @PathVariable Long id) {
+    @SecurityRequirement(name = "jwt_auth")
+    public ResponseEntity<Object> putAdmin(@Valid @RequestBody AdminEntity adminEntity, @PathVariable Long id) {
         try {
             var updatedAdmin = this.putAdminById.execute(id, adminEntity);
             return ResponseEntity.ok().body(updatedAdmin);
         } catch (Exception e) {
-            throw new EntityNotFoundException("Admin not found");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
         
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Exclusão do Administrador", description = "Essa função é responsável por excluir um administrador por ID")
     @ApiResponses({
       @ApiResponse(responseCode = "200", content = {
       }),
       @ApiResponse(responseCode = "400", description = "Admin not found")
     })
-    public ResponseEntity<Void> deleteAdmin(@Valid @PathVariable Long id) {
-        this.deleteAdminById.execute(id);
-        return ResponseEntity.ok().build();
+    @SecurityRequirement(name = "jwt_auth")
+    public ResponseEntity<Object> deleteAdmin(@Valid @PathVariable Long id) {
+        try {
+            this.deleteAdminById.execute(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     

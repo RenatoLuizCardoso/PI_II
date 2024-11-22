@@ -11,24 +11,16 @@ export class CadastrarDisciplinasComponent implements OnInit {
   registerForm!: FormGroup;
   registerError: boolean = false;
   registerSuccess: boolean = false;
-  professores: any[] = [];
 
   constructor(private formBuilder: FormBuilder, private cdisciplinaService: CdisciplinaService) {}
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
-      disciplineName: ['', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$')]], // Letras e espaços
-      description: ['', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$')]], // Letras e espaços
-      hour: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], // Números apenas
-     
-      objective: ['', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$')]], // Letras e espaços
-      syllabus: ['', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$')]] // Letras e espaços
+      subjectName: ['', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$')]], // Letras e espaços
+      subjectHours: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], // Números apenas
     });
-
-    
   }
 
-  
   get f() { return this.registerForm.controls; }
 
   onSubmit(): void {
@@ -38,7 +30,15 @@ export class CadastrarDisciplinasComponent implements OnInit {
       return;
     }
 
-    this.cdisciplinaService.registerDisciplines(this.registerForm.value).subscribe(
+    // Preparando o JSON para enviar com os dados corretos
+    const formData = { 
+      subjectId: 0, // ID fixo conforme sua solicitação
+      subjectName: this.registerForm.value.subjectName, // Nome da disciplina
+      subjectHours: this.registerForm.value.subjectHours // Carga horária
+    };
+
+    // Chamando o serviço para registrar a disciplina
+    this.cdisciplinaService.registerDisciplines(formData).subscribe(
       response => {
         console.log('Formulário enviado com sucesso', response);
         this.registerSuccess = true;

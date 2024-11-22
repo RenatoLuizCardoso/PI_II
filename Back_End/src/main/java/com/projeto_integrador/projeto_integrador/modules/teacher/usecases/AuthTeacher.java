@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.projeto_integrador.projeto_integrador.modules.student.dto.AuthStudentResponseDTO;
 import com.projeto_integrador.projeto_integrador.modules.teacher.dto.AuthTeacherRequestDTO;
 import com.projeto_integrador.projeto_integrador.modules.teacher.dto.AuthTeacherResponseDTO;
 import com.projeto_integrador.projeto_integrador.modules.teacher.repository.TeacherRepository;
@@ -25,7 +26,7 @@ public class AuthTeacher {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthTeacher.class);
 
-    @Value("${security.token.secret.teacher}")
+    @Value("${security.token.secret}")
     private String secretKey;
 
     @Autowired 
@@ -59,21 +60,21 @@ public class AuthTeacher {
 
         logger.info("Password matches for email {}", authTeacherRequestDTO.institutionalEmail());
 
+        var roles = Arrays.asList("TEACHER");
+
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
-        var expires_in = Instant.now().plus(Duration.ofHours(7));
-
+        var expiresIn = Instant.now().plus(Duration.ofMinutes(10));
         var token = JWT.create()
-            .withIssuer("cps")
+            .withIssuer("javagas")
             .withSubject(teacher.getTeacherId().toString())
-            .withClaim("roles", Arrays.asList("teacher"))
-            .withExpiresAt(expires_in)
+            .withClaim("roles", roles)
+            .withExpiresAt(expiresIn)
             .sign(algorithm);
-
-        logger.info("Token generated for email {}", authTeacherRequestDTO.institutionalEmail());
 
         var authTeacherResponse = AuthTeacherResponseDTO.builder()
             .access_token(token)
-            .expires_in(expires_in.toEpochMilli())
+            .expires_in(expiresIn.toEpochMilli())
+            .roles(roles)
             .build();
 
         return authTeacherResponse;

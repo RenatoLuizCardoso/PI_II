@@ -4,9 +4,9 @@ package com.projeto_integrador.projeto_integrador.modules.schedule.usecases;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.projeto_integrador.projeto_integrador.modules.schedule.ScheduleValidation;
 import com.projeto_integrador.projeto_integrador.modules.schedule.entity.ScheduleEntity;
 import com.projeto_integrador.projeto_integrador.modules.schedule.repository.ScheduleRepository;
+import com.projeto_integrador.projeto_integrador.modules.student.repository.StudentRepository;
 
 @Service
 public class CreateSchedule {
@@ -15,9 +15,14 @@ public class CreateSchedule {
     ScheduleRepository repository;
 
     @Autowired
-    private ScheduleValidation validation;
+    StudentRepository studentRepository;
+
+    @Autowired
+    private FKValidation validation;
 
     public ScheduleEntity execute(ScheduleEntity scheduleEntity){
+        
+        
         Long subjectId = scheduleEntity.getSubject();
         validation.validateSubjectExist(subjectId);
 
@@ -32,6 +37,10 @@ public class CreateSchedule {
 
         Long courseId = scheduleEntity.getCourse();
         validation.validateCourseExist(courseId);
+
+        ScheduleEntity scheduleEntity2 = new ScheduleEntity();
+
+        scheduleEntity2.setTeacher(teacherId);
         
         return this.repository.save(scheduleEntity);
     }

@@ -5,12 +5,13 @@ import {
   TextInput,
   StyleSheet,
   Text,
-  TouchableOpacity
+  Pressable,
+  ActivityIndicator,
 } from "react-native";
-import RNPickerSelect from "react-native-picker-select";
-import AwesomeAlert from 'react-native-awesome-alerts';
 import { useFonts } from "expo-font";
 import { useFocusEffect } from "@react-navigation/native";
+import { registerStudent } from "../api/apiService";
+import axios from "axios";
 
 export default function AutoRegisterScreen({ navigation }) {
   const [fontsLoaded] = useFonts({
@@ -19,51 +20,48 @@ export default function AutoRegisterScreen({ navigation }) {
     "Roboto-Medium": require("../assets/fonts/Roboto-Medium.ttf"),
   });
 
-  const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [confirmaSenha, setConfirmaSenha] = useState("");
-  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [studentName, setNome] = useState("");
+  const [institutionalEmail, setEmail] = useState("");
+  const [studentPassword, setSenha] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [alertVisible, setAlertVisible] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const [redirectToLogin, setRedirectToLogin] = useState(false);
 
-  const courses = [
-    { label: "Engenharia", value: "engenharia" },
-    { label: "Medicina", value: "medicina" },
-    { label: "Direito", value: "direito" },
-    { label: "Administração", value: "administracao" },
-  ];
+  // Função para exibir mensagens de alerta e ocultá-las após 3 segundos
+  const showAlert = (message, isSuccess = false) => {
+    setAlertMessage(message);
+    setAlertVisible(true);
+
+    if (isSuccess) {
+      setTimeout(() => {
+        setAlertVisible(false);
+        navigation.navigate("Login"); // Navega para a tela de login após o sucesso
+      }, 3000); // Alerta desaparece após 3 segundos
+    } else {
+      setTimeout(() => setAlertVisible(false), 3000);
+    }
+  };
 
   const validateFields = () => {
-    const trimmedNome = nome.trim();
-    const trimmedEmail = email.trim();
-    const trimmedSenha = senha.trim();
-    const trimmedConfirmaSenha = confirmaSenha.trim();
-    const regex = /^[\s]+$/;
+    const trimmedNome = studentName.trim();
+    const trimmedEmail = institutionalEmail.trim();
+    const trimmedSenha = studentPassword.trim();
 
-    const nameRegex = /^[A-Za-z\s]+$/;
+    // Regex para permitir letras, espaços, acentos e cedilha
+    const nameRegex = /^[A-Za-zÀ-ÿ\s]+$/;
+
     if (!trimmedNome || !nameRegex.test(trimmedNome)) {
-      setAlertMessage("Erro, o nome deve conter apenas letras e espaços.");
-      setAlertVisible(true);
+      showAlert("Por favor, o nome deve conter apenas letras, espaços e acentos.");
       return false;
     }
 
-    if (!trimmedEmail.endsWith("@fatec.sp.gov.br") && !regex.test(trimmedEmail)) {
-      setAlertMessage("Erro, o email precisa ser institucional.");
-      setAlertVisible(true);
+    if (!trimmedEmail.endsWith("@fatec.sp.gov.br")) {
+      showAlert("Por favor, o email precisa ser institucional.");
       return false;
     }
 
-    if (trimmedSenha === "" && trimmedConfirmaSenha === "") {
-      setAlertMessage("Erro, digite uma senha.");
-      setAlertVisible(true);
-      return false;
-    }
-
-    if (trimmedSenha !== trimmedConfirmaSenha) {
-      setAlertMessage("Erro, as senhas não coincidem.");
-      setAlertVisible(true);
+    if (trimmedSenha === "") {
+      showAlert("Por favor, digite uma senha.");
       return false;
     }
 
@@ -75,35 +73,34 @@ export default function AutoRegisterScreen({ navigation }) {
       return;
     }
 
+    setIsLoading(true);
+
     const data = {
-      name: nome.trim(),
-      email: email.trim(),
-      password: senha,
-      courseId: selectedCourse,
+      studentName: studentName.trim(),
+      institutionalEmail: institutionalEmail.trim(),
+      studentPassword: studentPassword,
     };
 
-    try {
-      const response = await fetch('http://localhost:3000/students', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+    console.log("Dados a serem enviados:", data);
 
-      if (response.ok) {
-        setAlertMessage("Sucesso, cadastro realizado com sucesso!");
-        setAlertVisible(true);
-        setRedirectToLogin(true); // Defina para redirecionar após a confirmação
-      } else {
-        const responseData = await response.json();
-        setAlertMessage(responseData.message || "Erro ao tentar realizar o cadastro.");
-        setAlertVisible(true);
+    try {
+      const response = await registerStudent(data);
+      console.log("Resposta da API:", response);
+
+      if (response) {
+        showAlert("Cadastro realizado com sucesso!", true); // Passa `true` para indicar sucesso
       }
     } catch (error) {
-      console.error(error);
-      setAlertMessage("Erro ao tentar realizar o cadastro.");
-      setAlertVisible(true);
+      console.error("Erro na requisição:", error);
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        showAlert("Erro: não foi possível realizar o cadastro.");
+      } else {
+        showAlert(
+          "Ocorreu um erro ao tentar cadastrar o aluno. Tente novamente mais tarde."
+        );
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -112,8 +109,6 @@ export default function AutoRegisterScreen({ navigation }) {
       setNome("");
       setEmail("");
       setSenha("");
-      setConfirmaSenha("");
-      setSelectedCourse(null);
     }, [])
   );
 
@@ -124,79 +119,76 @@ export default function AutoRegisterScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Image source={require("../assets/fatec-logo.png")} style={styles.logo} />
+
+      {/* Alerta de erro ou sucesso */}
+      {alertVisible && (
+        <View
+          style={[
+            styles.alertContainer,
+            {
+              backgroundColor: alertMessage.startsWith("Cadastro")
+                ? "#d4edda"
+                : "#f8d7da",
+            },
+          ]}
+        >
+          <Text
+            style={[
+              styles.alertMessage,
+              {
+                color: alertMessage.startsWith("Cadastro")
+                  ? "#155724"
+                  : "#721c24",
+              },
+            ]}
+          >
+            {alertMessage}
+          </Text>
+        </View>
+      )}
+
       <View style={styles.groupInputs}>
         <Text style={styles.label}>Nome Completo</Text>
         <TextInput
           style={styles.input}
-          placeholder="Digite seu nome:"
+          placeholder="Digite seu nome"
           onChangeText={(text) => setNome(text)}
-          value={nome}
+          value={studentName}
         />
         <Text style={styles.label}>Email institucional</Text>
         <TextInput
           style={styles.input}
-          placeholder="Digite seu email:"
+          placeholder="Digite seu email"
           onChangeText={(text) => setEmail(text.trim())}
-          value={email}
+          value={institutionalEmail}
         />
         <Text style={styles.label}>Senha</Text>
         <TextInput
           style={styles.input}
-          placeholder="Digite sua senha:"
-          secureTextEntry={true}
+          placeholder="Digite sua senha"
+          secureTextEntry
           onChangeText={(text) => setSenha(text.trim())}
-          value={senha}
+          value={studentPassword}
         />
-        <Text style={styles.label}>Repita a senha</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Repita sua senha:"
-          secureTextEntry={true}
-          onChangeText={(text) => setConfirmaSenha(text.trim())}
-          value={confirmaSenha}
-        />
-        <Text style={styles.label}>Curso</Text>
-        <RNPickerSelect
-          onValueChange={(value) => setSelectedCourse(value)}
-          items={courses}
-          placeholder={{ label: "Escolha seu curso:", value: null }}
-          style={pickerSelectStyles}
-          value={selectedCourse}
-        />
-        <TouchableOpacity
+
+        <Pressable
           style={styles.button}
           onPress={cadastro}
+          disabled={isLoading}
         >
-          <Text style={styles.buttonText}>CADASTRAR</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+          {isLoading ? (
+            <ActivityIndicator size="small" color="white" />
+          ) : (
+            <Text style={styles.buttonText}>CADASTRAR</Text>
+          )}
+        </Pressable>
+        <Pressable
           style={styles.buttonVoltar}
           onPress={() => navigation.navigate("Login")}
         >
           <Text style={styles.buttonText}>VOLTAR</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
-      <AwesomeAlert
-        show={alertVisible}
-        showProgress={false}
-        title="Atenção"
-        message={alertMessage}
-        closeOnTouchOutside={false}
-        closeOnHardwareBackPress={false}
-        showCancelButton={false}
-        showConfirmButton={true}
-        confirmText="OK"
-        confirmButtonColor="#000"
-        onConfirmPressed={() => {
-          setAlertVisible(false);
-          if (redirectToLogin) {
-            navigation.navigate("Login"); // Redirecionar para a tela de login
-          }
-        }}
-        titleStyle={styles.alertTitle}
-        messageStyle={styles.alertMessage}
-        confirmButtonTextStyle={styles.alertButtonText}
-      />
     </View>
   );
 }
@@ -254,44 +246,13 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-Medium",
     fontSize: 16,
   },
-  alertTitle: {
-    fontFamily: "Roboto-Medium",
-    fontSize: 18,
-    color: "#B20000",
+  alertContainer: {
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 15,
   },
   alertMessage: {
-    fontFamily: "Roboto-Regular",
-    fontSize: 16,
-    color: "#333",
-  },
-  alertButtonText: {
-    fontFamily: "Roboto-Medium",
-    fontSize: 16,
-    color: "#fff",
-  },
-});
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
     fontSize: 16,
     fontFamily: "Roboto-Regular",
-    height: 40,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 10,
-    color: "#333",
-  },
-  inputAndroid: {
-    fontSize: 16,
-    fontFamily: "Roboto-Regular",
-    height: 40,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 10,
-    color: "#333",
   },
 });

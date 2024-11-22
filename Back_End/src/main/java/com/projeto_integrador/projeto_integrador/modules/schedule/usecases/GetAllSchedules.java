@@ -60,6 +60,7 @@ public class GetAllSchedules {
         Long teacherId = schedule.getTeacher();
         Long timeId = schedule.getTime();
         Long courseId = schedule.getCourse();
+        String weekDay = schedule.getWeekDay();
 
         Optional<SubjectEntity> subject = subjectRepository.findById(subjectId);
         String subjectName = subject.map(SubjectEntity::getSubjectName)
@@ -82,6 +83,7 @@ public class GetAllSchedules {
         result.put("teacher", teacherName);
         result.put("time", timeText);
         result.put("course", courseText);
+        result.put("weekday", weekDay);
         return result;
     }
 }

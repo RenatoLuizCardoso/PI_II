@@ -3,9 +3,11 @@
 <div class="container">
   <div class="row justify-content-center mt-5">
     <div class="col-lg-10 crud">
+      
       <!-- Campo de pesquisa -->
       <div class="text-center mb-4">
-        <input type="text" class="form-control col-md-12" placeholder="Pesquisar por nome" [(ngModel)]="pesquisaNome" (input)="filtrarCursos()" />
+        <input type="text" class="form-control col-md-12" placeholder="Pesquisar por nome"
+               [(ngModel)]="pesquisaNome" (input)="filtrarCursos()" />
       </div>
 
       <h3 class="text-center">Lista de Cursos</h3>
@@ -14,26 +16,32 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>Nome</th>
-            <th>Disciplinas</th>
+            <th>Nome do Curso</th>
             <th>Período</th>
-            <th>Semestres</th>
+            <th>Semestre</th>
+            <th>Disciplinas</th>
             <th>Ações</th>
           </tr>
         </thead>
         <tbody>
+          <!-- Exibição dos cursos -->
           <tr *ngFor="let curso of cursosPaginados">
-            <td>{{ curso.id }}</td>
-            <td>{{ curso.nameCourse }}</td>
-            <td>{{ curso.disciplina }}</td>
-            <td>{{ curso.period }}</td>
-            <td>{{ curso.semester }}</td>
+            <td>{{ curso.courseId }}</td> <!-- Alterado de curso.id para curso.courseId -->
+            <td>{{ curso.courseName }}</td> <!-- Alterado de curso.nameCourse para curso.courseName -->
+            <td>{{ curso.coursePeriod }}</td> <!-- Alterado de curso.period para curso.coursePeriod -->
+            <td>{{ curso.courseSemester }}</td> <!-- Alterado de curso.semester para curso.courseSemester -->
             <td>
-              <button class="btn btn-primary" [routerLink]="['/admin/editar_curso', curso.id]"
-                aria-label="Editar Curso">
+              <ul>
+                <li *ngFor="let disciplina of curso.subjects">{{ disciplina }}</li> <!-- Alterado de curso.disciplina para curso.subjects -->
+              </ul>
+            </td>
+            <td>
+              <!-- Botões de Ação -->
+              <button class="btn btn-primary" [routerLink]="['/admin/editar_curso', curso.courseId]"
+                      aria-label="Editar Curso">
                 <i class="fas fa-pen"></i>
               </button>
-              <button class="btn btn-danger" [disabled]="loading" (click)="excluirCurso(curso.id)">
+              <button class="btn btn-danger" [disabled]="loading" (click)="excluirCurso(curso.courseId)">
                 <i class="fas fa-trash"></i>
               </button>
             </td>
@@ -49,11 +57,9 @@
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-
           <li class="page-item" *ngFor="let page of paginas" [class.active]="paginaAtual === page">
             <a class="page-link" (click)="irParaPagina(page)">{{ page }}</a>
           </li>
-
           <li class="page-item" [class.disabled]="paginaAtual === totalPaginas">
             <a class="page-link" (click)="irParaPagina(paginaAtual + 1)" aria-label="Próximo">
               <span aria-hidden="true">&raquo;</span>
@@ -62,6 +68,7 @@
         </ul>
       </nav>
 
+      <!-- Botão de Cadastro de Novo Curso -->
       <div class="text-center mt-4">
         <button class="btn btn-success col-md-12" routerLink="/admin/cadastrar_curso">Cadastrar Novo Curso</button>
       </div>
@@ -69,4 +76,5 @@
   </div>
 </div>
 
+<!-- Inclusão do Font Awesome para os ícones -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">

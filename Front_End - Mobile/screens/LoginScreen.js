@@ -6,15 +6,13 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  CheckBox,
-  Alert,
+  ActivityIndicator
 } from "react-native";
 import { useFonts } from "expo-font";
 import Checkbox from 'expo-checkbox';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Ionicons } from '@expo/vector-icons';  // Importar ícones
-
-const API_URL = "http://192.168.15.49:3000/students";
+import { Ionicons } from '@expo/vector-icons';  
+import { loginStudent } from '../api/apiService'; // Importando a função que faz o login
 
 export default function LoginScreen({ navigation }) {
   const [fontsLoaded] = useFonts({
@@ -23,81 +21,99 @@ export default function LoginScreen({ navigation }) {
     "Roboto-Medium": require("../assets/fonts/Roboto-Medium.ttf"),
   });
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [institutionalEmail, setEmail] = useState("");
+  const [studentPassword, setPassword] = useState("");
   const [rememberLogin, setRememberLogin] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // Novo estado
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); 
+  const [alertMessage, setAlertMessage] = useState(""); // Mensagem de alerta
+  const [alertVisible, setAlertVisible] = useState(false); // Controle de visibilidade do alerta
 
-  useEffect(() => {
-    checkRememberedLogin();
-  }, []);
-
-  const checkRememberedLogin = async () => {
-    try {
-      const rememberedLogin = await AsyncStorage.getItem("rememberedLogin");
-      if (rememberedLogin) {
-        const user = JSON.parse(rememberedLogin);
-        setEmail(user.email);
-        setPassword(user.password);
-        setRememberLogin(true);
-      }
-    } catch (error) {
-      console.error("Erro ao recuperar o estado de lembrar login", error);
+  // Função de validação dos campos
+  const validateLoginFields = () => {
+    if (!institutionalEmail || !studentPassword) {
+      showAlert("Por favor, preencha o e-mail e a senha.");
+      return false;
     }
+    return true;
   };
 
+   // Função para exibir mensagens de alerta e ocultá-las após 3 segundos
+   const showAlert = (message) => {
+    setAlertMessage(message);
+    setAlertVisible(true);
+    setTimeout(() => setAlertVisible(false), 10000); // Alerta desaparece após 3 segundos
+  };
+
+  // Função de login
   const login = async () => {
+    if (!validateLoginFields()) {
+      return;
+    }
+
+    setIsLoading(true);
+
+    const credentials = {
+      institutionalEmail: institutionalEmail,
+      studentPassword: studentPassword,
+    };
+
     try {
-      const response = await fetch(API_URL);
-      const students = await response.json();
-      const user = students.find((student) => student.email === email);
+      const response = await loginStudent(credentials); // Envia as credenciais para a API
 
-      if (!user || user.password !== password) {
-        alert("Erro, email ou senha incorretos.");
-        return;
+      console.log("Resposta da API:", response);  // Verifique o que está sendo retornado
+
+      if (response) {
+        showAlert("Sucesso, login bem-sucedido!");
+
+        console.log(response.access_token)
+        await AsyncStorage.setItem("userToken", response.access_token);
+
+        // Navega para a tela principal com as informações do usuário
+        navigation.navigate("HomeScreen"); // Passando 'user' para HomeScreen
       }
-
-      alert("Sucesso, login bem-sucedido!");
-
-      if (rememberLogin) {
-        await AsyncStorage.setItem("rememberedLogin", JSON.stringify(user));
-      } else {
-        await AsyncStorage.removeItem("rememberedLogin");
-      }
-
-      navigation.navigate("HomeScreen", { user });
-
     } catch (error) {
       console.error("Erro ao tentar fazer login", error);
-      alert("Erro ao tentar fazer login.");
+      showAlert("Erro ao tentar fazer login.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  // Aguarda o carregamento das fontes
   if (!fontsLoaded) {
     return null;
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textLogin}>Login</Text>
+      <Text style={styles.textLogin}>LOGIN</Text>
       <Image source={require("../assets/profile.png")} style={styles.logo} />
+      
+      {/* Alerta de erro ou sucesso */}
+      {alertVisible && (
+        <View style={styles.alertContainer}>
+          <Text style={styles.alertMessage}>{alertMessage}</Text>
+        </View>
+      )}
+
       <Text style={styles.label}>Email institucional</Text>
       <TextInput
         style={styles.input}
-        placeholder="Digite seu email"
-        value={email}
+        placeholder="Digite seu email:"
+        value={institutionalEmail}
         onChangeText={setEmail}
         autoCapitalize="none"
-        keyboardType="email-address"
+        inputMode="email-address"
       />
 
       <Text style={styles.label}>Senha</Text>
       <View style={styles.passwordContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Digite sua senha"
+          placeholder="Digite sua senha:"
           secureTextEntry={!showPassword} 
-          value={password}
+          value={studentPassword}
           onChangeText={setPassword}
         />
         <TouchableOpacity
@@ -105,7 +121,8 @@ export default function LoginScreen({ navigation }) {
           style={styles.eyeButton}
         >
           <Ionicons
-            name={showPassword ? "eye-off" : "eye"} // Ícone de olho
+          style={styles.icon}
+            name={showPassword ? "eye-off" : "eye"}
             size={24}
             color="gray"
           />
@@ -113,17 +130,17 @@ export default function LoginScreen({ navigation }) {
       </View>
 
       <View style={styles.optionsContainer}>
-        <View style={styles.section}>
-          <Checkbox style={styles.checkbox} value={rememberLogin} onValueChange={setRememberLogin} />
-          <Text style={styles.rememberLogin}>Lembrar meu login?</Text>
-        </View>
         <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
           <Text style={styles.forgotPassword}>Esqueci minha senha</Text>
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={login}>
-        <Text style={styles.buttonText}>ENTRAR</Text>
+      <TouchableOpacity style={styles.button} onPress={login} disabled={isLoading}>
+      {isLoading ? (
+            <ActivityIndicator size="small" color="white" />
+          ) : (
+            <Text style={styles.buttonText}>ENTRAR</Text>
+          )}
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate("Register")}>
@@ -182,10 +199,6 @@ const styles = StyleSheet.create({
     width: "100%",
     marginBottom: 15,
   },
-  checkboxContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
   rememberLogin: {
     fontSize: 16,
     fontFamily: "Roboto-Regular",
@@ -198,7 +211,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   button: {
-    width: 90,
+    width: 120,
     height: 40,
     backgroundColor: "#B20000",
     justifyContent: "center",
@@ -218,4 +231,18 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     marginBottom: 85,
   },
+  alertContainer: {
+    backgroundColor: "#f8d7da",
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 15,
+  },
+  alertMessage: {
+    color: "#721c24",
+    fontSize: 16,
+    fontFamily: "Roboto-Regular",
+  },
+  icon:{
+    marginBottom : 15
+  }
 });

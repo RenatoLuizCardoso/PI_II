@@ -2,6 +2,7 @@ package com.projeto_integrador.projeto_integrador.modules.admin.usecases;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
 
 import javax.naming.AuthenticationException;
 
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.projeto_integrador.projeto_integrador.modules.admin.dto.AuthAdminDTO;
+import com.projeto_integrador.projeto_integrador.modules.admin.dto.AuthAdminResponseDTO;
 import com.projeto_integrador.projeto_integrador.modules.admin.repository.AdminRepository;
 
 @Service
@@ -32,7 +34,7 @@ public class AuthAdminUseCase {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String execute(AuthAdminDTO authAdminDTO) throws AuthenticationException {
+    public AuthAdminResponseDTO execute(AuthAdminDTO authAdminDTO) throws AuthenticationException {
         logger.debug("Attempting to authenticate admin with email: {}", authAdminDTO.getAdminEmail());
         
         if (authAdminDTO.getAdminEmail() == null || authAdminDTO.getAdminPassword() == null) {
@@ -57,14 +59,22 @@ public class AuthAdminUseCase {
 
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
 
-        var token = JWT.create()
-            .withIssuer("cps")
-            .withExpiresAt(Instant.now().plus(Duration.ofHours(7)))
+        var expiresIn = Instant.now().plus(Duration.ofHours(7));
+
+        var token = JWT.create().withIssuer("javagas")
+            .withExpiresAt(expiresIn)
             .withSubject(admin.getAdminId().toString())
+            .withClaim("roles", Arrays.asList("ADMIN"))
             .sign(algorithm);
 
-        logger.info("Token generated for email {}", authAdminDTO.getAdminEmail());
+        var roles = Arrays.asList("ADMIN");
 
-        return token;
+        var authAdminResponseDTO = AuthAdminResponseDTO.builder()
+            .access_token(token)
+            .expires_in(expiresIn.toEpochMilli())
+            .roles(roles)
+            .build();
+
+        return authAdminResponseDTO;
     }
 }

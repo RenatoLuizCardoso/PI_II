@@ -17,25 +17,31 @@
           <tr>
             <th>ID</th>
             <th>Tipo</th>
-            <th>Capacidade Maxima</th>
+            <th>Capacidade Máxima</th>
             <th>Andar</th>
+            <th>Recursos</th>
             <th>Disponibilidade</th>
             <th>Ações</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let sala of salasPaginadas">
-            <td>{{ sala.id }}</td>
-            <td>{{ sala.type }}</td>
-            <td>{{ sala.capacity }}</td>
-            <td>{{ sala.floor }}</td>
-            <td>{{ sala.availability }}</td>
+            <td>{{ sala.roomId }}</td>
+            <td>{{ sala.roomType }}</td>
+            <td>{{ sala.roomCapacity }}</td>
+            <td>{{ sala.roomFloor }}</td>
+            <td>{{ sala.roomResources }}</td>
+            <td>{{ sala.roomAvailability }}</td>
             <td>
-              <button class="btn btn-primary" [routerLink]="['/admin/editar_sala', sala.id]"
-                aria-label="Editar Salas">
-                <i class="fas fa-pen"></i>
-              </button>
-              <button class="btn btn-danger" [disabled]="loading" (click)="excluirSalas(sala.id)">
+           <!-- Ajuste aqui para garantir que o valor correto está sendo passado como id -->
+<button class="btn btn-primary" [routerLink]="['/admin/editar_sala', sala.roomId]"
+aria-label="Editar Salas">
+<i class="fas fa-pen"></i>
+</button>
+
+
+<button class="btn btn-danger" [disabled]="loading" (click)="excluirSalas(sala.roomId)">
+
                 <i class="fas fa-trash"></i>
               </button>
             </td>
@@ -70,3 +76,4 @@
     </div>
   </div>
 </div>
+
