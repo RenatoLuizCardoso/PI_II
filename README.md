@@ -105,8 +105,3 @@ Desenvolver um sistema que:
  
 ---
  
-## 🔗 Links Úteis
- 
-- **Protótipo no Figma**: [Clique aqui]()
- 
----
