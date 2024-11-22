@@ -83,9 +83,9 @@ Desenvolver um sistema que:
  
 ## 🖥 Diagrama e Modelagem
  
-- **Diagramas MER e DER** para modelagem de dados.
-- **Casos de uso** detalhando fluxos de trabalho como reservas, consultas e cadastro de usuários.
-- **Diagramas UML** para representação gráfica do sistema.
+- **Diagramas MER e DER**: para modelagem de dados.
+- **Casos de uso**: detalhando fluxos de trabalho como reservas, consultas e cadastro de usuários.
+- **Diagramas UML**: para representação gráfica do sistema.
  
 ---
  
