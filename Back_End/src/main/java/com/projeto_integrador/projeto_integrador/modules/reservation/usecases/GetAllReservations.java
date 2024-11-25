@@ -1,6 +1,5 @@
 package com.projeto_integrador.projeto_integrador.modules.reservation.usecases;
 
-import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -23,12 +22,16 @@ import com.projeto_integrador.projeto_integrador.modules.time.repository.TimeRep
 import com.projeto_integrador.projeto_integrador.modules.courses.repository.CourseRepository;
 import com.projeto_integrador.projeto_integrador.modules.reservation.entity.ReservationEntity;
 import com.projeto_integrador.projeto_integrador.modules.reservation.repository.ReservationRepository;
+import com.projeto_integrador.projeto_integrador.modules.rooms.entity.RoomEntity;
+import com.projeto_integrador.projeto_integrador.modules.rooms.entity.RoomTypeEntity;
+import com.projeto_integrador.projeto_integrador.modules.rooms.repository.RoomRepository;
+import com.projeto_integrador.projeto_integrador.modules.rooms.repository.RoomTypeRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class GetAllReservations {
-    
+
     @Autowired
     ReservationRepository reservationRepository;
 
@@ -43,7 +46,12 @@ public class GetAllReservations {
 
     @Autowired
     CourseRepository courseRepository;
-    
+
+    @Autowired
+    RoomRepository roomRepository;
+
+    @Autowired
+    RoomTypeRepository roomTypeRepository;
 
     public List<Map<String, Object>> execute() {
         var allReservations = reservationRepository.findAll();
@@ -52,8 +60,8 @@ public class GetAllReservations {
         }
 
         return allReservations.stream()
-                          .map(this::convertReservationToMap)
-                          .collect(Collectors.toList());
+                .map(this::convertReservationToMap)
+                .collect(Collectors.toList());
     }
 
     private Map<String, Object> convertReservationToMap(ReservationEntity reservation) {
@@ -65,26 +73,37 @@ public class GetAllReservations {
         LocalDate date = reservation.getDate();
         Long timeId = reservation.getTime();
         Long courseId = reservation.getCourse();
+        Long roomId = reservation.getRoom();
 
         DayOfWeek dayOfWeek = date.getDayOfWeek();
         String dayName = dayOfWeek.getDisplayName(java.time.format.TextStyle.FULL, new Locale("pt", "BR"));
 
         Optional<SubjectEntity> subject = subjectRepository.findById(subjectId);
         String subjectName = subject.map(SubjectEntity::getSubjectName)
-                                    .orElse("Unknown Subject");
+                .orElse("Unknown Subject");
 
         Optional<TeacherEntity> teacher = teacherRepository.findById(teacherId);
         String teacherName = teacher.map(TeacherEntity::getTeacherName)
-                                    .orElse("Unknown Teacher");
+                .orElse("Unknown Teacher");
 
         Optional<TimeEntity> time = timeRepository.findById(timeId);
-        String timeText = time.map(t -> String.format("%s - %s (%s)", t.getStartTime(), t.getEndTime(), t.getWeekDay()))
-                                    .orElse("Unknown Time");
+        String timeText = time
+                .map(t -> String.format("%s - %s - %s (%s)", t.getTimeId(), t.getStartTime(), t.getEndTime(), dayName))
+                .orElse("Unknown Time");
 
         Optional<CourseEntity> course = courseRepository.findById(courseId);
         String courseText = course.map(c -> String.format("%s - %s", c.getCourseName(), c.getCourseSemester()))
-                                    .orElse("Unknown Course");
+                .orElse("Unknown Course");
 
+        Optional<RoomEntity> room = roomRepository.findById(roomId);
+        String roomText = room.map(r -> {
+            Long roomTypeId = r.getRoomType();
+
+            Optional<RoomTypeEntity> roomType = roomTypeRepository.findById(roomTypeId);
+            String roomTypeName = roomType.map(RoomTypeEntity::getRoomTypeDescription).orElse("Unknown Room Type");
+
+            return String.format("%s (%s)", r.getRoomNumber(), roomTypeName);
+        }).orElse("Unknown Room");
 
         result.put("subject", subjectName);
         result.put("teacher", teacherName);
@@ -92,7 +111,7 @@ public class GetAllReservations {
         result.put("weekDay", dayName);
         result.put("time", timeText);
         result.put("course", courseText);
+        result.put("room", roomText);
         return result;
     }
 }
-

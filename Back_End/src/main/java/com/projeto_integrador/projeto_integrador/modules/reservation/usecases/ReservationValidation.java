@@ -22,7 +22,6 @@ import com.projeto_integrador.projeto_integrador.modules.time.repository.TimeRep
 import com.projeto_integrador.projeto_integrador.modules.courses.repository.CourseRepository;
 import com.projeto_integrador.projeto_integrador.modules.reservation.entity.ReservationEntity;
 import com.projeto_integrador.projeto_integrador.modules.reservation.repository.ReservationRepository;
-import com.projeto_integrador.projeto_integrador.modules.admin.usecases.AuthAdminUseCase;
 import com.projeto_integrador.projeto_integrador.modules.courses.entity.CourseEntity;
 
 @Service

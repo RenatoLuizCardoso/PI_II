@@ -31,6 +31,7 @@ public class PutRoomById {
         updateRoom.setRoomResources(roomEntity.getRoomResources());
         updateRoom.setRoomAvailability(roomEntity.getRoomAvailability());
         updateRoom.setRoomType(roomEntity.getRoomType());
+        updateRoom.setRoomNumber(roomEntity.getRoomNumber());
 
 
         return this.roomRepository.save(updateRoom);

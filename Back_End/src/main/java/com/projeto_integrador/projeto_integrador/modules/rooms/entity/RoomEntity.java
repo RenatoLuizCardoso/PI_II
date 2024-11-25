@@ -41,6 +41,12 @@ public class RoomEntity {
     private String roomCapacity;
 
     @NotBlank
+    @Length(max = 2, message = "o máximo de caracteres do campo [roomNumber] são 11")
+    @Column(name = "room_number")
+    @Schema(example = "02", requiredMode = RequiredMode.REQUIRED, description = "Número da sala/labóratorio")
+    private String roomNumber;
+
+    @NotBlank
     @Length(max = 100, message = "o máximo de caracteres do campo [roomFloor] são 100")
     @Column(name = "room_floor")
     @Schema(example = "2", requiredMode = RequiredMode.REQUIRED, description = "Andar da sala/labóratorio")
