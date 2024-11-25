@@ -20,16 +20,15 @@
         </thead>
         <tbody>
           <tr *ngFor="let discipline of disciplinasPaginadas">
-            <td>{{ discipline.id }}</td>
-            <td>{{ discipline.disciplineName }}</td>
-            <td>{{ discipline.hour }}</td>
-      
+            <td>{{ discipline.subjectId }}</td> <!-- Atualizado para 'subjectId' -->
+            <td>{{ discipline.subjectName }}</td> <!-- Atualizado para 'subjectName' -->
+            <td>{{ discipline.subjectHours }}</td> <!-- Atualizado para 'subjectHours' -->
             <td>
-              <button class="btn btn-primary" [routerLink]="['/admin/editar_disc', discipline.id]"
+              <button class="btn btn-primary" [routerLink]="['/admin/editar_disc', discipline.subjectId]"
                 aria-label="Editar Disciplina">
                 <i class="fas fa-pen"></i>
               </button>
-              <button class="btn btn-danger" [disabled]="loading" (click)="excluirDisciplina(discipline.id)">
+              <button class="btn btn-danger" [disabled]="loading" (click)="excluirDisciplina(discipline.subjectId)">
                 <i class="fas fa-trash"></i>
               </button>
             </td>

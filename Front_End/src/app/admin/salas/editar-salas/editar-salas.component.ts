@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CsalasService } from '../../../serv/admin/csalas.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-editar-salas',
@@ -12,55 +13,93 @@ export class EditarSalasComponent implements OnInit {
   salaForm: FormGroup;
   registerError: boolean = false;
   mensagemSucesso: boolean = false;
+  todosRecursos: string[] = ['Computadores', 'Projetor', 'Ventiladores']; // Recursos disponíveis
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private csalasService: CsalasService
+    private csalasService: CsalasService,
+    private titleService: Title
   ) {
-    // Altere o nome do campo de 'id' para 'roomId'
     this.salaForm = this.fb.group({
-      roomId: [''],  // Altere 'id' para 'roomId'
+      roomId: [''],
       roomType: ['', Validators.required],
-      roomCapacity: ['', [Validators.required, Validators.min(1), Validators.pattern('^[0-9]+$')]],
+      roomCapacity: ['', [Validators.required, Validators.min(1)]],
       roomFloor: ['', [Validators.required, Validators.min(0)]],
-      roomResources: ['', Validators.required],
+      roomResources: this.fb.array([], Validators.required), // Recursos como FormArray
       roomAvailability: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Edição de Salas');
     this.carregarSala();
   }
 
-  carregarSala() {
-    const id = this.route.snapshot.paramMap.get('id');  // Pegue o id da URL
+  get f() {
+    return this.salaForm.controls;
+  }
+
+  get resources(): FormArray {
+    return this.salaForm.get('roomResources') as FormArray;
+  }
+
+  carregarSala(): void {
+    const id = this.route.snapshot.paramMap.get('id'); // Pega o ID da URL
 
     if (id) {
       this.csalasService.getSalaById(id).subscribe(
         data => {
-          // Aqui, estamos agora preenchendo o campo 'roomId'
-          this.salaForm.get('roomId')?.setValue(data.roomId);  // Defina o roomId
-          this.salaForm.patchValue(data);  // Preenche os outros campos
+          this.salaForm.patchValue({
+            roomId: data.roomId,
+            roomType: data.roomType,
+            roomCapacity: data.roomCapacity,
+            roomFloor: data.roomFloor,
+            roomAvailability: data.roomAvailability
+          });
+
+          // Converte os recursos recebidos para o FormArray
+          const recursosSelecionados: string[] = data.roomResources.split(', '); // Explicitamente definido como string[]
+          recursosSelecionados.forEach((recurso: string) => { // Tipo adicionado aqui
+            if (this.todosRecursos.includes(recurso)) {
+              this.resources.push(this.fb.control(recurso));
+            }
+          });
         },
-        error => {
-          console.error('Erro ao carregar sala: ', error);
-        }
+        error => console.error('Erro ao carregar sala: ', error)
       );
     } else {
       console.error('ID não encontrado na rota.');
     }
   }
 
-  salvar() {
-    if (this.salaForm.valid) {
-      const salaAtualizada = this.salaForm.getRawValue();
 
-      // Exibe o objeto que será enviado
+  isRecursoSelecionado(recurso: string): boolean {
+    return this.resources.value.includes(recurso);
+  }
+
+  onResourceChange(event: any, recurso: string): void {
+    const checked = event.target.checked;
+    if (checked) {
+      this.resources.push(this.fb.control(recurso));
+    } else {
+      const index = this.resources.controls.findIndex(control => control.value === recurso);
+      if (index !== -1) {
+        this.resources.removeAt(index);
+      }
+    }
+  }
+
+  salvar(): void {
+    if (this.salaForm.valid) {
+      const salaAtualizada = {
+        ...this.salaForm.value,
+        roomResources: this.resources.value.join(', ') // Converte FormArray para string
+      };
+
       console.log('JSON enviado para atualização:', JSON.stringify(salaAtualizada));
 
-      // Verifique se o roomId está correto
       if (!salaAtualizada.roomId) {
         console.error("ID da sala não encontrado!");
         return;
@@ -83,6 +122,4 @@ export class EditarSalasComponent implements OnInit {
       this.registerError = true;
     }
   }
-
-  get f() { return this.salaForm.controls; }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CcursoService } from '../../../serv/admin/ccurso.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-editar-curso',
@@ -16,7 +17,8 @@ export class EditarCursoComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private ccursoService: CcursoService
+    private ccursoService: CcursoService,
+    private titleService: Title
   ) {
     this.cursoForm = this.fb.group({
       id: [{ value: '', disabled: true }],
@@ -29,6 +31,7 @@ export class EditarCursoComponent implements OnInit {
 
   ngOnInit(): void {
     this.carregarCurso();
+    this.titleService.setTitle('Edição de Curso');
   }
 
   carregarCurso() {

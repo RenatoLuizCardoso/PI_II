@@ -14,6 +14,7 @@
                 <small *ngIf="f['courseName'].errors?.['pattern']">Nome do curso deve conter apenas letras e espaços.</small>
               </div>
             </div>
+
             <div class="mb-3 mt-3">
               <label for="courseSemester" class="form-label">Semestre</label>
               <input type="text" class="form-control" id="courseSemester" formControlName="courseSemester" placeholder="Semestre (Ex: 1° Semestre)">
@@ -21,6 +22,7 @@
                 <small *ngIf="f['courseSemester'].errors?.['required']">Semestre é obrigatório.</small>
               </div>
             </div>
+
             <div class="mb-3 mt-3">
               <label for="coursePeriod" class="form-label">Período</label>
               <select class="form-control" id="coursePeriod" formControlName="coursePeriod">
@@ -33,11 +35,29 @@
                 <small *ngIf="f['coursePeriod'].errors?.['required']">Período é obrigatório.</small>
               </div>
             </div>
+
+            <!-- Botão para abrir o menu de seleção de disciplinas -->
             <div class="mb-3 mt-3">
               <label for="courseSubjects" class="form-label">Matérias</label>
-              <input type="text" class="form-control" id="courseSubjects" formControlName="courseSubjects" placeholder="Matérias (Ex: Matemática, Física)">
-              <div *ngIf="f['courseSubjects'].touched && f['courseSubjects'].invalid" class="text-danger">
-                <small *ngIf="f['courseSubjects'].errors?.['required']">Matérias são obrigatórias.</small>
+              <button type="button" class="btn btn-secondary" (click)="toggleDisciplineSelection()">
+                Selecionar Disciplinas
+              </button>
+            </div>
+
+            <!-- Menu de seleção de disciplinas (Modal/Overlay) -->
+            <div *ngIf="disciplineSelectionOpen" class="discipline-overlay" (click)="toggleDisciplineSelection()">
+              <div class="discipline-menu" (click)="$event.stopPropagation()">
+                <h5 class="text-center">Selecione as Disciplinas</h5>
+                <div *ngFor="let discipline of disciplines">
+                  <label>
+                    <input type="checkbox" [value]="discipline.subjectId" (change)="onDisciplineChange($event)">
+                    {{ discipline.subjectName }}
+                  </label>
+                </div>
+                <div class="text-center mt-3">
+                  <button class="btn btn-secondary" (click)="toggleDisciplineSelection()">Fechar</button>
+                  <button class="btn btn-primary" (click)="confirmDisciplineSelection()">Confirmar</button>
+                </div>
               </div>
             </div>
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CcursoService } from '../../../serv/admin/ccurso.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-gerenciar-cursos',
@@ -17,10 +18,11 @@ export class GerenciarCursosComponent implements OnInit {
   itensPorPagina: number = 8;
   paginas: number[] = [];
 
-  constructor(private ccursoService: CcursoService) { }
+  constructor(private ccursoService: CcursoService, private titleService: Title) { }
 
   ngOnInit(): void {
     this.carregarCursos();
+    this.titleService.setTitle('Gerenciamento de Cursos');
   }
 
   carregarCursos() {

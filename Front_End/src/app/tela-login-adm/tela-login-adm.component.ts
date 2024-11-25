@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthaService } from '../autha.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tela-login-adm',
@@ -15,13 +16,21 @@ export class TelaLoginAdmComponent {
   constructor(
     private fb: FormBuilder,
     private authaService: AuthaService,
-    private router: Router
+    private router: Router,
+    private titleService: Title
   ) {
     this.loginForm = this.fb.group({
       adminEmail: ['', [Validators.required, Validators.email]],
       adminPassword: ['', Validators.required]
     });
   }
+
+  ngOnInit() {
+    this.titleService.setTitle('Login');
+  }
+
+
+
 
   onSubmit(): void {
     if (this.loginForm.valid) {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CsalasService } from '../../../serv/admin/csalas.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-gerenciar-salas',
@@ -17,10 +18,12 @@ export class GerenciarSalasComponent implements OnInit {
   itensPorPagina: number = 8;
   paginas: number[] = [];
 
-  constructor(private csalasService: CsalasService) { }
+  constructor(private csalasService: CsalasService,  private titleService: Title) { }
 
   ngOnInit(): void {
     this.carregarSalas();
+    this.titleService.setTitle('Gerenciamento de Salas');
+
   }
 
   carregarSalas() {

@@ -10,3 +10,34 @@
 .btn-verde {
   background-color: #0b9247;
 }
+
+/* Estilo para o overlay */
+.discipline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Coloca o modal sobre o restante do conteúdo */
+}
+
+/* Estilo para o menu de seleção de disciplinas */
+.discipline-menu {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 500px;
+  overflow-y: auto;
+  max-height: 70vh;
+}
+
+/* Estilo para os botões dentro do modal */
+.discipline-menu button {
+  margin: 5px;
+}

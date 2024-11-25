@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { CsalasService } from '../../../serv/admin/csalas.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-cadastrar-sala',
@@ -14,10 +15,12 @@ export class CadastrarSalaComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private csalasService: CsalasService
+    private csalasService: CsalasService,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('Cadastro de Salas');
     this.registerForm = this.formBuilder.group({
       roomType: ['', Validators.required], // Tipo da sala (1 ou 2)
       roomCapacity: ['', [Validators.required, Validators.min(1)]], // Capacidade da sala (mínimo 1)
@@ -46,20 +49,8 @@ export class CadastrarSalaComponent implements OnInit {
     }
   }
 
-  // Envio do formulário com a estrutura de dados adequada para o novo backend
   onSubmit(): void {
     if (this.registerForm.invalid) {
-      this.registerError = true;
-      return;
-    }
-
-    // Certificando-se de que roomType seja um número (1 ou 2)
-    let roomType = this.registerForm.value.roomType;
-    roomType = Number(roomType); // Converte roomType para número (1 ou 2)
-
-    // Verificação se roomType está correto
-    if (![1, 2].includes(roomType)) {
-      console.error('roomType deve ser 1 ou 2');
       this.registerError = true;
       return;
     }
@@ -70,7 +61,7 @@ export class CadastrarSalaComponent implements OnInit {
       roomFloor: this.registerForm.value.roomFloor, // Andar da sala
       roomResources: this.resources.controls.map((control: any) => control.value).join(', '), // Recursos como string
       roomAvailability: this.registerForm.value.roomAvailability, // Disponibilidade
-      roomType: roomType // Tipo da sala (agora garantido como número 1 ou 2)
+      roomType: this.registerForm.value.roomType // Tipo da sala (já garantido como número)
     };
 
     // **Log para verificar os dados antes de enviar**
@@ -91,6 +82,7 @@ export class CadastrarSalaComponent implements OnInit {
       }
     );
   }
+
 
   // Função para resetar o formulário
   onReset(): void {

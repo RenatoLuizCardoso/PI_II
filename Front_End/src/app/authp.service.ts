@@ -1,30 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthpService {
-  private isAuthenticated = false;
-  private readonly validUsername = 'admin';
-  private readonly validPassword = 'admin';
+  private apiUrl = 'https://projeto-integrador-1v4i.onrender.com/teacher/auth';
 
-  constructor(private router: Router) {}
+  constructor(private http: HttpClient) {}
 
-  login(username: string, password: string): boolean {
-    if (username === this.validUsername && password === this.validPassword) {
-      this.isAuthenticated = true;
-      return true;
-    }
-    return false;
-  }
-
-  logout(): void {
-    this.isAuthenticated = false;
-    this.router.navigate(['/login']);
-  }
-
-  getAuthStatus(): boolean {
-    return this.isAuthenticated;
+  login(payload: string): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(this.apiUrl, payload, { headers });
   }
 }

@@ -1,91 +1,88 @@
 <app-navbar></app-navbar>
+<div *ngIf="loading">Carregando...</div>
 
-<div class="full-width-container">
-  <div class="row">
-    
-    <!-- Coluna Esquerda - 20% -->
-    <div class="col-20">
-      <h3>Salas</h3>
-      <div class="salas">
-        <button type="button" class="btn">Sala 1</button>
-        <button type="button" class="btn">Sala 2</button>
-        <button type="button" class="btn">Sala 3</button>
-        <button type="button" class="btn">Sala 4</button>
-        <button type="button" class="btn">Sala 5</button>
-        <button type="button" class="btn">Sala 6</button>
-        <button type="button" class="btn">Sala 7</button>
-        <button type="button" class="btn">Sala 8</button>
-        <button type="button" class="btn">Sala 9</button>
-        <button type="button" class="btn">Sala 10</button>
-        <button type="button" class="btn">Sala 11</button>
-        <button type="button" class="btn">Sala 12</button>
-      </div>
-      
-      <h3>Laboratórios</h3>
-      <div class="laboratorios">
-        <button type="button" class="btn">Laboratório 1</button>
-        <button type="button" class="btn">Laboratório 2</button>
-        <button type="button" class="btn">Laboratório 3</button>
-        <button type="button" class="btn">Laboratório 4</button>
-        <button type="button" class="btn">Laboratório 5</button>
-        <button type="button" class="btn">Laboratório 6</button>
-      </div>
-    </div>
+<div *ngIf="!loading">
+  <h1>Gerenciar Reservas</h1>
 
-    <!-- Coluna Central - 50% -->
-    <div class="col-50">
-      <div class="container mt-4">
-        <h2>Grade de Horário</h2>
-        <div class="mb-3">
-          <label for="cursoSelect" class="form-label">Selecione o Curso:</label>
-          <select id="cursoSelect" class="form-select" (change)="selecionarCurso($event)">
-            <option *ngFor="let curso of cursos; let i = index" [value]="i">
-              {{ curso.curso }} - {{ curso.semestre }}
-            </option>
-          </select>
-        </div>
+  <!-- Formulário para criar/editar reservas -->
+  <!-- Formulário para criar/editar reservas -->
+  <form (submit)="isEditing ? updateReservation() : createReservation()">
+    <label>
+      <strong>Professor:</strong>
+       <select [(ngModel)]="form.teacher" name="teacher" required>
+    <option *ngFor="let teacher of teachers" [value]="teacher.teacherId">
+      {{ teacher.teacherName }}
+    </option>
+  </select>
+    </label>
+    <label>
+      <strong>Disciplina:</strong>
+      <select [(ngModel)]="form.subject" name="subject" (change)="logSelectedValue('Disciplina', form.subject)" required>
+        <option *ngFor="let subject of subjects" [value]="subject.subjectId">
+          {{ subject.subjectName }}
+        </option>
+      </select>
+    </label>
+    <label>
+      <strong>Horário:</strong>
+      <select [(ngModel)]="form.time" name="time" (change)="logSelectedValue('Horário', form.time)" required>
+        <option *ngFor="let time of times" [value]="time.timeId">
+          {{ time.startTime }}-{{ time.endTime }}
+        </option>
+      </select>
+    </label>
+    <label>
+      <strong>Sala:</strong>
+      <select [(ngModel)]="form.room" name="room" (change)="logSelectedValue('Sala', form.room)" required>
+        <option *ngFor="let room of rooms" [value]="room.roomId">
+          {{ room.roomType }} {{ room.roomFloor }}
+        </option>
+      </select>
+    </label>
+    <label>
+      <strong>Curso:</strong>
+      <select [(ngModel)]="form.course" name="course" (change)="logSelectedValue('Curso', form.course)" required>
+        <option *ngFor="let course of courses" [value]="course.courseId">
+          {{ course.courseName }}
+        </option>
+      </select>
+    </label>
+    <label>
+      <strong>Data:</strong>
+      <input [(ngModel)]="form.date" name="date" type="date" required />
+    </label>
+    <button type="submit">{{ isEditing ? 'Atualizar' : 'Adicionar' }}</button>
+    <button type="button" (click)="cancel()">Cancelar</button>
+  </form>
 
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th scope="col">Horário</th>
-              <th scope="col">Segunda</th>
-              <th scope="col">Terça</th>
-              <th scope="col">Quarta</th>
-              <th scope="col">Quinta</th>
-              <th scope="col">Sexta</th>
-              <th scope="col">Sábado</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let horario of ['13:20 - 14:10', '14:10 - 15:00', '15:00 - 15:50', '15:50 - 16:40', '16:40 - 17:30', '17:30 - 18:20']">
-              <td>{{ horario }}</td>
-              <td>{{ getMateriaParaHorario('segunda', horario) }}</td>
-              <td>{{ getMateriaParaHorario('terca', horario) }}</td>
-              <td>{{ getMateriaParaHorario('quarta', horario) }}</td>
-              <td>{{ getMateriaParaHorario('quinta', horario) }}</td>
-              <td>{{ getMateriaParaHorario('sexta', horario) }}</td>
-              <td>{{ getMateriaParaHorario('sabado', horario) }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
 
-    <!-- Coluna Direita - 30% -->
-    <div class="col-30">
-      <div class="calendar">
-        <button (click)="navegarSemana(-1)">Semana Anterior</button>
-        <button (click)="navegarSemana(1)">Próxima Semana</button>
-        
-        <div class="dias-mes">
-          <h4>{{ nomeMes }}</h4>
-          <div *ngFor="let dia of diasDoMes; let i = index" 
-               [class.highlighted]="isDiaNaSemana(i)">
-            {{ dia }}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <table border="1" style="width: 100%; text-align: center; margin-top: 20px;">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Professor</th>
+        <th>Disciplina</th>
+        <th>Horário</th>
+        <th>Data</th>
+        <th>Sala</th>
+        <th>Curso</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reservation of reservations">
+        <td>{{ reservation.reservationId }}</td>
+        <td>{{ reservation.teacher }}</td>
+        <td>{{ reservation.subject }}</td>
+        <td>{{ reservation.time }}</td>
+        <td>{{ reservation.date }}</td>
+        <td>{{ reservation.room }}</td>
+        <td>{{ reservation.course }}</td>
+        <td>
+          <button (click)="editReservation(reservation)">Editar</button>
+          <button (click)="deleteReservation(reservation.reservationId)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

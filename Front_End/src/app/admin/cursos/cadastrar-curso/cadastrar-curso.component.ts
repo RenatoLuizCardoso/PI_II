@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CcursoService } from '../../../serv/admin/ccurso.service';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-cadastrar-curso',
@@ -12,61 +13,95 @@ export class CadastrarCursoComponent implements OnInit {
   registerForm!: FormGroup;
   registerError: boolean = false;
   registerSuccess: boolean = false;
+  disciplines: any[] = [];  // Para armazenar as disciplinas carregadas
+  selectedDisciplines: number[] = [];  // Para armazenar as disciplinas selecionadas
+  disciplineSelectionOpen: boolean = false;  // Controla se o modal está aberto
 
   constructor(
     private formBuilder: FormBuilder,
     private ccursoService: CcursoService,
-    private router: Router
+    private router: Router,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('Cadastro de Cursos');
     this.registerForm = this.formBuilder.group({
       courseName: ['', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$')]], // Letras e espaços
       courseSemester: ['', [Validators.required]],
       coursePeriod: ['', Validators.required],
-      courseSubjects: ['', [Validators.required, Validators.pattern('^[0-9]+$')]] // Aceita números
+      courseSubjects: ['']  // Campo de matérias será preenchido ao enviar o formulário
     });
+
+    this.loadDisciplines();  // Carrega as disciplinas ao iniciar
   }
 
   get f() { return this.registerForm.controls; }
 
-  onSubmit(): void {
-    if (this.registerForm.invalid) {
-      this.registerError = true;
-      return;
-    }
-
-    // Transformando os dados do formulário para o formato desejado
-    const courseData = {
-      courseName: this.registerForm.value.courseName,  // Nome do curso
-      courseSemester: this.registerForm.value.courseSemester,  // Semestre
-      coursePeriod: this.registerForm.value.coursePeriod,  // Período
-      courseSubjects: [parseInt(this.registerForm.value.courseSubjects)]  // Converte para array de números
-    };
-
-    // Log dos dados que estão sendo enviados (para debug)
-    console.log('Dados enviados para o servidor:', JSON.stringify(courseData, null, 2));
-
-    // Envia os dados com o token via HTTP
-    this.ccursoService.registerCurso(courseData).subscribe(
-      response => {
-        console.log('Formulário enviado com sucesso', response);
-        this.registerSuccess = true;
-        this.registerForm.reset();
-        this.registerError = false;
-        setTimeout(() => this.registerSuccess = false, 5000);
-        this.router.navigate(['/admin/gerenciar_curso']);
+  // Função para carregar as disciplinas
+  loadDisciplines(): void {
+    this.ccursoService.getDisciplines().subscribe(
+      (response) => {
+        this.disciplines = response;  // Armazena as disciplinas no array
+        console.log('Disciplinas carregadas:', this.disciplines);
       },
-      error => {
-        console.error('Erro ao enviar o formulário', error);
-        this.registerError = true;
+      (error) => {
+        console.error('Erro ao carregar as disciplinas:', error);
       }
     );
   }
 
-  onReset(): void {
-    this.registerForm.reset();
-    this.registerError = false;
-    this.registerSuccess = false;
+  // Função para abrir/fechar o modal de seleção de disciplinas
+  toggleDisciplineSelection(): void {
+    this.disciplineSelectionOpen = !this.disciplineSelectionOpen;
+  }
+
+  // Função chamada ao alterar a seleção de uma disciplina
+  onDisciplineChange(event: any): void {
+    const subjectId = event.target.value;
+    if (event.target.checked) {
+      this.selectedDisciplines.push(Number(subjectId));  // Adiciona ID da disciplina
+    } else {
+      this.selectedDisciplines = this.selectedDisciplines.filter(id => id !== Number(subjectId));  // Remove ID da disciplina
+    }
+    console.log('Disciplinas selecionadas:', this.selectedDisciplines);
+  }
+
+  // Função para confirmar a seleção de disciplinas e fechar o modal
+  confirmDisciplineSelection(): void {
+    console.log('Disciplinas confirmadas:', this.selectedDisciplines);
+    this.toggleDisciplineSelection();  // Fecha o modal
+  }
+
+  onSubmit(): void {
+    if (this.registerForm.invalid || this.selectedDisciplines.length === 0) {
+      this.registerError = true;
+      return;
+    }
+
+    // Monta os dados do curso
+    const courseData = {
+      courseName: this.registerForm.value.courseName,
+      courseSemester: this.registerForm.value.courseSemester,
+      coursePeriod: this.registerForm.value.coursePeriod,
+      courseSubjects: this.selectedDisciplines  // Passa as disciplinas selecionadas
+    };
+
+    // Envia os dados para o backend
+    this.ccursoService.registerCurso(courseData).subscribe(
+      (response) => {
+        console.log('Formulário enviado com sucesso', response);
+        this.registerSuccess = true;
+        this.registerForm.reset();
+        this.selectedDisciplines = [];
+        this.registerError = false;
+        setTimeout(() => this.registerSuccess = false, 5000);
+        this.router.navigate(['/admin/gerenciar_curso']);
+      },
+      (error) => {
+        console.error('Erro ao enviar o formulário', error);
+        this.registerError = true;
+      }
+    );
   }
 }

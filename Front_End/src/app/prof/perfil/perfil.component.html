@@ -3,31 +3,30 @@
   <div class="row">
     <div class="esquerda col-md-3 left-side d-flex align-items-center justify-content-center">
       <div class="frame-container">
-        <div class="frame btn " (click)="triggerFileInput()">
+        <div class="frame btn" (click)="triggerFileInput()">
           <img [src]="selectedImage" alt="Perfil" class="profile-img" *ngIf="selectedImage">
           <span *ngIf="!selectedImage" class="placeholder-text">Adicione uma imagem</span>
         </div>
         <input type="file" id="fileInput" accept="image/*" (change)="onImageSelected($event)" hidden>
         <div class="profile-bar">
-          <span class="profile-name">Nome do Usuário</span>
+          <span class="profile-name">{{ professorData.teacherName }}</span>
         </div>
       </div>
-
     </div>
     <div class="col-md-9 right-side d-flex align-items-center justify-content-center">
       <form class="form-container">
         <div class="form-group">
           <label for="emailInst">Email Institucional</label>
-          <input type="email" class="form-control" id="emailInst" value="exemplo@institucional.com" disabled>
+          <input type="email" class="form-control" id="emailInst" [value]="professorData.institutionalEmail" disabled>
         </div>
 
-        <!-- Campo de Email Pessoal (também desabilitado por padrão) -->
+        <!-- Campo de Email Pessoal -->
         <div class="form-group">
           <label for="emailPessoal" class="me-2">Email Pessoal</label>
-<div class="d-flex align-items-center">
-          <input type="email" class="form-control me-2" id="emailPessoal" value="email@pessoal.com" disabled>
-          <button type="button" class="btn " (click)="toggleEmailDropdown()"><i class="fas fa-pen"></i></button>
-</div>
+          <div class="d-flex align-items-center">
+            <input type="email" class="form-control me-2" id="emailPessoal" [value]="professorData.personalEmail" disabled>
+            <button type="button" class="btn" (click)="toggleEmailDropdown()"><i class="fas fa-pen"></i></button>
+          </div>
         </div>
 
         <div class="form-group dropdown-container" *ngIf="showDropdown">
@@ -41,32 +40,36 @@
           </div>
         </div>
 
-        <!-- Outros campos do formulário -->
+        <!-- Campo de Telefone Pessoal -->
         <div class="form-group">
-          <label for="telefone">Telefone</label>
-          <input type="text" class="form-control" id="telefone" placeholder="Insira seu telefone" disabled>
+          <label for="personalPhone">Telefone Pessoal</label>
+          <input type="text" class="form-control" id="personalPhone" [value]="professorData.personalPhone" disabled>
         </div>
+
+        <!-- Campo de Telefone Comercial -->
         <div class="form-group">
-          <label for="senha">Senha</label>
-          <input type="password" class="form-control" id="senha" placeholder="Insira sua senha" disabled>
+          <label for="businessPhone">Telefone Comercial</label>
+          <input type="text" class="form-control" id="businessPhone" [value]="professorData.businessPhone" disabled>
+        </div>
+
+        <!-- Linha de Pesquisa -->
+        <div class="form-group">
+          <label for="researchLine">Linha de Pesquisa</label>
+          <input type="text" class="form-control" id="researchLine" [value]="professorData.researchLine" disabled>
+        </div>
+
+        <!-- Área de Atuação -->
+        <div class="form-group">
+          <label for="teacherArea">Área de Atuação</label>
+          <input type="text" class="form-control" id="teacherArea" [value]="professorData.teacherArea" disabled>
+        </div>
+
+        <!-- Assuntos de Ensino -->
+        <div class="form-group">
+          <label for="teacherSubjects">Assuntos de Ensino</label>
+          <input type="text" class="form-control" id="teacherSubjects" [value]="professorData.teacherSubjects.join(', ')" disabled>
         </div>
       </form>
     </div>
-
-
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CdisciplinaService } from '../../../serv/admin/cdisciplina.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-gerenciar-disciplina',
@@ -17,15 +18,20 @@ export class GerenciarDisciplinaComponent implements OnInit {
   itensPorPagina: number = 8;
   paginas: number[] = [];
 
-  constructor(private cdisciplinaService: CdisciplinaService) { }
+  constructor(private cdisciplinaService: CdisciplinaService, private titleService: Title) { }
 
   ngOnInit(): void {
     this.carregarDisciplinas();
+    this.titleService.setTitle('Gerenciamento de Disciplinas');
   }
 
   carregarDisciplinas() {
     this.cdisciplinaService.getDisciplines().subscribe(
       data => {
+        // Loga o JSON carregado no console
+        console.log('JSON carregado:', data);
+
+        // Aqui estamos assumindo que a resposta é um array de objetos com as propriedades 'subjectId', 'subjectName' e 'subjectHours'
         this.disciplinas = data;
         this.disciplinasFiltradas = this.disciplinas; // Inicialmente, todas as disciplinas estão na lista filtrada
         this.calcularPaginas();
@@ -58,7 +64,7 @@ export class GerenciarDisciplinaComponent implements OnInit {
   // Função de filtragem por nome
   filtrarDisciplinas() {
     this.disciplinasFiltradas = this.disciplinas.filter(disciplina =>
-      disciplina.disciplineName.toLowerCase().includes(this.pesquisaNome.toLowerCase())
+      disciplina.subjectName.toLowerCase().includes(this.pesquisaNome.toLowerCase())
     );
     this.paginaAtual = 1; // Resetar para a primeira página ao filtrar
     this.calcularPaginas();
@@ -70,7 +76,7 @@ export class GerenciarDisciplinaComponent implements OnInit {
       this.loading = true;
       this.cdisciplinaService.deleteDiscipline(id).subscribe(
         () => {
-          this.disciplinas = this.disciplinas.filter(disciplina => disciplina.id !== id);
+          this.disciplinas = this.disciplinas.filter(disciplina => disciplina.subjectId !== id);
           this.filtrarDisciplinas(); // Reaplica o filtro após a exclusão
           this.loading = false;
           alert('Disciplina excluída com sucesso!');

@@ -27,7 +27,6 @@ import { PerfilComponent } from './prof/perfil/perfil.component';
 import { VisualizarDisciplinaComponent } from './prof/visualizar-disciplina/visualizar-disciplina.component';
 
 // Guardas de Roteamento
-import { authpGuard } from './guards/authp.guard';
 import { GradeHorarioComponent } from './admin/grade-horario/grade-horario.component';
 import { TelaPerfilProfessorComponent } from './prof/tela-perfil-professor/tela-perfil-professor.component';
 
@@ -54,9 +53,9 @@ const routes: Routes = [
   {path: 'admin/teste', component: GradeHorarioComponent},
 
   // Rotas do Professor
-  { path: 'home', component: TelaInicialProfComponent },
-  { path: 'perfil', component: PerfilComponent},
-  { path: 'prof/visualizar-disc', component: VisualizarDisciplinaComponent }
+  { path: 'professor', component: TelaInicialProfComponent },
+  { path: 'professor/perfil', component: PerfilComponent},
+  { path: 'professor/visualizar-disc', component: VisualizarDisciplinaComponent }
 ];
 
 @NgModule({

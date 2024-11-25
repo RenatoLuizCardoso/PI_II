@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CdisciplinaService } from '../../../serv/admin/cdisciplina.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-editar-disciplinas',
@@ -16,7 +17,8 @@ export class EditarDisciplinasComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private cdisciplinaService: CdisciplinaService
+    private cdisciplinaService: CdisciplinaService,
+    private titleService: Title
   ) {
     this.disciplinaForm = this.fb.group({
       id: [{ value: '', disabled: true }],
@@ -27,6 +29,7 @@ export class EditarDisciplinasComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Edição de Disciplina');
     this.carregarDiscipline();
   }
 

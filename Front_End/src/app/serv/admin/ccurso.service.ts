@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CcursoService {
-  private apiUrl = 'https://projeto-integrador-1v4i.onrender.com/course/';
-  private disciplinesUrl = 'http://localhost:3000/disciplines';
+  private apiUrl = 'https://projeto-integrador-1v4i.onrender.com/course/';  // URL principal para cursos
+  private disciplinesUrl = 'https://projeto-integrador-1v4i.onrender.com/subject/';  // URL para buscar as disciplinas
 
   constructor(private http: HttpClient) { }
 
@@ -37,9 +37,9 @@ export class CcursoService {
   }
 
   // Método para obter a lista de disciplinas com autenticação
-  getDisciplines(): Observable<any> {
+  getDisciplines(): Observable<any[]> {
     const headers = this.getAuthHeaders(); // Obtém os headers com o token
-    return this.http.get<any[]>(this.disciplinesUrl, { headers });
+    return this.http.get<any[]>(this.disciplinesUrl, { headers });  // Alterado para a URL correta das disciplinas
   }
 
   // Método para obter um curso específico por ID com autenticação
