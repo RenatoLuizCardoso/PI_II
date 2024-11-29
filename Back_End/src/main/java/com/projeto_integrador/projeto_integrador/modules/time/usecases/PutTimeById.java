@@ -20,7 +20,6 @@ public class PutTimeById {
         );
         updateTime.setStartTime(timeEntity.getStartTime());
         updateTime.setEndTime(timeEntity.getEndTime());
-        updateTime.setWeekDay(timeEntity.getWeekDay());
 
 
         return this.timeRepository.save(updateTime);

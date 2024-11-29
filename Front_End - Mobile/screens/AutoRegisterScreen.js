@@ -81,11 +81,9 @@ export default function AutoRegisterScreen({ navigation }) {
       studentPassword: studentPassword,
     };
 
-    console.log("Dados a serem enviados:", data);
 
     try {
       const response = await registerStudent(data);
-      console.log("Resposta da API:", response);
 
       if (response) {
         showAlert("Cadastro realizado com sucesso!", true); // Passa `true` para indicar sucesso

@@ -1,88 +1,81 @@
 <app-navbar></app-navbar>
-<div *ngIf="loading">Carregando...</div>
 
-<div *ngIf="!loading">
-  <h1>Gerenciar Reservas</h1>
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-center">Gerenciar Reservas</h5>
+          <form (submit)="isEditing ? updateReservation() : createReservation()">
+            
+            <!-- Professor -->
+            <div class="mb-3 mt-3">
+              <label for="teacher" class="form-label"><strong>Professor:</strong></label>
+              <select [(ngModel)]="form.teacher" name="teacher" class="form-control" required>
+                <option *ngFor="let teacher of teachers" [value]="teacher.teacherId">
+                  {{ teacher.teacher }}
+                </option>
+              </select>
+            </div>
 
-  <!-- Formulário para criar/editar reservas -->
-  <!-- Formulário para criar/editar reservas -->
-  <form (submit)="isEditing ? updateReservation() : createReservation()">
-    <label>
-      <strong>Professor:</strong>
-       <select [(ngModel)]="form.teacher" name="teacher" required>
-    <option *ngFor="let teacher of teachers" [value]="teacher.teacherId">
-      {{ teacher.teacherName }}
-    </option>
-  </select>
-    </label>
-    <label>
-      <strong>Disciplina:</strong>
-      <select [(ngModel)]="form.subject" name="subject" (change)="logSelectedValue('Disciplina', form.subject)" required>
-        <option *ngFor="let subject of subjects" [value]="subject.subjectId">
-          {{ subject.subjectName }}
-        </option>
-      </select>
-    </label>
-    <label>
-      <strong>Horário:</strong>
-      <select [(ngModel)]="form.time" name="time" (change)="logSelectedValue('Horário', form.time)" required>
-        <option *ngFor="let time of times" [value]="time.timeId">
-          {{ time.startTime }}-{{ time.endTime }}
-        </option>
-      </select>
-    </label>
-    <label>
-      <strong>Sala:</strong>
-      <select [(ngModel)]="form.room" name="room" (change)="logSelectedValue('Sala', form.room)" required>
-        <option *ngFor="let room of rooms" [value]="room.roomId">
-          {{ room.roomType }} {{ room.roomFloor }}
-        </option>
-      </select>
-    </label>
-    <label>
-      <strong>Curso:</strong>
-      <select [(ngModel)]="form.course" name="course" (change)="logSelectedValue('Curso', form.course)" required>
-        <option *ngFor="let course of courses" [value]="course.courseId">
-          {{ course.courseName }}
-        </option>
-      </select>
-    </label>
-    <label>
-      <strong>Data:</strong>
-      <input [(ngModel)]="form.date" name="date" type="date" required />
-    </label>
-    <button type="submit">{{ isEditing ? 'Atualizar' : 'Adicionar' }}</button>
-    <button type="button" (click)="cancel()">Cancelar</button>
-  </form>
+            <!-- Disciplina -->
+            <div class="mb-3 mt-3">
+              <label for="subject" class="form-label"><strong>Disciplina:</strong></label>
+              <select [(ngModel)]="form.subject" name="subject" class="form-control" required>
+                <option *ngFor="let subject of subjects" [value]="subject.subjectId">
+                  {{ subject.subjectName }}
+                </option>
+              </select>
+            </div>
 
+            <!-- Horário -->
+            <div class="mb-3 mt-3">
+              <label for="time" class="form-label"><strong>Horário:</strong></label>
+              <select [(ngModel)]="form.time" name="time" class="form-control" required>
+                <option *ngFor="let time of times" [value]="time.timeId">
+                  {{ time.startTime }}-{{ time.endTime }}
+                </option>
+              </select>
+            </div>
 
-  <table border="1" style="width: 100%; text-align: center; margin-top: 20px;">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Professor</th>
-        <th>Disciplina</th>
-        <th>Horário</th>
-        <th>Data</th>
-        <th>Sala</th>
-        <th>Curso</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let reservation of reservations">
-        <td>{{ reservation.reservationId }}</td>
-        <td>{{ reservation.teacher }}</td>
-        <td>{{ reservation.subject }}</td>
-        <td>{{ reservation.time }}</td>
-        <td>{{ reservation.date }}</td>
-        <td>{{ reservation.room }}</td>
-        <td>{{ reservation.course }}</td>
-        <td>
-          <button (click)="editReservation(reservation)">Editar</button>
-          <button (click)="deleteReservation(reservation.reservationId)">Excluir</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+            <!-- Sala -->
+            <div class="mb-3 mt-3">
+              <label for="room" class="form-label"><strong>Sala:</strong></label>
+              <select [(ngModel)]="form.room" name="room" class="form-control" required>
+                <option *ngFor="let room of rooms" [value]="room.roomId">
+                  {{ room.roomType }} {{ room.roomFloor }}
+                </option>
+              </select>
+            </div>
+
+            <!-- Curso -->
+            <div class="mb-3 mt-3">
+              <label for="course" class="form-label"><strong>Curso:</strong></label>
+              <select [(ngModel)]="form.course" name="course" class="form-control" required>
+                <option *ngFor="let course of courses" [value]="course.courseId">
+                  {{ course.courseName }}
+                </option>
+              </select>
+            </div>
+
+            <!-- Data -->
+            <div class="mb-3 mt-3">
+              <label for="date" class="form-label"><strong>Data:</strong></label>
+              <input [(ngModel)]="form.date" name="date" type="date" class="form-control" required />
+            </div>
+
+            <div class="d-grid gap-2 mt-4 mb-3">
+              <button type="submit" class="btn btn-verde texto-branco">
+                {{ isEditing ? 'Atualizar' : 'Adicionar' }}
+              </button>
+            </div>
+            <div class="d-grid gap-2 mb-3">
+              <button type="button" class="btn btn-danger" (click)="cancel()">Cancelar</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

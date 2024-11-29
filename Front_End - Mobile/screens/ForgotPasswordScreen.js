@@ -53,7 +53,6 @@ const ForgotPasswordScreen = ({ navigation }) => {
   
     try {
       const response = await forgotPassword(email);
-      console.log("Resposta da API:", response); // Verifique a resposta completa da API no console
   
       if (response) {
         showAlert("Um e-mail de recuperação foi enviado.", true);

@@ -1,32 +1,12 @@
-.schedule-grid {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: center;
-  margin-top: 20px;
+.vermeio {
+  background-color: #c00c0c;
 }
 
-.schedule-grid th,
-.schedule-grid td {
-  padding: 8px;
-  border: 1px solid #ddd;
+.texto-branco {
+  color: white;
 }
 
-.schedule-grid th {
-  background-color: #f4f4f4;
-}
 
-.schedule-grid td {
-  vertical-align: top;
-  height: 100px; /* Definindo altura para dar mais espaço */
-}
-
-.schedule-grid div {
-  padding: 5px;
-  border: 1px solid #ddd;
-  background-color: #f9f9f9;
-  margin-bottom: 5px;
-}
-
-.schedule-grid div strong {
-  font-weight: bold;
+.btn-verde {
+  background-color: #0b9247;
 }

@@ -1,16 +1,21 @@
 <app-navbar></app-navbar>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+/>
 
 <div class="container">
   <div class="row justify-content-center mt-5">
     <div class="col-lg-10 crud">
-      <div class="text-center">
-        <button class="btn btn-success col-md-12" routerLink="/admin/cadastrar_professor">Cadastrar Novo Professor</button>
-      </div>
-      <hr class="linha col-md-12 hr-blurry mt-4">
-      <h3 class="text-center mt-5">Lista de Professores</h3>
+      <h3 class="text-center mb-2">Lista de Professores</h3>
       <div class="text-center mb-4">
-        <input type="text" class="form-control col-md-12" placeholder="Pesquisar por nome" [(ngModel)]="pesquisaNome" (input)="filtrarProfessores()" />
+        <input
+          type="text"
+          class="form-control col-md-12"
+          placeholder="Pesquisar por nome"
+          [(ngModel)]="pesquisaNome"
+          (input)="filtrarProfessores()"
+        />
       </div>
       <table class="table table-striped">
         <thead>
@@ -28,16 +33,25 @@
           <tr *ngFor="let professor of professoresPaginados">
             <td>{{ professor.id }}</td>
             <td>{{ professor.name }}</td>
-            <td>{{ professor.curso || 'Sem curso' }}</td> <!-- Exibe o primeiro curso ou 'Sem curso' -->
+            <td>{{ professor.curso || "Sem curso" }}</td>
+            <!-- Exibe o primeiro curso ou 'Sem curso' -->
             <td>{{ professor.emailI }}</td>
             <td>{{ professor.tel }}</td>
-            <td>{{ professor.businessPhone || 'Sem telefone corporativo' }}</td> <!-- Exibe telefone corporativo ou 'Sem telefone corporativo' -->
+            <td>{{ professor.businessPhone || "Sem telefone corporativo" }}</td>
+            <!-- Exibe telefone corporativo ou 'Sem telefone corporativo' -->
             <td>
-              <button class="btn btn-primary" [routerLink]="['/admin/editar_professores', professor.id]"
-                aria-label="Editar Professor">
+              <button
+                class="btn btn-primary"
+                [routerLink]="['/admin/editar_professores', professor.id]"
+                aria-label="Editar Professor"
+              >
                 <i class="fas fa-pen"></i>
               </button>
-              <button class="btn btn-danger" [disabled]="loading" (click)="excluirProfessor(professor.id)">
+              <button
+                class="btn btn-danger"
+                [disabled]="loading"
+                (click)="excluirProfessor(professor.id)"
+              >
                 <i class="fas fa-trash"></i>
               </button>
             </td>
@@ -49,22 +63,42 @@
       <nav aria-label="Navegação de página">
         <ul class="pagination justify-content-center">
           <li class="page-item" [class.disabled]="paginaAtual === 1">
-            <a class="page-link" (click)="irParaPagina(paginaAtual - 1)" aria-label="Anterior">
+            <a
+              class="page-link"
+              (click)="irParaPagina(paginaAtual - 1)"
+              aria-label="Anterior"
+            >
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
 
-          <li class="page-item" *ngFor="let page of paginas" [class.active]="paginaAtual === page">
+          <li
+            class="page-item"
+            *ngFor="let page of paginas"
+            [class.active]="paginaAtual === page"
+          >
             <a class="page-link" (click)="irParaPagina(page)">{{ page }}</a>
           </li>
 
           <li class="page-item" [class.disabled]="paginaAtual === totalPaginas">
-            <a class="page-link" (click)="irParaPagina(paginaAtual + 1)" aria-label="Próximo">
+            <a
+              class="page-link"
+              (click)="irParaPagina(paginaAtual + 1)"
+              aria-label="Próximo"
+            >
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>
         </ul>
       </nav>
+      <div class="text-center">
+        <button
+          class="btn btn-success col-md-12"
+          routerLink="/admin/cadastrar_professor"
+        >
+          Cadastrar Novo Professor
+        </button>
+      </div>
     </div>
   </div>
 </div>

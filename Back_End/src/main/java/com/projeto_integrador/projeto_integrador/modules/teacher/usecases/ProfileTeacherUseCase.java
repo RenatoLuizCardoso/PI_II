@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.projeto_integrador.projeto_integrador.modules.teacher.dto.ProfileTeacherResponseDTO;
 import com.projeto_integrador.projeto_integrador.modules.teacher.repository.TeacherRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class ProfileTeacherUseCase {
     
@@ -29,8 +31,17 @@ public class ProfileTeacherUseCase {
             .personalEmail(teacher.getPersonalEmail())
             .personalPhone(teacher.getPersonalPhone())
             .researchLine(teacher.getResearchLine())
+            .profilePhoto(teacher.getProfilePhoto())
             .build();
         
         return teacherDTO;
+    }
+
+     public void updatePhoto(Long teacherId, String photoPath) {
+        var teacher = teacherRepository.findById(teacherId)
+            .orElseThrow(() -> new EntityNotFoundException("Professor não encontrado"));
+
+        teacher.setProfilePhoto(photoPath); // Atualiza a foto de perfil
+        teacherRepository.save(teacher); // Salva a atualização no banco
     }
 }

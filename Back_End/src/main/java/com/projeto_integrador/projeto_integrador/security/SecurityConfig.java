@@ -52,6 +52,8 @@ public class SecurityConfig {
                 .requestMatchers("/student/register").permitAll()
                 .requestMatchers("/student/forgot-password").permitAll()
                 .requestMatchers("/student/reset-password").permitAll()
+                .requestMatchers("/teacher/forgot-password").permitAll()
+                .requestMatchers("/teacher/reset-password").permitAll()
                 .requestMatchers("/student/").permitAll()
                 .requestMatchers(PERMIT_ALL_LIST).permitAll()
                 .requestMatchers(PERMIT_TEMPORARILY).permitAll();

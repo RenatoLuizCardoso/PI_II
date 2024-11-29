@@ -30,4 +30,6 @@ public class ProfileTeacherResponseDTO {
     private String teacherArea;
 
     private List<Long> teacherSubjects;
+
+    private String profilePhoto;
 }

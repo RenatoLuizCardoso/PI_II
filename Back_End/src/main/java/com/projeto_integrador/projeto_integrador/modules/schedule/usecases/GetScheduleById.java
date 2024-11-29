@@ -65,7 +65,7 @@ public class GetScheduleById {
                                     .orElse("Unknown Teacher");
 
         Optional<TimeEntity> time = timeRepository.findById(timeId);
-        String timeText = time.map(t -> String.format("%s - %s (%s)", t.getStartTime(), t.getEndTime(), t.getWeekDay()))
+        String timeText = time.map(t -> String.format("%s - %s", t.getStartTime(), t.getEndTime()))
                                     .orElse("Unknown Time");
 
         Optional<CourseEntity> course = courseRepository.findById(courseId);

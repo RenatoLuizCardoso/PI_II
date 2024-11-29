@@ -1,78 +1,114 @@
 import { Component, OnInit } from '@angular/core';
-import { ReservationService } from '../../serv/admin/reservation.service';
-import { FormsModule } from '@angular/forms';
+import { GhorarioService } from '../../serv/admin/ghorario.service';
 
+interface ReservationForm {
+  teacher: number | null;
+  subject: number | null;
+  time: number | null;
+  date: string;
+  room: number | null;
+  course: number | null;
+  teacherName?: string;
+  courseName?: string;
+  timeName?: string;
+  roomName?: string;
+}
 
 @Component({
   selector: 'app-reservas',
   templateUrl: './reservas.component.html',
-  styleUrls: ['./reservas.component.css']
+  styleUrls: ['./reservas.component.css'],
 })
 export class ReservasComponent implements OnInit {
-  searchTerm: string = '';
-  selectedShift: string = ''; // Adiciona a variável para filtro de turno
   reservations: any[] = [];
-  selectedReservation: any = null; // Adiciona variável para armazenar a reserva selecionada
-  showConfirmDialog: boolean = false; // Variável para controlar a exibição do diálogo de confirmação
-  reservationToDelete: any = null; // Reserva que está para ser excluída
+  teachers: any[] = [];
+  subjects: any[] = [];
+  times: any[] = [];
+  rooms: any[] = [];
+  courses: any[] = [];
+  searchTerm: string = '';
+  form: ReservationForm = { teacher: null, subject: null, time: null, date: '', room: null, course: null };
+  isEditing: boolean = false;
+  loading: boolean = false;
 
-  constructor(private reservationService: ReservationService) { }
+  constructor(private ghorarioService: GhorarioService) {}
 
   ngOnInit(): void {
     this.loadReservations();
+    this.loadAuxiliaryData();
   }
 
   loadReservations(): void {
-    this.reservationService.getReservations().subscribe(
-      data => {
+    this.loading = true;
+    this.ghorarioService.getReservations().subscribe({
+      next: (data) => {
         this.reservations = data;
+        this.loading = false;
       },
-      error => {
-        console.error('Erro ao carregar as reservas:', error);
+      error: (err) => {
+        console.error('Erro ao carregar reservas:', err);
+        this.loading = false;
+      },
+    });
+  }
+
+  get filteredReservations(): any[] {
+    return this.reservations.filter((reservation) =>
+      (reservation.teacherName?.toLowerCase() || '').includes(this.searchTerm.toLowerCase()) ||
+      (reservation.courseName?.toLowerCase() || '').includes(this.searchTerm.toLowerCase())
+    );
+  }
+
+  loadAuxiliaryData(): void {
+    this.ghorarioService.getTeachers().subscribe((data) => (this.teachers = data));
+    this.ghorarioService.getSubjects().subscribe((data) => (this.subjects = data));
+    this.ghorarioService.getTimes().subscribe((data) => (this.times = data));
+    this.ghorarioService.getRooms().subscribe((data) => (this.rooms = data));
+    this.ghorarioService.getCourses().subscribe((data) => (this.courses = data));
+  }
+
+  editReservation(reservation: any): void {
+  this.isEditing = true;
+
+  // Mapeamento para obter detalhes completos
+  const teacher = this.teachers.find((t) => t.id === reservation.teacher) || {};
+  const course = this.courses.find((c) => c.id === reservation.course) || {};
+  const time = this.times.find((t) => t.id === reservation.time) || {};
+  const room = this.rooms.find((r) => r.id === reservation.room) || {};
+
+  this.form = {
+    teacher: reservation.teacher,
+    subject: reservation.subject,
+    time: reservation.time,
+    date: reservation.date,
+    room: reservation.room,
+    course: reservation.course,
+    teacherName: teacher.name || 'Não encontrado',
+    courseName: course.name || 'Não encontrado',
+    timeName: time.name || 'Não encontrado',
+    roomName: room.name || 'Não encontrado',
+  };
+}
+
+
+  cancel(): void {
+    this.isEditing = false;
+    this.form = { teacher: null, subject: null, time: null, date: '', room: null, course: null };
+  }
+ deleteReservation(id: number): void {
+  if (confirm('Tem certeza de que deseja excluir esta reserva?')) {
+    this.ghorarioService.deleteReservation(id).subscribe({
+      next: () => {
+        alert('Reserva excluída com sucesso!');
+        this.loadReservations();  // Recarregar as reservas após a exclusão
+      },
+      error: (err) => {
+        console.error('Erro ao excluir reserva:', err);
+        alert('Erro ao excluir reserva');
       }
-    );
+    });
   }
+}
 
-  get filteredReservations() {
-    return this.reservations.filter(reservation =>
-      reservation.name.toLowerCase().includes(this.searchTerm.toLowerCase()) &&
-      (this.selectedShift ? reservation.shift.toLowerCase() === this.selectedShift.toLowerCase() : true)
-    );
-  }
-
-
-  moveReservationToRight(reservation: any): void {
-    this.selectedReservation = reservation;
-  }
-
-  editReservation(): void {
-    // Lógica para editar a reserva (por enquanto apenas um log)
-    console.log('Editar reserva', this.selectedReservation);
-  }
-
-  confirmDelete(): void {
-    this.showConfirmDialog = true;
-    this.reservationToDelete = this.selectedReservation;
-  }
-
-  cancelDelete(): void {
-    this.showConfirmDialog = false;
-    this.reservationToDelete = null;
-  }
-
-  deleteReservation(): void {
-    if (this.reservationToDelete) {
-      this.reservationService.deleteReservation(this.reservationToDelete.id).subscribe(
-        () => {
-          this.reservations = this.reservations.filter(reservation => reservation.id !== this.reservationToDelete.id);
-          this.selectedReservation = null; // Limpa a reserva selecionada
-          this.showConfirmDialog = false;
-          this.reservationToDelete = null;
-        },
-        error => {
-          console.error('Erro ao excluir a reserva:', error);
-        }
-      );
-    }
-  }
+  
 }

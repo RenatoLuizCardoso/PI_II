@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, Image, StyleSheet, Text, Dimensions, TouchableOpacity, ScrollView } from "react-native";
 import { useFonts } from "expo-font";
 import AwesomeAlert from "react-native-awesome-alerts";
+import * as ScreenOrientation from "expo-screen-orientation";
 import axios from "axios";
 
 
@@ -46,6 +47,32 @@ export default function HomeScreen({ navigation, route }) {
 
     fetchUserName();
   }, []);
+
+  useEffect(() => {
+    const updateOrientation = async () => {
+      const currentOrientation = await ScreenOrientation.getOrientationAsync();
+      setOrientation(
+        currentOrientation === ScreenOrientation.Orientation.LANDSCAPE_LEFT ||
+        currentOrientation === ScreenOrientation.Orientation.LANDSCAPE_RIGHT
+          ? "LANDSCAPE"
+          : "PORTRAIT"
+      );
+    };
+ 
+    // Verifica a orientação inicial
+    updateOrientation();
+ 
+    // Adiciona o listener para mudanças de orientação
+    const subscription = ScreenOrientation.addOrientationChangeListener(() => {
+      updateOrientation();
+    });
+ 
+    // Limpa o listener ao desmontar o componente
+    return () => {
+      ScreenOrientation.removeOrientationChangeListener(subscription);
+    };
+  }, []);
+ 
   
 
   const logout = async () => {
@@ -68,7 +95,6 @@ export default function HomeScreen({ navigation, route }) {
 
   // Verifique se user ou fontsLoaded são falsos
 if (!fontsLoaded || !userName) {
-  console.log("Carregando... fontsLoaded:", fontsLoaded, "user:", userName);
   return (
     <View style={styles.container}>
       <Text>Carregando...</Text>

@@ -79,6 +79,10 @@ public class TeacherEntity {
     @Schema(description = "Lista de IDs das disciplinas associadas ao professor", example = "[1, 2, 3]")
     private List<Long> teacherSubjects;
 
+    @Column(name = "profile_photo")
+    @Schema(description = "Caminho da foto de perfil do professor", example = "/uploads/teacher_photos/1_profile.jpg")
+    private String profilePhoto;
+
     @CreationTimestamp
     @Schema(description = "Data e hora de criação do registro", example = "2024-01-01T12:00:00")
     private LocalDateTime create_at;

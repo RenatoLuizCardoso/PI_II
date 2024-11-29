@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ReservationService {
-  private jsonUrl = 'http://localhost:3000/reservas'; // Ajuste para corresponder ao local correto
+  private jsonUrl = 'https://projeto-integrador-1v4i.onrender.com/reservation/'; 
 
   constructor(private http: HttpClient) { }
 
@@ -14,7 +14,6 @@ export class ReservationService {
     return this.http.get<any[]>(this.jsonUrl);
   }
 
-  // Método para excluir uma reserva
   deleteReservation(id: number): Observable<void> {
     const url = `${this.jsonUrl}/${id}`;
     return this.http.delete<void>(url);

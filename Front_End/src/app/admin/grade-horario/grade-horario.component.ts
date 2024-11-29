@@ -8,7 +8,17 @@ interface ReservationForm {
   time: number | null;
   date: string;
   room: number | null;
-  course: number | null; // Campo "course" mantido
+  course: number | null;
+}
+
+interface Reservation {
+  reservationId: number;
+  teacher: number;
+  subject: number;
+  time: number;
+  date: string;
+  room: number;
+  course: number;
 }
 
 @Component({
@@ -17,7 +27,7 @@ interface ReservationForm {
   styleUrls: ['./grade-horario.component.css']
 })
 export class GradeHorarioComponent implements OnInit {
-  reservations: any[] = [];
+  reservations: Reservation[] = [];
   teachers: any[] = [];
   subjects: any[] = [];
   times: any[] = [];
@@ -57,23 +67,23 @@ export class GradeHorarioComponent implements OnInit {
   // Método para carregar os dados auxiliares (listas dinâmicas)
   loadAuxiliaryData(): void {
     this.ghorarioService.getTeachers().subscribe(data => {
-      console.log('Teachers:', data);  // Verifique os dados no console
+      console.log('Teachers:', data);
       this.teachers = data;
     });
     this.ghorarioService.getSubjects().subscribe(data => {
-      console.log('Subjects:', data);  // Verifique os dados no console
+      console.log('Subjects:', data);
       this.subjects = data;
     });
     this.ghorarioService.getTimes().subscribe(data => {
-      console.log('Times:', data);  // Verifique os dados no console
+      console.log('Times:', data);
       this.times = data;
     });
     this.ghorarioService.getRooms().subscribe(data => {
-      console.log('Rooms:', data);  // Verifique os dados no console
+      console.log('Rooms:', data);
       this.rooms = data;
     });
     this.ghorarioService.getCourses().subscribe(data => {
-      console.log('Courses:', data);  // Verifique os dados no console
+      console.log('Courses:', data);
       this.courses = data;
     });
   }
@@ -82,7 +92,7 @@ export class GradeHorarioComponent implements OnInit {
   createReservation(): void {
     this.loading = true;
     const formattedData = this.formatReservationData(this.form);
-    console.log('Dados enviados para criação de reserva:', formattedData);  // Exibe os dados no console
+    console.log('Dados enviados para criação de reserva:', formattedData);
     
     this.ghorarioService.createReservation(formattedData).subscribe({
       next: () => {
@@ -96,12 +106,18 @@ export class GradeHorarioComponent implements OnInit {
       }
     });
   }
-    
 
   // Método para editar uma reserva
-  editReservation(reservation: any): void {
+  editReservation(reservation: Reservation): void {
     this.isEditing = true;
-    this.form = { ...reservation };
+    this.form = { 
+      teacher: reservation.teacher,
+      subject: reservation.subject,
+      time: reservation.time,
+      date: reservation.date,
+      room: reservation.room,
+      course: reservation.course
+    };
   }
 
   // Método para atualizar uma reserva
@@ -148,16 +164,14 @@ export class GradeHorarioComponent implements OnInit {
   }
 
   // Método para formatar os dados antes de enviar
-  formatReservationData(reservationData: any): any {
-    const { reservationId, ...formattedData } = reservationData;
+  formatReservationData(reservationData: ReservationForm): any {
     const finalData = {
-      teacher: Number(formattedData.teacher),
-      subject: Number(formattedData.subject),
-      time: Number(formattedData.time),
-      date: formattedData.date, // Date continua como string
-      room: Number(formattedData.room),
-      course: Number(formattedData.course),
-      reservationId: reservationId
+      teacher: Number(reservationData.teacher),
+      subject: Number(reservationData.subject),
+      time: Number(reservationData.time),
+      date: reservationData.date, // Date continua como string
+      room: Number(reservationData.room),
+      course: Number(reservationData.course),
     };
 
     console.log('Dados enviados para criar ou atualizar reserva:', JSON.stringify(finalData, null, 2));

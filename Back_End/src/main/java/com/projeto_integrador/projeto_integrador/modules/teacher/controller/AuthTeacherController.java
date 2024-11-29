@@ -26,18 +26,15 @@ public class AuthTeacherController {
     @Autowired
     private AuthTeacher authTeacher;
 
-    @Operation(
-        summary = "Login Professor",
-        description = "Gera um token baseado no email e senha do estudante, no qual permite com que ele acesse suas ações autorizadas.",
-        tags = { "Login Professor" }
-    )
+    @Operation(summary = "Login Professor", description = "Gera um token baseado no email e senha do estudante, no qual permite com que ele acesse suas ações autorizadas.", tags = {
+            "Login Professor" })
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Authentication successful", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
-        }),
-        @ApiResponse(responseCode = "401", description = "Authentication failed", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
-        })
+            @ApiResponse(responseCode = "200", description = "Authentication successful", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Authentication failed", content = {
+                    @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+            })
     })
     @PostMapping("/auth")
     public ResponseEntity<Object> auth(@RequestBody AuthTeacherRequestDTO authTeacherRequestDTO) {
@@ -49,4 +46,3 @@ public class AuthTeacherController {
         }
     }
 }
-

@@ -20,12 +20,12 @@ import com.projeto_integrador.projeto_integrador.modules.student.dto.ResetPasswo
 import com.projeto_integrador.projeto_integrador.modules.student.entity.StudentEntity;
 import com.projeto_integrador.projeto_integrador.modules.student.usecases.CreateStudentUseCase;
 import com.projeto_integrador.projeto_integrador.modules.student.usecases.DeleteStudentUseCase;
-import com.projeto_integrador.projeto_integrador.modules.student.usecases.ForgotPasswordService;
+import com.projeto_integrador.projeto_integrador.modules.student.usecases.ForgotPasswordStudentService;
 import com.projeto_integrador.projeto_integrador.modules.student.usecases.GetAllStudents;
 import com.projeto_integrador.projeto_integrador.modules.student.usecases.GetStudentById;
 import com.projeto_integrador.projeto_integrador.modules.student.usecases.ProfileStudentUseCase;
 import com.projeto_integrador.projeto_integrador.modules.student.usecases.PutStudentById;
-import com.projeto_integrador.projeto_integrador.modules.student.usecases.ResetPasswordService;
+import com.projeto_integrador.projeto_integrador.modules.student.usecases.ResetPasswordStudentService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -56,10 +56,10 @@ public class StudentController {
     private DeleteStudentUseCase deleteStudentById;
 
     @Autowired
-    private ForgotPasswordService forgotPasswordService;
+    private ForgotPasswordStudentService forgotPasswordService;
 
     @Autowired
-    private ResetPasswordService resetPasswordService;
+    private ResetPasswordStudentService resetPasswordService;
 
     @Autowired
     private ProfileStudentUseCase profileStudentUseCase;

@@ -14,7 +14,7 @@ export class CadastrarProfComponent implements OnInit {
   registerError: boolean = false;
   registerSuccess: boolean = false;
   disciplinas: any[] = []; // Lista de disciplinas carregadas
-  passwdGerada!: string; // Variável para armazenar a senha gerada
+  senhaGerada!: string; // Variável para armazenar a senha gerada
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,17 +35,16 @@ export class CadastrarProfComponent implements OnInit {
       personalEmail: ['', [Validators.email]], // Email pessoal (opcional)
       personalPhone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], // Telefone pessoal
       businessPhone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], // Telefone corporativo
-      teacherPassword: ['', [Validators.required]], // Senha (pode ser gerada automaticamente)
-      teacherSubjects: [null, [Validators.required]] // Agora é um único valor (não um array)
+      teacherSubjects: [null, [Validators.required]], // Agora é um único valor (não um array)
+      teacherPassword: ['', [Validators.required]] // Campo de senha para ser enviado ao backend
     });
   }
 
-  // Função para carregar as disciplinas da API
+  // Função para carregar as disciplinas
   carregarDisciplinas() {
     this.cdisciplinaService.getDisciplines().subscribe(
       (data) => {
-        console.log('Disciplinas carregadas:', data);  // Verifique aqui se as disciplinas estão vindo corretamente
-        this.disciplinas = data; // Armazena as disciplinas carregadas
+        this.disciplinas = data;
       },
       (error) => {
         console.error('Erro ao carregar disciplinas:', error);
@@ -69,39 +68,30 @@ export class CadastrarProfComponent implements OnInit {
 
   // Função chamada quando o formulário é submetido
   onSubmit(): void {
-    console.log('Formulário enviado', this.registerForm.value); // Logando os dados do formulário antes de qualquer validação
+    console.log('Formulário enviado', this.registerForm.value);
 
     // Gerar senha aleatória
-    const senhaGerada = this.gerarSenhaAleatoria();
-    console.log('Senha gerada:', senhaGerada); // Logando a senha gerada
+    this.senhaGerada = this.gerarSenhaAleatoria();
+    console.log('Senha gerada:', this.senhaGerada);
 
-    // Atualizar o campo de senha no formulário
-    this.registerForm.patchValue({ teacherPassword: senhaGerada });
-    console.log('Dados do formulário após atualização da senha:', this.registerForm.value); // Logando os dados do formulário após atualização
+    // Atualizar o campo de senha no formulário para que fique visível
+    this.registerForm.patchValue({ teacherPassword: this.senhaGerada });
+    console.log('Dados do formulário após atualização da senha:', this.registerForm.value);
 
-    // Verificando se o formulário está válido
+    // Verificando se o formulário é válido antes de prosseguir
     if (this.registerForm.invalid) {
       this.registerError = true;
-      this.registerForm.markAllAsTouched(); // Marca todos os campos como tocados
-      console.log('Formulário inválido:', this.registerForm.errors); // Logando erros de formulário
+      this.registerForm.markAllAsTouched();
+      console.log('Formulário inválido:', this.registerForm.errors);
       return;
     }
 
-    // Obter os dados do formulário, incluindo a senha gerada
-    const dadosFormulario = this.registerForm.value;
-
-    // Garantir que teacherSubjects seja um array
-    if (!Array.isArray(dadosFormulario.teacherSubjects)) {
-      // Se não for um array (caso de uma única disciplina), converte em um array
-      dadosFormulario.teacherSubjects = [Number(dadosFormulario.teacherSubjects)];
-    } else {
-      // Caso já seja um array, converte os IDs de disciplinas para números
-      dadosFormulario.teacherSubjects = dadosFormulario.teacherSubjects.map((subjectId: any) => Number(subjectId));
-    }
-
-    console.log('Dados do formulário para envio:', dadosFormulario); // Logando os dados a serem enviados para a API
-
     // Enviar os dados para o serviço
+    const dadosFormulario = this.registerForm.value;
+    dadosFormulario.teacherSubjects = Array.isArray(dadosFormulario.teacherSubjects)
+      ? dadosFormulario.teacherSubjects.map(Number)
+      : [Number(dadosFormulario.teacherSubjects)];
+
     this.professoresService.registerProfessor(dadosFormulario).subscribe(
       response => {
         console.log('Professor registrado com sucesso!', response);
@@ -113,15 +103,6 @@ export class CadastrarProfComponent implements OnInit {
       error => {
         console.error('Erro ao registrar professor:', error);
         this.registerError = true;
-        if (error.status === 400) {
-          console.error('Erro 400: Dados inválidos ou incompletos.');
-        } else if (error.status === 401) {
-          console.error('Erro 401: Não autorizado (Token inválido ou expirada).');
-        } else if (error.status === 500) {
-          console.error('Erro 500: Erro interno do servidor.');
-        } else {
-          console.error(`Erro desconhecido: ${error.status} - ${error.message}`);
-        }
       }
     );
   }
@@ -129,5 +110,6 @@ export class CadastrarProfComponent implements OnInit {
   // Função para resetar o formulário
   onReset(): void {
     this.registerForm.reset();
+    this.senhaGerada = ''; // Limpar a senha gerada
   }
 }

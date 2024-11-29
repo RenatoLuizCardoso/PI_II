@@ -30,6 +30,7 @@
                 <small *ngIf="f['researchLine'].errors?.['required']">Linha de pesquisa é obrigatória.</small>
               </div>
             </div>
+
             <div class="mb-3 mt-3">
               <label for="teacherSubjects" class="form-label">Disciplina</label>
               <select id="teacherSubjects" formControlName="teacherSubjects" class="form-control">
@@ -69,10 +70,6 @@
               </div>
             </div>
 
-            <!-- Campo de senha oculto -->
-<input type="hidden" formControlName="teacherPassword">
-
-
             <div class="mb-3 mt-3">
               <label for="businessPhone" class="form-label">Telefone Corporativo</label>
               <input type="text" class="form-control" id="businessPhone" formControlName="businessPhone" placeholder="(XX) XXXXX-XXXX" required>
@@ -96,6 +93,17 @@
           </form>
         </div>
       </div>
+
+      <!-- Card com a senha gerada -->
+      <div *ngIf="senhaGerada" class="card mt-4">
+        <div class="card-body">
+          <h5 class="card-title">Senha Gerada</h5>
+          <p class="card-text">A senha gerada para o professor é:</p>
+          <h4>{{ senhaGerada }}</h4>
+          <small class="text-muted">Copie e guarde essa senha com segurança.</small>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

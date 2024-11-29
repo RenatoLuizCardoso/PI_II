@@ -35,11 +35,6 @@ public class TimeEntity {
     @Schema(example = "12:00", requiredMode = RequiredMode.REQUIRED, description = "Hora de término")
     private String endTime;
 
-    @NotBlank
-    @Column(name = "week_day")
-    @Schema(example = "Segunda-feira", requiredMode = RequiredMode.REQUIRED, description = "Dia da semana")
-    private String weekDay;
-
     @CreationTimestamp
     @Schema(example = "2024-01-01T08:00:00", description = "Data de criação")
     private LocalDateTime create_at;
