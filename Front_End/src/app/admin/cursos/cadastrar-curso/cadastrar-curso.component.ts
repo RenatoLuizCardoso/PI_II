@@ -14,7 +14,7 @@ export class CadastrarCursoComponent implements OnInit {
   registerError: boolean = false;
   registerSuccess: boolean = false;
   disciplines: any[] = [];  // Para armazenar as disciplinas carregadas
-  selectedDisciplines: number[] = [];  // Para armazenar as disciplinas selecionadas
+  selectedDisciplines: { subjectId: number }[] = [];  // Para armazenar as disciplinas selecionadas como objetos
   disciplineSelectionOpen: boolean = false;  // Controla se o modal está aberto
 
   constructor(
@@ -60,9 +60,11 @@ export class CadastrarCursoComponent implements OnInit {
   onDisciplineChange(event: any): void {
     const subjectId = event.target.value;
     if (event.target.checked) {
-      this.selectedDisciplines.push(Number(subjectId));  // Adiciona ID da disciplina
+      // Adiciona o objeto { subjectId: X } ao invés de só o ID
+      this.selectedDisciplines.push({ subjectId: Number(subjectId) });
     } else {
-      this.selectedDisciplines = this.selectedDisciplines.filter(id => id !== Number(subjectId));  // Remove ID da disciplina
+      // Remove o objeto { subjectId: X } do array
+      this.selectedDisciplines = this.selectedDisciplines.filter(discipline => discipline.subjectId !== Number(subjectId));
     }
     console.log('Disciplinas selecionadas:', this.selectedDisciplines);
   }
@@ -79,12 +81,13 @@ export class CadastrarCursoComponent implements OnInit {
       return;
     }
 
-    // Monta os dados do curso
+    // Monta os dados do curso com a nova estrutura para "courseSubjects"
     const courseData = {
       courseName: this.registerForm.value.courseName,
       courseSemester: this.registerForm.value.courseSemester,
       coursePeriod: this.registerForm.value.coursePeriod,
-      courseSubjects: this.selectedDisciplines  // Passa as disciplinas selecionadas
+      // Mantém o formato do JSON com objetos { subjectId: X }
+      courseSubjects: this.selectedDisciplines
     };
 
     // Envia os dados para o backend

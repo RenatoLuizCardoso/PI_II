@@ -1,17 +1,13 @@
 package com.projeto_integrador.projeto_integrador.modules.teacher.usecases;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.projeto_integrador.projeto_integrador.modules.subjects.entity.SubjectEntity;
-import com.projeto_integrador.projeto_integrador.modules.subjects.repository.SubjectRepository;
 import com.projeto_integrador.projeto_integrador.modules.teacher.entity.TeacherEntity;
 import com.projeto_integrador.projeto_integrador.modules.teacher.repository.TeacherRepository;
 
@@ -19,12 +15,9 @@ import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class GetAllTeachers {
-    
-    @Autowired
-    private TeacherRepository teacherRepository;
 
     @Autowired
-    private SubjectRepository subjectRepository;
+    private TeacherRepository teacherRepository;
 
     public List<Map<String, Object>> execute() {
         var allTeachers = teacherRepository.findAll();
@@ -50,20 +43,11 @@ public class GetAllTeachers {
         result.put("teacherArea", teacher.getTeacherArea());
         result.put("profilePhoto", teacher.getProfilePhoto());
 
-    
-        // Transformar IDs em nomes
-        List<String> subjectNames = new ArrayList<>();
-        if (teacher.getTeacherSubjects() != null) {
-            subjectNames = teacher.getTeacherSubjects().stream()
-                .map(subjectId -> {
-                    Optional<SubjectEntity> subject = subjectRepository.findById(subjectId);
-                    return subject.map(SubjectEntity::getSubjectName).orElse("Unknown Subject");
-                })
-                .collect(Collectors.toList());
-        }
+        List<String> subjectNames = teacher.getTeacherSubjects().stream()
+                                           .map(subject -> subject.getSubjectName())
+                                           .collect(Collectors.toList());
 
         result.put("subjects", subjectNames);
         return result;
     }
-    
 }

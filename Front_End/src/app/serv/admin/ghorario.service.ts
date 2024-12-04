@@ -16,7 +16,7 @@
     constructor(private http: HttpClient) {}
 
     private getAuthHeaders(): HttpHeaders {
-      const token = localStorage.getItem('authToken');
+      const token = localStorage.getItem('adminToken');
       if (!token) {
         throw new Error('Token de autenticação não encontrado.');
       }

@@ -11,7 +11,7 @@ export class PerfilService {
   constructor(private http: HttpClient) {}
 
   getProfile(): Observable<any> {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('teacherToken');
 
     if (!token) {
       throw new Error('Token não encontrado');

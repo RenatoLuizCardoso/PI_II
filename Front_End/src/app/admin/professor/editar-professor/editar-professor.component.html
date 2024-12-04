@@ -2,7 +2,6 @@
 <div class="container">
     <div class="row justify-content-center mt-5">
         <div class="col-md-6">
-
             <!-- Mensagem de sucesso -->
             <div *ngIf="mensagemSucesso" class="alert alert-success">
                 Professor atualizado com sucesso!
@@ -12,50 +11,79 @@
                 <div class="card-body">
                     <h5 class="card-title text-center">Edição de Professor</h5>
                     <form [formGroup]="professorForm" (ngSubmit)="salvar()">
-                        <div class="form-group">
-                            <label for="id">ID</label>
-                            <input id="id" class="form-control" formControlName="id" readonly>
-                        </div>
-                        <div class="form-group mb-3 mt-3">
-                            <label for="name">Nome</label>
-                            <input id="name" class="form-control" formControlName="name">
-                            <div *ngIf="professorForm.get('name')?.touched && professorForm.get('name')?.invalid" class="text-danger">
-                                <small *ngIf="professorForm.get('name')?.errors?.['required']">Nome é obrigatório.</small>
-                                <small *ngIf="professorForm.get('name')?.errors?.['pattern']">Nome deve conter apenas letras e espaços.</small>
+                        <div class="mb-3 mt-3">
+                            <label for="teacherName" class="form-label">Nome completo</label>
+                            <input type="text" class="form-control" id="teacherName" formControlName="teacherName" placeholder="Nome Completo">
+                            <div *ngIf="f['teacherName'].touched && f['teacherName'].invalid" class="text-danger">
+                                <small *ngIf="f['teacherName'].errors?.['required']">Nome é obrigatório.</small>
+                                <small *ngIf="f['teacherName'].errors?.['pattern']">Nome deve conter apenas letras e espaços.</small>
                             </div>
                         </div>
-                        <div class="form-group mb-3 mt-3">
-                            <label for="emailI">Email Institucional</label>
-                            <input id="emailI" class="form-control" formControlName="emailI">
-                            <div *ngIf="professorForm.get('emailI')?.touched && professorForm.get('emailI')?.invalid" class="text-danger">
-                                <small *ngIf="professorForm.get('emailI')?.errors?.['required']">Email institucional é obrigatório.</small>
-                                <small *ngIf="professorForm.get('emailI')?.errors?.['email']">Email institucional inválido.</small>
+
+                        <div class="mb-3 mt-3">
+                            <label for="teacherArea" class="form-label">Área de Ensino</label>
+                            <input type="text" class="form-control" id="teacherArea" formControlName="teacherArea" placeholder="Área de Ensino">
+                            <div *ngIf="f['teacherArea'].touched && f['teacherArea'].invalid" class="text-danger">
+                                <small *ngIf="f['teacherArea'].errors?.['required']">Área de ensino é obrigatória.</small>
                             </div>
                         </div>
-                        <div class="form-group mb-3 mt-3">
-                            <label for="senha">Senha</label>
-                            <input id="senha" type="password" class="form-control" formControlName="senha">
-                            <div *ngIf="professorForm.get('senha')?.touched && professorForm.get('senha')?.invalid" class="text-danger">
-                                <small *ngIf="professorForm.get('senha')?.errors?.['required']">Senha é obrigatória.</small>
-                                <small *ngIf="professorForm.get('senha')?.errors?.['minlength']">Senha deve ter pelo menos 6 caracteres.</small>
+
+                        <div class="mb-3 mt-3">
+                            <label for="researchLine" class="form-label">Linha de Pesquisa</label>
+                            <input type="text" class="form-control" id="researchLine" formControlName="researchLine" placeholder="Linha de Pesquisa">
+                            <div *ngIf="f['researchLine'].touched && f['researchLine'].invalid" class="text-danger">
+                                <small *ngIf="f['researchLine'].errors?.['required']">Linha de pesquisa é obrigatória.</small>
                             </div>
                         </div>
-                        <div class="form-group mb-3 mt-3">
-                            <label for="disciplina">Disciplina</label>
-                            <input id="disciplina" type="disciplina" class="form-control" formControlName="disciplina">
-                            
-                            <div *ngIf="professorForm.get('disciplina')?.touched && professorForm.get('disciplina')?.invalid" class="text-danger">
-                                <small *ngIf="professorForm.get('disciplina')?.errors?.['required']">Disciplina é obrigatória.</small>
+
+                        <div class="mb-3 mt-3">
+                            <label for="teacherSubjects" class="form-label">Disciplina</label>
+                            <select id="teacherSubjects" formControlName="teacherSubjects" class="form-control">
+                                <option value="" disabled selected>Selecione uma disciplina</option>
+                                <option *ngFor="let disciplina of disciplinas" [value]="disciplina.subjectId">
+                                    {{ disciplina.subjectName }}
+                                </option>
+                            </select>
+                            <div *ngIf="f['teacherSubjects']?.invalid && f['teacherSubjects']?.touched" class="invalid-feedback">
+                                A disciplina é obrigatória.
                             </div>
                         </div>
-                        <div class="form-group mb-3 mt-3">
-                            <label for="tel">Telefone</label>
-                            <input id="tel" class="form-control" formControlName="tel">
-                            <div *ngIf="professorForm.get('tel')?.touched && professorForm.get('tel')?.invalid" class="text-danger">
-                                <small *ngIf="professorForm.get('tel')?.errors?.['required']">Telefone é obrigatório.</small>
-                                <small *ngIf="professorForm.get('tel')?.errors?.['pattern']">Telefone deve conter apenas números.</small>
+
+                        <div class="mb-3 mt-3">
+                            <label for="institutionalEmail" class="form-label">Email Institucional</label>
+                            <input type="email" class="form-control" id="institutionalEmail" formControlName="institutionalEmail" placeholder="email@universidade.com">
+                            <div *ngIf="f['institutionalEmail'].touched && f['institutionalEmail'].invalid" class="text-danger">
+                                <small *ngIf="f['institutionalEmail'].errors?.['required']">Email institucional é obrigatório.</small>
+                                <small *ngIf="f['institutionalEmail'].errors?.['email']">Formato de email inválido.</small>
                             </div>
                         </div>
+
+                        <div class="mb-3 mt-3">
+                            <label for="personalEmail" class="form-label">Email Pessoal (Opcional)</label>
+                            <input type="email" class="form-control" id="personalEmail" formControlName="personalEmail" placeholder="emailp@example.com">
+                            <div *ngIf="f['personalEmail'].touched && f['personalEmail'].invalid" class="text-danger">
+                                <small *ngIf="f['personalEmail'].errors?.['email']">Formato de email inválido.</small>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 mt-3">
+                            <label for="personalPhone" class="form-label">Telefone Pessoal</label>
+                            <input type="text" class="form-control" id="personalPhone" formControlName="personalPhone" placeholder="(XX) XXXXX-XXXX">
+                            <div *ngIf="f['personalPhone'].touched && f['personalPhone'].invalid" class="text-danger">
+                                <small *ngIf="f['personalPhone'].errors?.['required']">Telefone pessoal é obrigatório.</small>
+                                <small *ngIf="f['personalPhone'].errors?.['pattern']">Telefone deve conter apenas números.</small>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 mt-3">
+                            <label for="businessPhone" class="form-label">Telefone Corporativo</label>
+                            <input type="text" class="form-control" id="businessPhone" formControlName="businessPhone" placeholder="(XX) XXXXX-XXXX">
+                            <div *ngIf="f['businessPhone'].touched && f['businessPhone'].invalid" class="text-danger">
+                                <small *ngIf="f['businessPhone'].errors?.['required']">Telefone corporativo é obrigatório.</small>
+                                <small *ngIf="f['businessPhone'].errors?.['pattern']">Telefone deve conter apenas números.</small>
+                            </div>
+                        </div>
+
                         <div class="d-grid gap-2 mt-4 mb-3">
                             <button type="submit" class="btn btn-verde texto-branco">Salvar</button>
                         </div>

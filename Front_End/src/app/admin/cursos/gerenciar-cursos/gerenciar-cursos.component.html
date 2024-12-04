@@ -3,15 +3,13 @@
 <div class="container">
   <div class="row justify-content-center mt-5">
     <div class="col-lg-10 crud">
-      
-      <!-- Campo de pesquisa -->
-      <div class="text-center mb-4">
-        <input type="text" class="form-control col-md-12" placeholder="Pesquisar por nome"
-               [(ngModel)]="pesquisaNome" (input)="filtrarCursos()" />
-      </div>
 
       <h3 class="text-center">Lista de Cursos</h3>
-
+      <!-- Campo de pesquisa -->
+      <div class="text-center mb-4">
+        <input type="text" class="form-control col-md-12" placeholder="Pesquisar por nome" [(ngModel)]="pesquisaNome"
+          (input)="filtrarCursos()" />
+      </div>
       <table class="table table-striped">
         <thead>
           <tr>
@@ -32,13 +30,14 @@
             <td>{{ curso.courseSemester }}</td> <!-- Alterado de curso.semester para curso.courseSemester -->
             <td>
               <ul>
-                <li *ngFor="let disciplina of curso.subjects">{{ disciplina }}</li> <!-- Alterado de curso.disciplina para curso.subjects -->
+                <li *ngFor="let disciplina of curso.subjects">{{ disciplina }}</li>
+                <!-- Alterado de curso.disciplina para curso.subjects -->
               </ul>
             </td>
             <td>
               <!-- Botões de Ação -->
               <button class="btn btn-primary" [routerLink]="['/admin/editar_curso', curso.courseId]"
-                      aria-label="Editar Curso">
+                aria-label="Editar Curso">
                 <i class="fas fa-pen"></i>
               </button>
               <button class="btn btn-danger" [disabled]="loading" (click)="excluirCurso(curso.courseId)">

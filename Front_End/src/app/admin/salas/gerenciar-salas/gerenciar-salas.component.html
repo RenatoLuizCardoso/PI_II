@@ -5,12 +5,14 @@
 <div class="container">
   <div class="row justify-content-center mt-5">
     <div class="col-lg-10 crud">
+      <h3 class="text-center">Lista de Salas</h3>
+
       <!-- Campo de pesquisa -->
       <div class="text-center mb-4">
-        <input type="text" class="form-control col-md-12" placeholder="Pesquisar por tipo" [(ngModel)]="pesquisaTipo" (input)="filtrarSalas()" />
+        <input type="text" class="form-control col-md-12" placeholder="Pesquisar por tipo" [(ngModel)]="pesquisaTipo"
+          (input)="filtrarSalas()" />
       </div>
 
-      <h3 class="text-center">Lista de Salas</h3>
 
       <table class="table table-striped">
         <thead>
@@ -33,14 +35,14 @@
             <td>{{ sala.roomResources }}</td>
             <td>{{ sala.roomAvailability }}</td>
             <td>
-           <!-- Ajuste aqui para garantir que o valor correto está sendo passado como id -->
-<button class="btn btn-primary" [routerLink]="['/admin/editar_sala', sala.roomId]"
-aria-label="Editar Salas">
-<i class="fas fa-pen"></i>
-</button>
+              <!-- Ajuste aqui para garantir que o valor correto está sendo passado como id -->
+              <button class="btn btn-primary" [routerLink]="['/admin/editar_sala', sala.roomId]"
+                aria-label="Editar Salas">
+                <i class="fas fa-pen"></i>
+              </button>
 
 
-<button class="btn btn-danger" [disabled]="loading" (click)="excluirSalas(sala.roomId)">
+              <button class="btn btn-danger" [disabled]="loading" (click)="excluirSalas(sala.roomId)">
 
                 <i class="fas fa-trash"></i>
               </button>
@@ -76,4 +78,3 @@ aria-label="Editar Salas">
     </div>
   </div>
 </div>
-

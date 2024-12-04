@@ -27,37 +27,117 @@ import { PerfilComponent } from './prof/perfil/perfil.component';
 import { VisualizarDisciplinaComponent } from './prof/visualizar-disciplina/visualizar-disciplina.component';
 
 // Guardas de Roteamento
+import { AdminAuthGuard } from './admin-auth.guard';
+import { TeacherAuthGuard } from './teacher-auth.guard';
 import { GradeHorarioComponent } from './admin/grade-horario/grade-horario.component';
 import { TelaPerfilProfessorComponent } from './prof/tela-perfil-professor/tela-perfil-professor.component';
 import { GradeFixaComponent } from './admin/grade-fixa/grade-fixa.component';
+import { InicioComponent } from './inicio/inicio.component';
 
 const routes: Routes = [
   // Rotas de Login
+  { path: '', component: InicioComponent },
   { path: 'login', component: TelaLoginComponent },
   { path: 'login_adm', component: TelaLoginAdmComponent },
 
   // Rotas do Administrador
-  { path: 'admin', component: TelaInicialAdmComponent },
-  { path: 'admin/cadastrar_professor', component: CadastrarProfComponent },
-  { path: 'admin/cadastrar_sala', component: CadastrarSalaComponent },
-  { path: 'admin/cadastrar_disc', component: CadastrarDisciplinasComponent },
-  { path: 'admin/gerenciar_disc', component: GerenciarDisciplinaComponent },
-  { path: 'admin/cadastrar_curso', component: CadastrarCursoComponent },
-  { path: 'admin/gerenciar_professor', component: GerenciarProfessorComponent },
-  { path: 'admin/gerenciar_curso', component: GerenciarCursosComponent },
-  { path: 'admin/gerenciar_sala', component: GerenciarSalasComponent },
-  { path: 'admin/editar_disc/:id', component: EditarDisciplinasComponent },
-  { path: 'admin/editar_professores/:id', component: EditarProfessorComponent },
-  { path: 'admin/editar_curso/:id', component: EditarCursoComponent },
-  { path: 'admin/editar_sala/:id', component: EditarSalasComponent },
-  { path: 'admin/gerenciar_reservas', component: ReservasComponent },
-  {path: 'admin/teste', component: GradeHorarioComponent},
-  {path: 'admin/grade-fixa', component: GradeFixaComponent},
+  {
+    path: 'admin',
+    component: TelaInicialAdmComponent,
+    canActivate: [AdminAuthGuard] // Protege com o AdminAuthGuard
+  },
+  {
+    path: 'admin/cadastrar_professor',
+    component: CadastrarProfComponent,
+    canActivate: [AdminAuthGuard] // Protege com o AdminAuthGuard
+  },
+  {
+    path: 'admin/cadastrar_sala',
+    component: CadastrarSalaComponent,
+    canActivate: [AdminAuthGuard] // Protege com o AdminAuthGuard
+  },
+  {
+    path: 'admin/cadastrar_disc',
+    component: CadastrarDisciplinasComponent,
+    canActivate: [AdminAuthGuard] // Protege com o AdminAuthGuard
+  },
+  {
+    path: 'admin/gerenciar_disc',
+    component: GerenciarDisciplinaComponent,
+    canActivate: [AdminAuthGuard] // Protege com o AdminAuthGuard
+  },
+  {
+    path: 'admin/cadastrar_curso',
+    component: CadastrarCursoComponent,
+    canActivate: [AdminAuthGuard] // Protege com o AdminAuthGuard
+  },
+  {
+    path: 'admin/gerenciar_professor',
+    component: GerenciarProfessorComponent,
+    canActivate: [AdminAuthGuard] // Protege com o AdminAuthGuard
+  },
+  {
+    path: 'admin/gerenciar_curso',
+    component: GerenciarCursosComponent,
+    canActivate: [AdminAuthGuard] // Protege com o AdminAuthGuard
+  },
+  {
+    path: 'admin/gerenciar_sala',
+    component: GerenciarSalasComponent,
+    canActivate: [AdminAuthGuard] // Protege com o AdminAuthGuard
+  },
+  {
+    path: 'admin/editar_disc/:id',
+    component: EditarDisciplinasComponent,
+    canActivate: [AdminAuthGuard] // Protege com o AdminAuthGuard
+  },
+  {
+    path: 'admin/editar_professores/:id',
+    component: EditarProfessorComponent,
+    canActivate: [AdminAuthGuard] // Protege com o AdminAuthGuard
+  },
+  {
+    path: 'admin/editar_curso/:id',
+    component: EditarCursoComponent,
+    canActivate: [AdminAuthGuard] // Protege com o AdminAuthGuard
+  },
+  {
+    path: 'admin/editar_sala/:id',
+    component: EditarSalasComponent,
+    canActivate: [AdminAuthGuard] // Protege com o AdminAuthGuard
+  },
+  {
+    path: 'admin/gerenciar_reservas',
+    component: ReservasComponent,
+    canActivate: [AdminAuthGuard] // Protege com o AdminAuthGuard
+  },
+  {
+    path: 'admin/teste',
+    component: GradeHorarioComponent,
+    canActivate: [AdminAuthGuard] // Protege com o AdminAuthGuard
+  },
+  {
+    path: 'admin/grade-fixa',
+    component: GradeFixaComponent,
+    canActivate: [AdminAuthGuard] // Protege com o AdminAuthGuard
+  },
 
   // Rotas do Professor
-  { path: 'professor', component: TelaInicialProfComponent },
-  { path: 'professor/perfil', component: PerfilComponent},
-  { path: 'professor/visualizar-disc', component: VisualizarDisciplinaComponent }
+  {
+    path: 'professor',
+    component: TelaInicialProfComponent,
+    canActivate: [TeacherAuthGuard] // Protege com o TeacherAuthGuard
+  },
+  {
+    path: 'professor/perfil',
+    component: PerfilComponent,
+    canActivate: [TeacherAuthGuard] // Protege com o TeacherAuthGuard
+  },
+  {
+    path: 'professor/visualizar-disc',
+    component: VisualizarDisciplinaComponent,
+    canActivate: [TeacherAuthGuard] // Protege com o TeacherAuthGuard
+  },
 ];
 
 @NgModule({

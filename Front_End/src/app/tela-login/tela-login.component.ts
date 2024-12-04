@@ -44,7 +44,7 @@ export class TelaLoginComponent implements OnInit {
             console.log("Token recebido:", response.access_token);
 
             // Armazenar o token no localStorage
-            localStorage.setItem('authToken', response.access_token);
+            localStorage.setItem('teacherToken', response.access_token);
 
             // Opcional: Armazenar outras informações, como tempo de expiração
             localStorage.setItem('expires_in', response.expires_in.toString());

@@ -6,9 +6,11 @@
         <div class="card-body">
           <h5 class="card-title text-center">Registro de Professor</h5>
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
             <div class="mb-3 mt-3">
               <label for="teacherName" class="form-label">Nome completo</label>
-              <input type="text" class="form-control" id="teacherName" formControlName="teacherName" placeholder="Nome Completo" required>
+              <input type="text" class="form-control" id="teacherName" formControlName="teacherName"
+                placeholder="Nome Completo" required>
               <div *ngIf="f['teacherName'].touched && f['teacherName'].invalid" class="text-danger">
                 <small *ngIf="f['teacherName'].errors?.['required']">Nome é obrigatório.</small>
                 <small *ngIf="f['teacherName'].errors?.['pattern']">Nome deve conter apenas letras e espaços.</small>
@@ -17,7 +19,8 @@
 
             <div class="mb-3 mt-3">
               <label for="teacherArea" class="form-label">Área de Ensino</label>
-              <input type="text" class="form-control" id="teacherArea" formControlName="teacherArea" placeholder="Área de Ensino" required>
+              <input type="text" class="form-control" id="teacherArea" formControlName="teacherArea"
+                placeholder="Área de Ensino" required>
               <div *ngIf="f['teacherArea'].touched && f['teacherArea'].invalid" class="text-danger">
                 <small *ngIf="f['teacherArea'].errors?.['required']">Área de ensino é obrigatória.</small>
               </div>
@@ -25,28 +28,49 @@
 
             <div class="mb-3 mt-3">
               <label for="researchLine" class="form-label">Linha de Pesquisa</label>
-              <input type="text" class="form-control" id="researchLine" formControlName="researchLine" placeholder="Linha de Pesquisa" required>
+              <input type="text" class="form-control" id="researchLine" formControlName="researchLine"
+                placeholder="Linha de Pesquisa" required>
               <div *ngIf="f['researchLine'].touched && f['researchLine'].invalid" class="text-danger">
                 <small *ngIf="f['researchLine'].errors?.['required']">Linha de pesquisa é obrigatória.</small>
               </div>
             </div>
 
-            <div class="mb-3 mt-3">
-              <label for="teacherSubjects" class="form-label">Disciplina</label>
-              <select id="teacherSubjects" formControlName="teacherSubjects" class="form-control">
-                <option value="" disabled selected>Selecione uma disciplina</option>
-                <option *ngFor="let disciplina of disciplinas" [value]="disciplina.subjectId">
-                  {{ disciplina.subjectName }}
-                </option>
-              </select>
-              <div *ngIf="f['teacherSubjects']?.invalid && f['teacherSubjects']?.touched" class="invalid-feedback">
-                A disciplina é obrigatória.
+            <!-- Botão para abrir o modal de seleção de disciplinas -->
+            <button type="button" class="btn btn-secondary" (click)="toggleDisciplineSelection()">
+              Selecionar Disciplinas
+            </button>
+
+            <!-- Modal de seleção de disciplinas -->
+            <div *ngIf="disciplineSelectionOpen" class="discipline-overlay" (click)="toggleDisciplineSelection()">
+              <div class="discipline-menu" (click)="$event.stopPropagation()">
+                <h5 class="text-center">Selecione as Disciplinas</h5>
+
+                <!-- Campo de pesquisa de disciplinas -->
+                <div class="mb-3">
+                  <input type="text" class="form-control" placeholder="Pesquisar Disciplinas"
+                    [formControl]="pesquisaControl">
+                </div>
+
+                <!-- Lista de disciplinas filtradas -->
+                <div *ngFor="let disciplina of disciplinasFiltradas">
+                  <label>
+                    <input type="checkbox" [value]="disciplina.subjectId" (change)="onDisciplineChange($event)"
+                      [checked]="selectedDisciplines.includes(disciplina.subjectId)">
+                    {{ disciplina.subjectName }}
+                  </label>
+                </div>
+
+                <div class="text-center mt-3">
+                  <button class="btn btn-secondary" (click)="toggleDisciplineSelection()">Fechar</button>
+                  <button class="btn btn-primary" (click)="confirmDisciplineSelection()">Confirmar</button>
+                </div>
               </div>
             </div>
 
             <div class="mb-3 mt-3">
               <label for="institutionalEmail" class="form-label">Email Institucional</label>
-              <input type="email" class="form-control" id="institutionalEmail" formControlName="institutionalEmail" placeholder="email@universidade.com" required>
+              <input type="email" class="form-control" id="institutionalEmail" formControlName="institutionalEmail"
+                placeholder="email@universidade.com" required>
               <div *ngIf="f['institutionalEmail'].touched && f['institutionalEmail'].invalid" class="text-danger">
                 <small *ngIf="f['institutionalEmail'].errors?.['required']">Email institucional é obrigatório.</small>
                 <small *ngIf="f['institutionalEmail'].errors?.['email']">Formato de email inválido.</small>
@@ -55,7 +79,8 @@
 
             <div class="mb-3 mt-3">
               <label for="personalEmail" class="form-label">Email Pessoal (Opcional)</label>
-              <input type="email" class="form-control" id="personalEmail" formControlName="personalEmail" placeholder="emailp@example.com">
+              <input type="email" class="form-control" id="personalEmail" formControlName="personalEmail"
+                placeholder="emailp@example.com">
               <div *ngIf="f['personalEmail'].touched && f['personalEmail'].invalid" class="text-danger">
                 <small *ngIf="f['personalEmail'].errors?.['email']">Formato de email inválido.</small>
               </div>
@@ -63,7 +88,8 @@
 
             <div class="mb-3 mt-3">
               <label for="personalPhone" class="form-label">Telefone Pessoal</label>
-              <input type="text" class="form-control" id="personalPhone" formControlName="personalPhone" placeholder="(XX) XXXXX-XXXX" required>
+              <input type="text" class="form-control" id="personalPhone" formControlName="personalPhone"
+                placeholder="(XX) XXXXX-XXXX" required>
               <div *ngIf="f['personalPhone'].touched && f['personalPhone'].invalid" class="text-danger">
                 <small *ngIf="f['personalPhone'].errors?.['required']">Telefone pessoal é obrigatório.</small>
                 <small *ngIf="f['personalPhone'].errors?.['pattern']">Telefone deve conter apenas números.</small>
@@ -72,10 +98,21 @@
 
             <div class="mb-3 mt-3">
               <label for="businessPhone" class="form-label">Telefone Corporativo</label>
-              <input type="text" class="form-control" id="businessPhone" formControlName="businessPhone" placeholder="(XX) XXXXX-XXXX" required>
+              <input type="text" class="form-control" id="businessPhone" formControlName="businessPhone"
+                placeholder="(XX) XXXXX-XXXX" required>
               <div *ngIf="f['businessPhone'].touched && f['businessPhone'].invalid" class="text-danger">
                 <small *ngIf="f['businessPhone'].errors?.['required']">Telefone corporativo é obrigatório.</small>
                 <small *ngIf="f['businessPhone'].errors?.['pattern']">Telefone deve conter apenas números.</small>
+              </div>
+            </div>
+
+            <!-- Campo de senha visível para o professor digitar a senha -->
+            <div class="mb-3 mt-3">
+              <label for="teacherPassword" class="form-label">Senha</label>
+              <input type="password" class="form-control" id="teacherPassword" formControlName="teacherPassword"
+                placeholder="Digite a senha" required>
+              <div *ngIf="f['teacherPassword'].touched && f['teacherPassword'].invalid" class="text-danger">
+                <small *ngIf="f['teacherPassword'].errors?.['required']">Senha é obrigatória.</small>
               </div>
             </div>
 
@@ -93,17 +130,6 @@
           </form>
         </div>
       </div>
-
-      <!-- Card com a senha gerada -->
-      <div *ngIf="senhaGerada" class="card mt-4">
-        <div class="card-body">
-          <h5 class="card-title">Senha Gerada</h5>
-          <p class="card-text">A senha gerada para o professor é:</p>
-          <h4>{{ senhaGerada }}</h4>
-          <small class="text-muted">Copie e guarde essa senha com segurança.</small>
-        </div>
-      </div>
-
     </div>
   </div>
 </div>

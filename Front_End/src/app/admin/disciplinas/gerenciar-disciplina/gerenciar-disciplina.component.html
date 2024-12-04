@@ -2,13 +2,11 @@
 <div class="container">
   <div class="row justify-content-center mt-5">
     <div class="col-lg-10 crud">
+      <h3 class="text-center">Lista de Disciplinas</h3>
       <!-- Campo de pesquisa -->
       <div class="text-center mb-4">
         <input type="text" class="form-control col-md-12" placeholder="Pesquisar por nome" [(ngModel)]="pesquisaNome" (input)="filtrarDisciplinas()" />
       </div>
-
-      <h3 class="text-center">Lista de Disciplinas</h3>
-
       <table class="table table-striped">
         <thead>
           <tr>

@@ -1,5 +1,7 @@
 package com.projeto_integrador.projeto_integrador.modules.teacher.usecases;
 
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,9 @@ public class ProfileTeacherUseCase {
         var teacherDTO = ProfileTeacherResponseDTO.builder()
             .teacherName(teacher.getTeacherName())
             .teacherArea(teacher.getTeacherArea())
-            .teacherSubjects(teacher.getTeacherSubjects())
+            .teacherSubjects(teacher.getTeacherSubjects().stream()
+                .map(subject -> subject.getSubjectId())
+                .collect(Collectors.toList()))
             .teacherId(teacher.getTeacherId())
             .institutionalEmail(teacher.getInstitutionalEmail())
             .businessPhone(teacher.getBusinessPhone())

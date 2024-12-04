@@ -1,7 +1,6 @@
 package com.projeto_integrador.projeto_integrador.modules.reservation.usecases;
 
 
-import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Locale;
@@ -11,16 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.projeto_integrador.projeto_integrador.modules.reservation.entity.ReservationEntity;
 import com.projeto_integrador.projeto_integrador.modules.reservation.repository.ReservationRepository;
-import com.projeto_integrador.projeto_integrador.modules.schedule.usecases.FKValidation;
 
 @Service
 public class CreateReservation {
     
     @Autowired
     ReservationRepository repository;
-
-    @Autowired
-    private FKValidation fkValidation;
 
     @Autowired
     private ReservationValidation reservationValidation;
@@ -31,20 +26,10 @@ public class CreateReservation {
             throw new IllegalArgumentException("A data da reserva não pode ser no passado.");
         }
 
-        Long subjectId = reservationEntity.getSubject();
-        fkValidation.validateSubjectExist(subjectId);
 
-        Long timeId = reservationEntity.getTime();
-        fkValidation.validateTimeExist(timeId);
+        Long timeId = reservationEntity.getTime().getTimeId();
 
-        Long teacherId = reservationEntity.getTeacher();
-        fkValidation.validateTeacherExist(teacherId);
-
-        Long roomId = reservationEntity.getRoom();
-        fkValidation.validateRoomExist(roomId);
-
-        Long courseId = reservationEntity.getCourse();
-        fkValidation.validateCourseExist(courseId);
+        Long roomId = reservationEntity.getRoom().getRoomId();
 
         LocalDate date = reservationEntity.getDate();
 

@@ -7,6 +7,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Length;
 
+import com.projeto_integrador.projeto_integrador.modules.subjects.entity.SubjectEntity;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -75,9 +77,14 @@ public class TeacherEntity {
     @Schema(description = "Área de atuação do professor", example = "Engenharia de Software")
     private String teacherArea;
 
-    @Column(name = "teacher_subjects")
-    @Schema(description = "Lista de IDs das disciplinas associadas ao professor", example = "[1, 2, 3]")
-    private List<Long> teacherSubjects;
+    @ManyToMany
+    @JoinTable(
+        name = "teacher_subjects",
+        joinColumns = @JoinColumn(name = "teacher_id"), 
+        inverseJoinColumns = @JoinColumn(name = "subject_id")
+    )
+    @Schema(example = "[{\"subjectId\": 1}, {\"subjectId\": 2}]", description = "Lista de disciplinas associadas ao professor")
+    private List<SubjectEntity> teacherSubjects;
 
     @Column(name = "profile_photo")
     @Schema(description = "Caminho da foto de perfil do professor", example = "/uploads/teacher_photos/1_profile.jpg")

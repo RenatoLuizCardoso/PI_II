@@ -16,16 +16,16 @@ import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class GetRoomById {
-    
+
     @Autowired
     RoomRepository repository;
 
     @Autowired
     RoomTypeRepository roomTypeRepository;
-    
-     public Map<String, Object> execute(Long id) {
+
+    public Map<String, Object> execute(Long id) {
         RoomEntity room = repository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Room not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Room not found"));
 
         return convertRoomToMap(room);
     }
@@ -38,11 +38,8 @@ public class GetRoomById {
         result.put("roomResources", room.getRoomResources());
         result.put("roomAvailability", room.getRoomAvailability());
 
-        Long roomTypeId = room.getRoomType();
-
-        Optional<RoomTypeEntity> roomType = roomTypeRepository.findById(roomTypeId);
-        String roomTypeName = roomType.map(RoomTypeEntity::getRoomTypeDescription)
-                                    .orElse("Unknown Subject");
+        RoomTypeEntity roomType = room.getRoomType();
+        String roomTypeName = (roomType != null) ? roomType.getRoomTypeDescription() : "Unknown Subject";
 
         result.put("roomType", roomTypeName);
         return result;

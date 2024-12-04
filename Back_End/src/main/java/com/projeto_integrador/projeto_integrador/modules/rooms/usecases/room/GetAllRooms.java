@@ -16,12 +16,11 @@ import java.util.HashMap;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
 import com.projeto_integrador.projeto_integrador.modules.rooms.entity.RoomTypeEntity;
 
 @Service
 public class GetAllRooms {
-    
+
     @Autowired
     RoomRepository roomRepository;
 
@@ -35,8 +34,8 @@ public class GetAllRooms {
         }
 
         return allRooms.stream()
-                          .map(this::convertRoomToMap)
-                          .collect(Collectors.toList());
+                .map(this::convertRoomToMap)
+                .collect(Collectors.toList());
     }
 
     private Map<String, Object> convertRoomToMap(RoomEntity room) {
@@ -47,15 +46,11 @@ public class GetAllRooms {
         result.put("roomResources", room.getRoomResources());
         result.put("roomAvailability", room.getRoomAvailability());
 
-        Long roomTypeId = room.getRoomType();
-
-        Optional<RoomTypeEntity> roomType = roomTypeRepository.findById(roomTypeId);
-        String roomTypeName = roomType.map(RoomTypeEntity::getRoomTypeDescription)
-                                    .orElse("Unknown Subject");
+        RoomTypeEntity roomType = room.getRoomType();
+        String roomTypeName = (roomType != null) ? roomType.getRoomTypeDescription() : "Unknown Subject";
 
         result.put("roomType", roomTypeName);
         return result;
     }
 
 }
-

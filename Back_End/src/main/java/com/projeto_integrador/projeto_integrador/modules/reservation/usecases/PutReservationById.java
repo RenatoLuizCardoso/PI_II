@@ -1,5 +1,4 @@
 package com.projeto_integrador.projeto_integrador.modules.reservation.usecases;
-import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Locale;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.projeto_integrador.projeto_integrador.modules.reservation.entity.ReservationEntity;
 import com.projeto_integrador.projeto_integrador.modules.reservation.repository.ReservationRepository;
-import com.projeto_integrador.projeto_integrador.modules.schedule.usecases.FKValidation;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -18,10 +16,6 @@ public class PutReservationById {
 
     @Autowired
     ReservationRepository repository;
-
-    @Autowired
-    private FKValidation fkValidation;
-
     @Autowired
     private ReservationValidation reservationValidation;
     
@@ -35,33 +29,20 @@ public class PutReservationById {
             throw new IllegalArgumentException("A data da reserva não pode ser no passado.");
         }
 
-        Long subjectId = reservationEntity.getSubject();
-        fkValidation.validateSubjectExist(subjectId);
-
-        Long timeId = reservationEntity.getTime();
-        fkValidation.validateTimeExist(timeId);
-
-        Long teacherId = reservationEntity.getTeacher();
-        fkValidation.validateTeacherExist(teacherId);
-
-        Long roomId = reservationEntity.getRoom();
-        fkValidation.validateRoomExist(roomId);
-
-        Long courseId = reservationEntity.getCourse();
-        fkValidation.validateCourseExist(courseId);
-
+        Long timeId = reservationEntity.getTime().getTimeId();
+        Long roomId = reservationEntity.getRoom().getRoomId();
         LocalDate date = reservationEntity.getDate();
 
         DayOfWeek dayOfWeek = date.getDayOfWeek();
         String dayName = dayOfWeek.getDisplayName(java.time.format.TextStyle.FULL, new Locale("pt", "BR"));
         reservationValidation.searchConflictReservations(date, dayName, roomId, timeId);
 
-        updateReservation.setTime(timeId);
-        updateReservation.setTeacher(teacherId);
+        updateReservation.setTime(reservationEntity.getTime());
+        updateReservation.setTeacher(reservationEntity.getTeacher());
         updateReservation.setDate(reservationEntity.getDate());
-        updateReservation.setSubject(subjectId);
-        updateReservation.setRoom(roomId);
-        updateReservation.setCourse(courseId);
+        updateReservation.setSubject(reservationEntity.getSubject());
+        updateReservation.setRoom(reservationEntity.getRoom());
+        updateReservation.setCourse(reservationEntity.getCourse());
 
 
         return this.repository.save(updateReservation);

@@ -1,11 +1,16 @@
 package com.projeto_integrador.projeto_integrador.modules.reservation.entity;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.projeto_integrador.projeto_integrador.modules.courses.entity.CourseEntity;
+import com.projeto_integrador.projeto_integrador.modules.rooms.entity.RoomEntity;
+import com.projeto_integrador.projeto_integrador.modules.subjects.entity.SubjectEntity;
+import com.projeto_integrador.projeto_integrador.modules.teacher.entity.TeacherEntity;
+import com.projeto_integrador.projeto_integrador.modules.time.entity.TimeEntity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
@@ -14,6 +19,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,19 +41,22 @@ public class ReservationEntity {
     private Long reservationId;
 
     @NotNull
-    @Column(name = "teacher")
+    @ManyToOne
+    @JoinColumn(name = "teacher", referencedColumnName = "teacher_id", nullable = false)
     @Schema(example = "1", requiredMode = RequiredMode.REQUIRED, description = "Professor da reserva")
-    private Long teacher;
+    private TeacherEntity teacher;
 
     @NotNull
-    @Column(name = "subject")
+    @ManyToOne
+    @JoinColumn(name = "subject", referencedColumnName = "subject_id", nullable = false)
     @Schema(example = "1", requiredMode = RequiredMode.REQUIRED, description = "Matéria da reserva")
-    private Long subject;
+    private SubjectEntity subject;
 
     @NotNull
-    @Column(name = "time")
+    @ManyToOne
+    @JoinColumn(name = "time", referencedColumnName = "time_id", nullable = false)
     @Schema(example = "1", requiredMode = RequiredMode.REQUIRED, description = "Horario da reserva")
-    private Long time;
+    private TimeEntity time;
 
     @NotNull
     @Column(name = "date")
@@ -54,14 +64,16 @@ public class ReservationEntity {
     private LocalDate date;
 
     @NotNull
-    @Column(name = "room")
+    @ManyToOne
+    @JoinColumn(name = "room", referencedColumnName = "room_id", nullable = false)
     @Schema(example = "1", requiredMode = RequiredMode.REQUIRED, description = "Sala da reserva")
-    private Long room;
+    private RoomEntity room;
 
     @NotNull
-    @Column(name = "course")
+    @ManyToOne
+    @JoinColumn(name = "course", referencedColumnName = "course_id", nullable = false)
     @Schema(example = "1", requiredMode = RequiredMode.REQUIRED, description = "Curso da reserva")
-    private Long course;
+    private CourseEntity course;
 
     @CreationTimestamp
     private LocalDateTime create_at;

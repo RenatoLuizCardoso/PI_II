@@ -10,35 +10,37 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./editar-disciplinas.component.css']
 })
 export class EditarDisciplinasComponent implements OnInit {
-  disciplinaForm: FormGroup;
-  mensagemSucesso: boolean = false;
+  editForm!: FormGroup;
+  editError: boolean = false;
+  editSuccess: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private cdisciplinaService: CdisciplinaService,
     private titleService: Title
-  ) {
-    this.disciplinaForm = this.fb.group({
-      id: [{ value: '', disabled: true }],
-      disciplineName: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9 ]*$')]],  // Validação para letras, números e espaços
-      hour: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],  // Validação para número positivo
-      professor: ['', Validators.required]
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle('Edição de Disciplina');
-    this.carregarDiscipline();
+    this.titleService.setTitle('Editar Disciplina');
+    this.editForm = this.formBuilder.group({
+      subjectId: [{ value: 0, disabled: true }], // Campo desativado
+      subjectName: ['', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$')]], // Letras e espaços
+      subjectHours: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], // Números apenas
+    });
+
+    this.carregarDisciplina();
   }
 
-  carregarDiscipline() {
+  get f() { return this.editForm.controls; }
+
+  carregarDisciplina(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.cdisciplinaService.getDisciplineById(id).subscribe(
         data => {
-          this.disciplinaForm.patchValue(data);
+          this.editForm.patchValue(data); // Preenche o formulário com os dados recebidos
         },
         error => {
           console.error('Erro ao carregar disciplina: ', error);
@@ -47,23 +49,33 @@ export class EditarDisciplinasComponent implements OnInit {
     }
   }
 
-  salvar() {
-    if (this.disciplinaForm.valid) {
-      const disciplinaAtualizada = this.disciplinaForm.getRawValue();
-      this.cdisciplinaService.updateDiscipline(disciplinaAtualizada).subscribe(
-        () => {
-          this.mensagemSucesso = true;
-          setTimeout(() => {
-            this.mensagemSucesso = false;
-            this.router.navigate(['/admin/gerenciar_disc']);
-          }, 3000);
-        },
-        error => {
-          console.error('Erro ao atualizar disciplina: ', error);
-        }
-      );
+  onSubmit(): void {
+    if (this.editForm.invalid) {
+      this.editError = true;
+      this.editForm.markAllAsTouched();
+      return;
     }
-  }
 
-  get f() { return this.disciplinaForm.controls; }
+    // Preparando o JSON para envio
+    const updatedData = {
+      subjectId: this.route.snapshot.paramMap.get('id'), // Pegando o ID da URL
+      subjectName: this.editForm.value.subjectName,
+      subjectHours: this.editForm.value.subjectHours
+    };
+
+    this.cdisciplinaService.updateDiscipline(updatedData).subscribe(
+      response => {
+        console.log('Disciplina atualizada com sucesso', response);
+        this.editSuccess = true;
+        this.editError = false;
+        setTimeout(() => {
+          this.router.navigate(['/admin/gerenciar_disc']); // Redireciona após sucesso
+        }, 3000);
+      },
+      error => {
+        console.error('Erro ao atualizar disciplina: ', error);
+        this.editError = true;
+      }
+    );
+  }
 }

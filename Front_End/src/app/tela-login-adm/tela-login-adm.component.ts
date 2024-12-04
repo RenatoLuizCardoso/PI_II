@@ -45,7 +45,7 @@ export class TelaLoginAdmComponent {
             console.log("Token recebido:", response.access_token);
 
             // Armazenar o token no localStorage
-            localStorage.setItem('authToken', response.access_token);
+            localStorage.setItem('adminToken', response.access_token);
 
             // Opcional: Armazenar outras informações, como tempo de expiração
             localStorage.setItem('expires_in', response.expires_in.toString());

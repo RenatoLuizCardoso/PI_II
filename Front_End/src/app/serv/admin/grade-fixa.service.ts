@@ -17,7 +17,7 @@ export class GradeFixaService {
 
   // Método para obter os cabeçalhos de autenticação
   private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('adminToken');
     if (!token) {
       throw new Error('Token de autenticação não encontrado.');
     }

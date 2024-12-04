@@ -13,7 +13,7 @@
               <label for="teacher" class="form-label"><strong>Professor:</strong></label>
               <select [(ngModel)]="form.teacher" name="teacher" class="form-control" required>
                 <option *ngFor="let teacher of teachers" [value]="teacher.teacherId">
-                  {{ teacher.teacher }}
+                  {{ teacher.teacherName }}
                 </option>
               </select>
             </div>

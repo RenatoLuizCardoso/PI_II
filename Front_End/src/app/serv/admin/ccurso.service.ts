@@ -13,7 +13,7 @@ export class CcursoService {
 
   // Função para obter os headers com o token
   private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('adminToken');
     if (!token) {
       throw new Error('Token de autenticação não encontrado.');
     }
