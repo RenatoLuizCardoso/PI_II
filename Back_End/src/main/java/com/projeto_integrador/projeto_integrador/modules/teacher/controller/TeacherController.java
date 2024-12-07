@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.projeto_integrador.projeto_integrador.modules.student.dto.ResetPasswordRequest;
+import com.projeto_integrador.projeto_integrador.modules.teacher.dto.TeacherDTO;
 import com.projeto_integrador.projeto_integrador.modules.teacher.entity.TeacherEntity;
 import com.projeto_integrador.projeto_integrador.modules.teacher.repository.TeacherRepository;
 import com.projeto_integrador.projeto_integrador.modules.teacher.usecases.*;
@@ -67,7 +68,9 @@ public class TeacherController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Criar um novo professor", description = "Cria um novo professor no sistema. Apenas administradores podem acessar.", security = @SecurityRequirement(name = "jwt_auth"))
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Professor criado com sucesso"),
+            @ApiResponse(responseCode = "200", description = "Professor criado com sucesso", content = {
+                    @Content(schema = @Schema(implementation = TeacherDTO.class))
+            }),
             @ApiResponse(responseCode = "400", description = "Erro ao criar professor", content = @Content)
     })
     public ResponseEntity<Object> create(@Valid @RequestBody TeacherEntity teacherEntity) {
@@ -123,7 +126,9 @@ public class TeacherController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Atualizar professor", description = "Atualiza as informações de um professor existente. Disponível apenas para administradores.", security = @SecurityRequirement(name = "jwt_auth"))
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Professor atualizado com sucesso"),
+            @ApiResponse(responseCode = "200", description = "Professor atualizado com sucesso", content = {
+                    @Content(schema = @Schema(implementation = TeacherDTO.class))
+            }),
             @ApiResponse(responseCode = "404", description = "Professor não encontrado", content = @Content)
     })
     public ResponseEntity<?> putTeacher(@Valid @RequestBody TeacherEntity teacherEntity, @PathVariable Long id) {
@@ -156,14 +161,15 @@ public class TeacherController {
     @PostMapping("/{id}/photo")
     @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')")
     public ResponseEntity<Object> uploadPhoto(
-        @PathVariable Long id,
-        @RequestPart("profilePhoto") MultipartFile profilePhoto) {
+            @PathVariable Long id,
+            @RequestPart("profilePhoto") MultipartFile profilePhoto) {
         try {
             String filePath = fileStorageService.saveFile(profilePhoto);
-    
+
             profileTeacherUseCase.updatePhoto(id, filePath);
-    
-            return ResponseEntity.ok(Map.of("message", "Foto de perfil atualizada com sucesso!", "photoPath", filePath));
+
+            return ResponseEntity
+                    .ok(Map.of("message", "Foto de perfil atualizada com sucesso!", "photoPath", filePath));
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Professor não encontrado."));
         } catch (Exception e) {

@@ -28,3 +28,12 @@
   .scrollable-content::-webkit-scrollbar-track {
     background: #f8f9fa; /* Cor */
   }
+
+  .card {
+    transition: transform 0.2s;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  

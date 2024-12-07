@@ -69,7 +69,7 @@ public class RoomEntity {
 
     @ManyToOne
     @JoinColumn(name = "room_type_id", nullable = false)
-    @Schema(description = "Tipo da sala/laboratório", requiredMode = RequiredMode.REQUIRED)
+    @Schema(example = "{ \"roomTypeId\": 2}", description = "Tipo da sala/laboratório", requiredMode = RequiredMode.REQUIRED)
     private RoomTypeEntity roomType;
 
     @CreationTimestamp

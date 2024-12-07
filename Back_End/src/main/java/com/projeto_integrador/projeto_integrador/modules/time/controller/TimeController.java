@@ -3,14 +3,29 @@ package com.projeto_integrador.projeto_integrador.modules.time.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.projeto_integrador.projeto_integrador.modules.time.dto.TimeDTO;
 import com.projeto_integrador.projeto_integrador.modules.time.entity.TimeEntity;
-import com.projeto_integrador.projeto_integrador.modules.time.usecases.*;
+import com.projeto_integrador.projeto_integrador.modules.time.usecases.CreateTime;
+import com.projeto_integrador.projeto_integrador.modules.time.usecases.DeleteTimeById;
+import com.projeto_integrador.projeto_integrador.modules.time.usecases.GetAllTimes;
+import com.projeto_integrador.projeto_integrador.modules.time.usecases.GetTimeById;
+import com.projeto_integrador.projeto_integrador.modules.time.usecases.PutTimeById;
+
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -41,7 +56,7 @@ public class TimeController {
     @Operation(summary = "Cadastrar horário", description = "Essa função é responsável por cadastrar um novo horário")
     @ApiResponses({
         @ApiResponse(responseCode = "200", content = {
-            @Content(schema = @Schema(implementation = TimeEntity.class))
+            @Content(schema = @Schema(implementation = TimeDTO.class))
         }),
         @ApiResponse(responseCode = "400", description = "Erro ao cadastrar horário")
     })
@@ -56,7 +71,7 @@ public class TimeController {
     }
 
     @GetMapping("/")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')")
     @Operation(summary = "Listar horários", description = "Essa função é responsável por listar todos os horários")
     @ApiResponses({
         @ApiResponse(responseCode = "200", content = {
@@ -98,7 +113,7 @@ public class TimeController {
     @Operation(summary = "Atualizar horário", description = "Essa função é responsável por atualizar um horário existente")
     @ApiResponses({
         @ApiResponse(responseCode = "200", content = {
-            @Content(schema = @Schema(implementation = TimeEntity.class))
+            @Content(schema = @Schema(implementation = TimeDTO.class))
         }),
         @ApiResponse(responseCode = "404", description = "Horário não encontrado")
     })

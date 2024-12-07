@@ -94,17 +94,25 @@ export class EditarSalasComponent implements OnInit {
   salvar(): void {
     if (this.salaForm.valid) {
       const salaAtualizada = {
-        ...this.salaForm.value,
-        roomResources: this.resources.value.join(', ') // Converte FormArray para string
+        roomId: this.salaForm.value.roomId, // roomId sendo enviado corretamente
+        roomCapacity: this.salaForm.value.roomCapacity.toString(),
+        roomNumber: this.salaForm.value.roomId ? this.salaForm.value.roomId.toString().padStart(2, '0') : '',
+        roomFloor: this.salaForm.value.roomFloor.toString(),
+        roomResources: this.resources.value.join(', '),
+        roomAvailability: this.salaForm.value.roomAvailability === 'L' ? 'Livre' : 'Indisponível',
+        roomType: {
+          roomTypeId: this.salaForm.value.roomType
+        }
       };
-
+  
       console.log('JSON enviado para atualização:', JSON.stringify(salaAtualizada));
-
+  
+      // Verifique se roomId existe antes de enviar
       if (!salaAtualizada.roomId) {
         console.error("ID da sala não encontrado!");
         return;
       }
-
+  
       this.csalasService.updateSala(salaAtualizada).subscribe(
         () => {
           this.mensagemSucesso = true;
@@ -122,4 +130,5 @@ export class EditarSalasComponent implements OnInit {
       this.registerError = true;
     }
   }
+  
 }

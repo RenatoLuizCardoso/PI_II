@@ -22,6 +22,8 @@ html, body {
   overflow: hidden; /* Remove a rolagem interna */
 }
 
+
+
 /* Coluna esquerda */
 .col-md-6.bg-light {
   display: flex;
@@ -89,7 +91,36 @@ html, body {
   height: 400px;
   margin-bottom: 10px; /* Espaço abaixo da imagem */
 }
-
+.linha {
+    border-width: 7px;
+    border-color: #C00c0c !important;
+    opacity: 1;
+  }
+  
+  .vertical-line {
+    width: 1px;
+    height: 40px; /* ajuste conforme necessário */
+    background-color: black;
+  }
+  
+  .scrollable-content {
+    overflow-y: auto; /* Adiciona rolagem vertical */
+    max-height: 50vh; /* Limita a altura da área scrollable */
+    padding: 10px; /* Espaçamento interno */
+  }
+  
+  .scrollable-content::-webkit-scrollbar {
+    width: 8px; /* Largura da barra de rolagem */
+  }
+  
+  .scrollable-content::-webkit-scrollbar-thumb {
+    background-color: #C00c0c; /* Cor da barra de rolagem */
+    border-radius: 10px; /* Cantos arredondados */
+  }
+  
+  .scrollable-content::-webkit-scrollbar-track {
+    background: #f8f9fa; /* Cor */
+  }
 /* Estilos do quadrado externo */
 .outer-square {
   width: 100%; /* Largura total */
@@ -129,7 +160,26 @@ html, body {
   cursor: pointer; /* Muda o cursor para indicar que é clicável */
   transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transição suave para hover */
   color: #000; /* Cor do texto dos itens de reserva */
+  justify-content: space-between; /* Adiciona espaço entre os elementos do item de reserva */
 }
+
+/* Estilo para o botão de excluir dentro do item de reserva */
+.reservation-item .btn-delete {
+  background-color: #dc3545; /* Cor de fundo vermelha para excluir */
+  color: #fff; /* Cor do texto branca */
+  border: none; /* Sem borda */
+  padding: 5px 10px; /* Espaçamento interno do botão */
+  border-radius: 5px; /* Cantos arredondados */
+  cursor: pointer; /* Muda o cursor para indicar que é clicável */
+  font-size: 12px; /* Tamanho da fonte */
+  transition: background-color 0.3s ease; /* Transição suave para hover */
+  margin-left: 10px; /* Adiciona um pequeno espaço à esquerda do botão */
+}
+
+.reservation-item .btn-delete:hover {
+  background-color: #c82333; /* Cor de fundo ao passar o mouse */
+}
+
 
 .reservation-item:hover {
   background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
@@ -170,7 +220,7 @@ html, body {
 }
 
 /* Coluna direita */
-.col-md-6.bg-secondary {
+.col-md-6  {
   background-color: #ffffff; /* Altera a cor de fundo para branca */
   color: #000; /* Ajusta a cor do texto para preto */
   display: flex;
@@ -185,17 +235,9 @@ html, body {
 /* Detalhes da reserva */
 .reservation-detail {
 
-  text-align: center; /* Centraliza o texto */
-  background-color: #f8f9fa; /* Fundo claro para os detalhes da reserva */
-  padding: 20px; /* Espaço interno ajustado */
-  border-radius: 8px; /* Cantos arredondados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
-  width: 100%; /* Largura total */
-  max-width: 500px; /* Largura máxima ajustada */
-
-  color: #000; /* Cor do texto nos detalhes da reserva */
+  width: 500px; min-height: 400px; border: 2px solid #C00c0c; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 10px;
   margin-bottom: 10px; /* Espaço abaixo dos detalhes */
-  margin-top: 70px;
+  margin-top: 140px;
 }
 
 /* Botões no detalhe da reserva */
@@ -279,4 +321,51 @@ html, body {
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
+}
+
+/* Estilo do cabeçalho de data e horário */
+.reservation-header {
+  text-align: left; /* Alinha os elementos à esquerda */
+  margin-bottom: 5px; /* Espaçamento entre o horário e os detalhes */
+}
+
+.reservation-date {
+  display: block; /* Força a data a ocupar uma linha completa */
+  font-weight: bold; /* Destaca a data */
+}
+
+.reservation-time {
+  display: block; /* Força o horário a ocupar uma linha completa */
+  font-size: 0.9rem; /* Reduz levemente o tamanho da fonte */
+  color: #6c757d; /* Cor cinza para menor destaque */
+}
+
+/* Estilo dos detalhes (Professor e Curso) */
+.reservation-name {
+  text-align: left; /* Alinha o conteúdo à esquerda */
+  margin-bottom: 5px; /* Espaçamento entre linhas */
+}
+
+.teacher {
+  font-size: 1rem; /* Tamanho normal */
+  font-weight: bold; /* Deixa o texto mais destacado */
+}
+
+.course {
+  font-size: 0.85rem; /* Fonte menor para o curso */
+  color: #6c757d; /* Cor cinza para suavizar */
+}
+
+/* Botão excluir */
+.btn-delete {
+  background-color: #dc3545; /* Cor vermelha */
+  color: #fff; /* Texto branco */
+  border: none; /* Remove a borda */
+  padding: 5px 10px; /* Ajusta o tamanho */
+  cursor: pointer; /* Muda o cursor ao passar sobre o botão */
+  border-radius: 3px; /* Bordas arredondadas */
+}
+
+.btn-delete:hover {
+  background-color: #c82333; /* Cor mais escura ao passar o mouse */
 }

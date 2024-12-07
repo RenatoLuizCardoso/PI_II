@@ -1,0 +1,45 @@
+
+  .table {
+    border: 1px solid #dee2e6;
+    background-color: #ffffff;
+  }
+
+  .table th {
+    background-color: #343a40;
+    color: white;
+  }
+
+  .schedule-cell {
+    padding: 10px;
+    
+    border-radius: 5px;
+    margin: 5px;
+    font-size: 0.9rem;
+  }
+
+  .schedule-cell {
+    position: relative;
+    cursor: pointer; /* Para indicar que é interativo */
+    transition: background-color 0.3s ease; /* Transição suave para a cor de fundo */
+  }
+  
+  .schedule-cell:hover {
+    background-color: rgba(255, 0, 0, 0.2); /* Deixa a célula com um fundo vermelho suave */
+  }
+  
+  .schedule-cell .btn-danger {
+    display: none; /* O botão de excluir fica escondido inicialmente */
+    position: absolute; /* Posiciona o botão dentro da célula */
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+  }
+  
+  .schedule-cell.highlight .btn-danger {
+    display: block; /* Exibe o botão de excluir quando a célula estiver clicada */
+  }
+  
+  .schedule-cell.highlight {
+    background-color: rgba(255, 0, 0, 0.5); /* Cor de fundo quando clicada */
+  }
+  

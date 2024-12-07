@@ -1,1 +1,64 @@
 <app-navbar></app-navbar>
+<div class="grade-fixa-container container mt-3">
+  <h2 class="text-center mb-4">Horário das Aulas</h2>
+
+  <!-- Filtro de Seleção por Curso -->
+  <div class="filter-container mb-3">
+    <label for="courseSelect">Escolha um Curso:</label>
+    <select id="courseSelect" [(ngModel)]="searchTerm" class="form-control">
+      <option value="">Selecione um curso</option>
+      <!-- Preenche o select com os cursos disponíveis -->
+      <option *ngFor="let course of courses" [value]="course.courseName">{{ course.courseName }} <p> - Semestre </p>{{ course.courseSemester }}</option>
+    </select>
+    <div class="d-flex justify-content-end align-items-center mt-1">
+      <button class="btn btn-success ml-3" (click)="showTimes27to32()">Manhã</button>
+      <button class="btn btn-primary ml-3" (click)="showTimes11to16()">Tarde</button>
+      <button class="btn btn-dark ml-3" (click)="showTimes33to38()">Noite</button> <!-- Novo botão -->
+    </div>
+  </div>
+
+  <!-- A tabela de horários será exibida apenas se searchTerm (curso) não estiver vazio -->
+  <div *ngIf="searchTerm">
+    <table class="table table-bordered text-center">
+      <thead>
+        <tr>
+          <th>Horário</th>
+          <th>Segunda-feira</th>
+          <th>Terça-feira</th>
+          <th>Quarta-feira</th>
+          <th>Quinta-feira</th>
+          <th>Sexta-feira</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let time of filteredTimes">
+          <td>{{ time.startTime }} - {{ time.endTime }}</td>
+          <td *ngFor="let day of ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira']">
+            <div *ngFor="let schedule of schedules | dayFilter:day | timeFilter:{ start: time.startTime, end: time.endTime }">
+              <div
+                class="schedule-cell"
+                (click)="toggleDeleteButton(schedule.scheduleId)"
+                [ngClass]="{'highlight': isHovered(schedule.scheduleId)}"
+              >
+                <!-- Exibe o curso, sujeito à seleção -->
+                <strong *ngIf="!searchTerm || schedule.course.toLowerCase().includes(searchTerm.toLowerCase())">{{ schedule.subject }}</strong><br />
+                <span *ngIf="!searchTerm || schedule.course.toLowerCase().includes(searchTerm.toLowerCase())">{{ schedule.teacher }}</span>
+                <p *ngIf="!searchTerm || schedule.course.toLowerCase().includes(searchTerm.toLowerCase())">{{ schedule.room }}</p>
+
+                <!-- Botão de excluir, aparece se a célula for clicada -->
+                <button *ngIf="scheduleIdToDelete === schedule.scheduleId" class="btn btn-danger" (click)="deleteSchedule(schedule.scheduleId, $event)">Excluir</button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+
+
+    </table>
+  </div>
+
+  <!-- Caso searchTerm (curso) esteja vazio, a tabela não será exibida -->
+  <div *ngIf="!searchTerm" class="text-center">
+    <p>Selecione um curso para ver o horário das aulas.</p>
+  </div>
+</div>

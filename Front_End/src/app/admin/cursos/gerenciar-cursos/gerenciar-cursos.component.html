@@ -16,8 +16,7 @@
             <th>ID</th>
             <th>Nome do Curso</th>
             <th>Período</th>
-            <th>Semestre</th>
-            <th>Disciplinas</th>
+            <th>Semestres</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -28,12 +27,6 @@
             <td>{{ curso.courseName }}</td> <!-- Alterado de curso.nameCourse para curso.courseName -->
             <td>{{ curso.coursePeriod }}</td> <!-- Alterado de curso.period para curso.coursePeriod -->
             <td>{{ curso.courseSemester }}</td> <!-- Alterado de curso.semester para curso.courseSemester -->
-            <td>
-              <ul>
-                <li *ngFor="let disciplina of curso.subjects">{{ disciplina }}</li>
-                <!-- Alterado de curso.disciplina para curso.subjects -->
-              </ul>
-            </td>
             <td>
               <!-- Botões de Ação -->
               <button class="btn btn-primary" [routerLink]="['/admin/editar_curso', curso.courseId]"

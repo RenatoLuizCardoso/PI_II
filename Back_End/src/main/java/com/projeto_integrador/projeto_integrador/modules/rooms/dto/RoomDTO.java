@@ -23,6 +23,9 @@ public class RoomDTO {
     @Schema(example = "Livre", requiredMode = RequiredMode.REQUIRED, description = "Capacidade da sala/labóratorio")
     private String roomAvailability;
 
-    @Schema(requiredMode = RequiredMode.REQUIRED, description = "Tipo da sala/laboratório")
+    @Schema(example = "1", requiredMode = RequiredMode.REQUIRED, description = "Número da sala/labóratorio")
+    private String roomNumber;
+
+    @Schema(example = "{ \"roomTypeId\": 2}",requiredMode = RequiredMode.REQUIRED, description = "Tipo da sala/laboratório")
     private Long roomType;
 }

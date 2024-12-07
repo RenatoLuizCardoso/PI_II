@@ -76,7 +76,7 @@ public class CourseController {
     }
 
     @GetMapping("/")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT') or hasRole('TEACHER')")
     @Operation(summary = "Listar cursos", description = "Essa função é responsável por listar todos os cursos")
     @ApiResponses({
       @ApiResponse(responseCode = "200", content = {

@@ -46,7 +46,7 @@ export class ProfessoresService {
   updateProfessor(professor: any): Observable<any> {
     const headers = this.getAuthHeaders();
     const professorId = professor.id || professor.teacherId; // Ajuste para o nome correto do ID
-    return this.http.put<any>(`${this.apiUrl}/${professorId}`, professor, { headers });
+    return this.http.put<any>(`${this.apiUrl}${professorId}`, professor, { headers });
   }
 
   deleteProfessor(id: number): Observable<any> {

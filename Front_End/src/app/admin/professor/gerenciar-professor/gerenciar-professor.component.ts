@@ -30,9 +30,8 @@ export class GerenciarProfessorComponent implements OnInit {
         this.professores = data.map(professor => ({
           id: professor.teacherId, // Usar teacherId em vez de id
           name: professor.teacherName, // Usar teacherName
-          curso: professor.subjects.length > 0 ? professor.subjects[0] : 'Sem curso', // Usar o primeiro item de subjects
           emailI: professor.institutionalEmail, // Usar institutionalEmail
-          tel: professor.personalPhone // Usar personalPhone
+          tel: professor.businessPhone // Usar personalPhone
         }));
 
         this.professoresFiltrados = this.professores; // Inicialmente, todos os professores estão na lista filtrada
@@ -74,21 +73,22 @@ export class GerenciarProfessorComponent implements OnInit {
   }
 
   excluirProfessor(id: number) {
-    if (confirm('Tem certeza que deseja excluir este professor?')) {
-      this.loading = true;
-      this.professoresService.deleteProfessor(id).subscribe(
-        () => {
-          this.professores = this.professores.filter(professor => professor.id !== id);
-          this.filtrarProfessores(); // Reaplica o filtro após a exclusão
-          this.loading = false;
-          alert('Professor excluído com sucesso!');
-        },
-        error => {
-          console.error('Erro ao excluir professor: ', error);
-          this.loading = false;
-          alert('Ocorreu um erro ao excluir o professor.');
-        }
-      );
-    }
+    this.loading = true;
+    this.professoresService.deleteProfessor(id).subscribe(
+      () => {
+        // Remover o professor da lista diretamente
+        this.professores = this.professores.filter(professor => professor.id !== id);
+        this.filtrarProfessores(); // Reaplica o filtro após a exclusão
+        this.loading = false;
+        // Mensagem de sucesso
+        alert('Professor excluído com sucesso!');
+      },
+      error => {
+        console.error('Erro ao excluir professor: ', error);
+        this.loading = false;
+        alert('Ocorreu um erro ao excluir o professor.');
+      }
+    );
   }
+
 }

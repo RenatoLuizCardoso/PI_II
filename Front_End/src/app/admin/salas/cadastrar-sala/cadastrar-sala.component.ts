@@ -24,6 +24,7 @@ export class CadastrarSalaComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       roomType: ['', Validators.required], // Tipo da sala (1 ou 2)
       roomCapacity: ['', [Validators.required, Validators.min(1)]], // Capacidade da sala (mínimo 1)
+      roomNumber: ['', Validators.required], // Número da sala (obrigatório)
       roomFloor: ['', [Validators.required, Validators.min(0)]], // Andar (mínimo 0)
       roomResources: this.formBuilder.array([]), // Recursos (checkboxes)
       roomAvailability: ['', Validators.required] // Disponibilidade da sala
@@ -57,11 +58,14 @@ export class CadastrarSalaComponent implements OnInit {
 
     // Formatação dos dados para o novo formato esperado pela API
     const formData = {
-      roomCapacity: this.registerForm.value.roomCapacity, // Capacidade da sala
-      roomFloor: this.registerForm.value.roomFloor, // Andar da sala
+      roomCapacity: this.registerForm.value.roomCapacity.toString(), // Capacidade da sala (convertido para string)
+      roomNumber: this.registerForm.value.roomNumber.padStart(2, '0'), // Garante que o número da sala tenha 2 dígitos
+      roomFloor: this.registerForm.value.roomFloor.toString(), // Andar da sala (convertido para string)
       roomResources: this.resources.controls.map((control: any) => control.value).join(', '), // Recursos como string
-      roomAvailability: this.registerForm.value.roomAvailability, // Disponibilidade
-      roomType: this.registerForm.value.roomType // Tipo da sala (já garantido como número)
+      roomAvailability: this.registerForm.value.roomAvailability === 'Livre' ? 'Livre' : 'Indisponível',
+      roomType: {
+        roomTypeId: this.registerForm.value.roomType // Tipo da sala com chave 'roomTypeId'
+      }
     };
 
     // **Log para verificar os dados antes de enviar**
@@ -82,7 +86,6 @@ export class CadastrarSalaComponent implements OnInit {
       }
     );
   }
-
 
   // Função para resetar o formulário
   onReset(): void {

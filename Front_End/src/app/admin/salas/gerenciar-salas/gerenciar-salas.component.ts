@@ -61,7 +61,7 @@ export class GerenciarSalasComponent implements OnInit {
   // Função de filtragem por tipo
   filtrarSalas() {
     this.salasFiltradas = this.sala.filter(sala =>
-      sala.roomType.toString().toLowerCase().includes(this.pesquisaTipo.toLowerCase())
+      sala.roomNumber.toString().toLowerCase().includes(this.pesquisaTipo.toLowerCase())
     );
     this.paginaAtual = 1;
     this.calcularPaginas();

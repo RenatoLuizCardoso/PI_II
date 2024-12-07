@@ -12,6 +12,11 @@ import { Title } from '@angular/platform-browser';
 export class TelaLoginAdmComponent {
   loginForm: FormGroup;
   loginError: boolean = false;
+  passwordVisible = false;
+  password: string = '';
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+  }
 
   constructor(
     private fb: FormBuilder,

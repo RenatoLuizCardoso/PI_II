@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import com.projeto_integrador.projeto_integrador.modules.student.usecases.EmailService;
+import com.projeto_integrador.projeto_integrador.modules.student.usecases.EmailServiceStudent;
 
 @SpringBootTest
 public class EmailServiceTest {
@@ -18,7 +18,7 @@ public class EmailServiceTest {
     private JavaMailSender mailSender;
 
     @InjectMocks
-    private EmailService emailService;
+    private EmailServiceStudent emailService;
 
     @Test
     public void testEmailSending() {

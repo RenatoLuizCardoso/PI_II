@@ -67,8 +67,10 @@
         <!-- Assuntos de Ensino -->
         <div class="form-group">
           <label for="teacherSubjects">Assuntos de Ensino</label>
-          <input type="text" class="form-control" id="teacherSubjects" [value]="professorData.teacherSubjects.join(', ')" disabled>
+          <!-- Use o método getSubjectNames() para exibir os nomes dos subjects -->
+          <input type="text" class="form-control" id="teacherSubjects" [value]="getSubjectNames()" disabled>
         </div>
+        
       </form>
     </div>
   </div>

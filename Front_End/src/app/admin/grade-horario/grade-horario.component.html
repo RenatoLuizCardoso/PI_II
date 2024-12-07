@@ -7,13 +7,13 @@
         <div class="card-body">
           <h5 class="card-title text-center">Gerenciar Reservas</h5>
           <form (submit)="isEditing ? updateReservation() : createReservation()">
-            
+
             <!-- Professor -->
             <div class="mb-3 mt-3">
               <label for="teacher" class="form-label"><strong>Professor:</strong></label>
               <select [(ngModel)]="form.teacher" name="teacher" class="form-control" required>
                 <option *ngFor="let teacher of teachers" [value]="teacher.teacherId">
-                  {{ teacher.teacherName }}
+                  {{ teacher.teacherName}}
                 </option>
               </select>
             </div>
@@ -43,7 +43,7 @@
               <label for="room" class="form-label"><strong>Sala:</strong></label>
               <select [(ngModel)]="form.room" name="room" class="form-control" required>
                 <option *ngFor="let room of rooms" [value]="room.roomId">
-                  {{ room.roomType }} {{ room.roomFloor }}
+                  {{ room.roomType }} {{ room.roomNumber }}
                 </option>
               </select>
             </div>
@@ -70,7 +70,7 @@
               </button>
             </div>
             <div class="d-grid gap-2 mb-3">
-              <button type="button" class="btn btn-danger" (click)="cancel()">Cancelar</button>
+              <button type="button" class="btn btn-danger" routerLink="/admin/gerenciar_reservas" (click)="cancel()">Cancelar</button>
             </div>
 
           </form>

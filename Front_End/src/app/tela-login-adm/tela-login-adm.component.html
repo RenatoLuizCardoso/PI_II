@@ -10,18 +10,32 @@
               <label for="adminEmail" class="form-label">Email</label>
               <input type="email" class="form-control" id="adminEmail" formControlName="adminEmail" required>
             </div>
+
             <div class="mb-3 mt-4">
               <label for="adminPassword" class="form-label">Senha</label>
-              <input type="password" class="form-control" id="adminPassword" formControlName="adminPassword" required>
+              <div class="input-group">
+                <input
+                  [type]="passwordVisible ? 'text' : 'password'"
+                  class="form-control"
+                  id="adminPassword"
+                  formControlName="adminPassword"
+                  required
+                />
+                <div class="input-group-append">
+
+                </div>
+              </div>
             </div>
+
             <div *ngIf="loginError" class="alert alert-danger mt-3" role="alert">
               Usuário ou senha incorretos!
             </div>
+
             <div class="d-grid gap-2 mt-4 mb-3">
               <button type="submit" class="btn btn-verde texto-branco">Entrar</button>
             </div>
-            <a routerLink="/recuperar-senha"><p>Recuperar a senha</p></a>
           </form>
+
         </div>
       </div>
     </div>

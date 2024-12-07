@@ -17,9 +17,8 @@ public class EmailServiceStudent {
     private JavaMailSender mailSender;
 
     public void sendResetPasswordEmail(String toEmail, String token) {
-        String subject = "Reset your password";
-        String resetUrl = "http://localhost:8080/student/reset-password?token=" + token;
-        String message = "To reset your password, click the link below:\n" + resetUrl;
+        String subject = "Redefinir senha";
+        String message = "Para redefinir sua senha, copie o código abaixo:\n" + token;
 
         logger.info("Sending password reset email to: {}", toEmail);
         

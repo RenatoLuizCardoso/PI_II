@@ -1,0 +1,54 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-4">
+  <!-- Formulário para cadastrar horários -->
+  <form (ngSubmit)="addTime()">
+    <div class="row mb-3">
+      <div class="col">
+        <input
+          type="time"
+          class="form-control"
+          placeholder="Horário início"
+          [(ngModel)]="newStartTime"
+          name="startTime"
+          required
+        />
+      </div>
+      <div class="col">
+        <input
+          type="time"
+          class="form-control"
+          placeholder="Horário fim"
+          [(ngModel)]="newEndTime"
+          name="endTime"
+          required
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" (click)="addTime" class="btn btn-primary">Cadastrar</button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Tabela de horários -->
+  <table class="table">
+    <thead>
+      <tr class="table-dark">
+        <th scope="col">ID</th>
+        <th scope="col">Horário Começo</th>
+        <th scope="col">Horário Final</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let time of times">
+        <th scope="row">{{ time.timeId }}</th>
+        <td>{{ time.startTime }}</td>
+        <td>{{ time.endTime }}</td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteTime(time.timeId)">Excluir</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

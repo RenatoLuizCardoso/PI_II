@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "projeto-integrador-app",
+    "newArchEnabled": true,
+    "slug": "ProjetoIntegrador",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/fatec-logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.ktrox.ProjetoIntegrador"
+    },
+    "web": {
+      "favicon": "",
+      "backgroundColor": "#FFFFFF"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7c8c964f-7c0b-467f-b2c4-f2b466e7384c"
+      }
+    }
+  }
+}

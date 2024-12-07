@@ -1,0 +1,91 @@
+/* Estilo geral */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa; /* Fundo leve */
+    color: #333; /* Texto mais escuro */
+  }
+  
+  /* Container principal */
+  .container {
+    max-width: 800px;
+    background-color: #ffffff; /* Fundo branco para contraste */
+    padding: 20px;
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  }
+  
+  /* Formulário */
+  form {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  input[type="time"] {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 1rem;
+  }
+  
+  button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Tabela */
+  .table {
+    margin-top: 20px;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+  }
+  
+  .table th,
+  .table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .table thead {
+    background-color: #343a40;
+    color: #ffffff;
+    font-size: 1rem;
+  }
+  
+  .table tbody tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+  }
+  
+  .table .btn-danger {
+    background-color: #dc3545;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .table .btn-danger:hover {
+    background-color: #c82333;
+  }
+  
+  /* Espaçamento entre elementos */
+  .mb-3 {
+    margin-bottom: 1rem !important;
+  }
+  

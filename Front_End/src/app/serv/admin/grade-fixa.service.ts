@@ -6,9 +6,11 @@ import { Observable, catchError, throwError, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class GradeFixaService {
-  private apiUrl = 'https://projeto-integrador-1v4i.onrender.com/reservation/';
+  private apiUrl = 'https://projeto-integrador-1v4i.onrender.com/schedule/';
   private teachersUrl = 'https://projeto-integrador-1v4i.onrender.com/teacher/';
   private subjectsUrl = 'https://projeto-integrador-1v4i.onrender.com/subject/';
+  private jsonUrl = 'https://projeto-integrador-1v4i.onrender.com/reservation/'; 
+  private weekDaysUrl = 'https://projeto-integrador-1v4i.onrender.com/weekDays/';
   private timesUrl = 'https://projeto-integrador-1v4i.onrender.com/time/';
   private roomsUrl = 'https://projeto-integrador-1v4i.onrender.com/rooms/';
   private coursesUrl = 'https://projeto-integrador-1v4i.onrender.com/course/';
@@ -68,47 +70,7 @@ export class GradeFixaService {
       })
     );
   }
-
-  // Métodos para cadastrar dados auxiliares
-  createTeacher(teacherData: any): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.post(this.teachersUrl, teacherData, { headers }).pipe(
-      catchError((error) => {
-        console.error('Erro ao criar professor:', error);
-        return throwError(() => new Error('Erro ao criar professor'));
-      })
-    );
-  }
-
-  createSubject(subjectData: any): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.post(this.subjectsUrl, subjectData, { headers }).pipe(
-      catchError((error) => {
-        console.error('Erro ao criar matéria:', error);
-        return throwError(() => new Error('Erro ao criar matéria'));
-      })
-    );
-  }
-
-  createRoom(roomData: any): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.post(this.roomsUrl, roomData, { headers }).pipe(
-      catchError((error) => {
-        console.error('Erro ao criar sala:', error);
-        return throwError(() => new Error('Erro ao criar sala'));
-      })
-    );
-  }
-
-  createCourse(courseData: any): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.post(this.coursesUrl, courseData, { headers }).pipe(
-      catchError((error) => {
-        console.error('Erro ao criar curso:', error);
-        return throwError(() => new Error('Erro ao criar curso'));
-      })
-    );
-  }
+  
 
   // Métodos para obter dados auxiliares
   getTeachers(): Observable<any[]> {
@@ -117,6 +79,16 @@ export class GradeFixaService {
       catchError((error) => {
         console.error('Erro ao obter professores:', error);
         return throwError(() => new Error('Erro ao obter professores'));
+      })
+    );
+  }
+
+  getWeekDays(): Observable<any[]> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<any[]>(this.weekDaysUrl, { headers }).pipe(
+      catchError((error) => {
+        console.error('Erro ao obter dias da semana:', error);
+        return throwError(() => new Error('Erro ao obter dias da semana'));
       })
     );
   }

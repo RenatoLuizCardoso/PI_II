@@ -11,6 +11,7 @@ export class PerfilComponent implements OnInit {
   showDropdown = false;
   emailErrorMessage: string = '';
   selectedImage: string | ArrayBuffer | null = null;
+  subjectMap: { [key: string]: string } = {};  // Mapeamento otimizado de subjects
 
   // Dados do professor
   professorData = {
@@ -22,7 +23,7 @@ export class PerfilComponent implements OnInit {
     businessPhone: '',
     researchLine: '',
     teacherArea: '',
-    teacherSubjects: []
+    teacherSubjects: []  // Lista de subjectIds
   };
 
   constructor(
@@ -31,29 +32,40 @@ export class PerfilComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadProfile();
+    this.loadProfile();    // Carregar os dados do perfil
+    this.loadSubjects();   // Carregar o mapeamento de subjects
   }
 
   // Função para carregar os dados do perfil
   loadProfile() {
     this.perfilService.getProfile().subscribe({
       next: (data) => {
-        // Preenche os campos com os dados recebidos
-        this.professorData.teacherId = data.teacherId || null;
-        this.professorData.teacherName = data.teacherName || 'Nome não encontrado';
-        this.professorData.institutionalEmail = data.institutionalEmail || 'Email institucional não encontrado';
-        this.professorData.personalEmail = data.personalEmail || 'Email pessoal não encontrado';
-        this.professorData.personalPhone = data.personalPhone || 'Telefone pessoal não encontrado';
-        this.professorData.businessPhone = data.businessPhone || 'Telefone comercial não encontrado';
-        this.professorData.researchLine = data.researchLine || 'Linha de pesquisa não encontrada';
-        this.professorData.teacherArea = data.teacherArea || 'Área de atuação não encontrada';
-        this.professorData.teacherSubjects = data.teacherSubjects || [];
+        this.professorData = data;  // Preenche os dados do professor
       },
       error: (err) => {
         console.error('Erro ao carregar o perfil', err);
-        this.router.navigate(['/login']); // Redireciona para o login se falhar ao carregar os dados
+        this.router.navigate(['/login']);  // Redireciona para login em caso de erro
       }
     });
+  }
+
+  // Função para carregar o mapa de subjects
+  loadSubjects() {
+    this.perfilService.getSubjectsMap().subscribe({
+      next: (subjectMap) => {
+        this.subjectMap = subjectMap;  // Armazenar o mapa de subjects
+      },
+      error: (err) => {
+        console.error('Erro ao carregar os subjects', err);
+      }
+    });
+  }
+
+  // Função para mapear os subjectIds para os subjectNames
+  getSubjectNames(): string {
+    return this.professorData.teacherSubjects
+      .map(subjectId => this.subjectMap[subjectId] || 'Assunto não encontrado')  // Obtém o nome do subject usando o id
+      .join(', ');  // Junte os nomes dos subjects separados por vírgula
   }
 
   // Função para abrir o seletor de arquivos
@@ -71,23 +83,25 @@ export class PerfilComponent implements OnInit {
       const reader = new FileReader();
 
       reader.onload = () => {
-        this.selectedImage = reader.result; // A imagem selecionada é carregada como uma string base64
+        this.selectedImage = reader.result;  // A imagem selecionada é carregada como uma string base64
       };
 
       reader.readAsDataURL(file); // Converte a imagem em base64 para exibição
     }
   }
 
-  // Outras funções existentes
+  // Função para alternar a exibição do dropdown para editar o email
   toggleEmailDropdown() {
     this.showDropdown = !this.showDropdown;
   }
 
+  // Função para validar o formato do email
   isValidEmail(email: string): boolean {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     return emailPattern.test(email);
   }
 
+  // Função para registrar um novo email
   registerNewEmail() {
     const newEmailInput = document.getElementById('newEmail') as HTMLInputElement;
     const newEmailValue = newEmailInput.value;

@@ -7,21 +7,21 @@ import lombok.Data;
 @Data
 public class ReservationDTO {
     
-    @Schema(example = "1", requiredMode = RequiredMode.REQUIRED, description = "Professor da reserva")
+    @Schema(example = "{ \"teacherId\": 1}", requiredMode = RequiredMode.REQUIRED, description = "Professor da reserva")
     private Long teacher;
 
-    @Schema(example = "1", requiredMode = RequiredMode.REQUIRED, description = "Matéria da reserva")
+    @Schema(example = "{ \"subjectId\": 1}", requiredMode = RequiredMode.REQUIRED, description = "Matéria da reserva")
     private Long subject;
 
-    @Schema(example = "1", requiredMode = RequiredMode.REQUIRED, description = "Hora da reserva")
+    @Schema(example = "{ \"timeId\": 1}", requiredMode = RequiredMode.REQUIRED, description = "Hora da reserva")
     private Long time;
 
     @Schema(example = "10/12", requiredMode = RequiredMode.REQUIRED, description = "Data da reserva")
     private Long date;
 
-    @Schema(example = "1", requiredMode = RequiredMode.REQUIRED, description = "Sala da reserva")
+    @Schema(example = "{ \"roomId\": 1}", requiredMode = RequiredMode.REQUIRED, description = "Sala da reserva")
     private Long room;
 
-    @Schema(example = "1", requiredMode = RequiredMode.REQUIRED, description = "Curso da reserva")
+    @Schema(example = "{ \"courseId\": 1}", requiredMode = RequiredMode.REQUIRED, description = "Curso da reserva")
     private Long course;
 }

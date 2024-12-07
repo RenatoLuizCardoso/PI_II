@@ -15,7 +15,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry){
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200", "http://localhost:8081", "https://main.d32fywy3goxad7.amplifyapp.com", "https://master.d3sgsryxh8v9ff.amplifyapp.com")
+                        .allowedOrigins("http://localhost:4200", "http://localhost:8081", "https://main.d32fywy3goxad7.amplifyapp.com", "https://master.d3sgsryxh8v9ff.amplifyapp.com", "https://projetointegrador.ndxinfo.eti.br")
                         .allowedMethods("*");
             }
  

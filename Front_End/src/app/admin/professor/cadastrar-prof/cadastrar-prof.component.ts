@@ -142,7 +142,7 @@ export class CadastrarProfComponent implements OnInit {
   // Função para filtrar as disciplinas com base no texto digitado no campo de pesquisa
   filtrarDisciplinas() {
     if (this.pesquisaControl.value) {
-      this.disciplinasFiltradas = this.disciplinas.filter(disciplina => 
+      this.disciplinasFiltradas = this.disciplinas.filter(disciplina =>
         disciplina.subjectName.toLowerCase().includes(this.pesquisaControl.value.toLowerCase())
       );
     } else {

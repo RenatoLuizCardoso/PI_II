@@ -12,7 +12,7 @@ import { CdisciplinaService } from '../../../serv/admin/cdisciplina.service';
 export class EditarProfessorComponent implements OnInit {
   professorForm!: FormGroup;
   mensagemSucesso: boolean = false;
-  disciplinas: any[] = [];
+  teacherId!: number; // Variável para armazenar o ID do professor
 
   constructor(
     private fb: FormBuilder,
@@ -23,6 +23,7 @@ export class EditarProfessorComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Inicializando o formulário
     this.professorForm = this.fb.group({
       teacherName: ['', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$')]],
       teacherArea: ['', [Validators.required]],
@@ -31,37 +32,42 @@ export class EditarProfessorComponent implements OnInit {
       personalEmail: ['', [Validators.email]],
       personalPhone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       businessPhone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-      teacherSubjects: [null, [Validators.required]],
+      teacherPassword: ['', [Validators.required]]  // Novo campo de senha
     });
 
-    this.carregarDisciplinas();
     this.carregarProfessor();
   }
 
+  // Método de acesso aos controles do formulário
   get f() {
     return this.professorForm.controls;
   }
 
-  carregarDisciplinas() {
-    this.cdisciplinaService.getDisciplines().subscribe(
-      data => (this.disciplinas = data),
-      error => console.error('Erro ao carregar disciplinas:', error)
-    );
-  }
-
+  // Carregar os dados do professor (para edição)
   carregarProfessor() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
+      this.teacherId = +id; // Salva o ID do professor na variável teacherId
+
       this.professoresService.getProfessorById(id).subscribe(
-        data => this.professorForm.patchValue(data),
-        error => console.error('Erro ao carregar professor:', error)
+        data => {
+          // Preencher o formulário com os dados do professor
+          this.professorForm.patchValue(data);
+        },
+        error => {
+          console.error('Erro ao carregar professor:', error);
+        }
       );
     }
   }
 
+  // Salvar os dados do professor
   salvar() {
     if (this.professorForm.valid) {
       const professorAtualizado = this.professorForm.value;
+      professorAtualizado.teacherId = this.teacherId; // Incluindo o ID do professor na requisição
+
+      // Enviar os dados para a API
       this.professoresService.updateProfessor(professorAtualizado).subscribe(
         () => {
           this.mensagemSucesso = true;
@@ -70,7 +76,9 @@ export class EditarProfessorComponent implements OnInit {
             this.router.navigate(['/admin/gerenciar_professor']);
           }, 3000);
         },
-        error => console.error('Erro ao atualizar professor:', error)
+        error => {
+          console.error('Erro ao atualizar professor:', error);
+        }
       );
     } else {
       this.professorForm.markAllAsTouched();

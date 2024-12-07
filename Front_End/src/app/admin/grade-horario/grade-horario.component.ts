@@ -60,10 +60,6 @@ export class GradeHorarioComponent implements OnInit {
     });
   }
 
-  logSelectedValue(field: string, value: any): void {
-    console.log(`${field} selecionado:`, value);
-  }
-
   // Método para carregar os dados auxiliares (listas dinâmicas)
   loadAuxiliaryData(): void {
     this.ghorarioService.getTeachers().subscribe(data => {
@@ -93,7 +89,7 @@ export class GradeHorarioComponent implements OnInit {
     this.loading = true;
     const formattedData = this.formatReservationData(this.form);
     console.log('Dados enviados para criação de reserva:', formattedData);
-    
+
     this.ghorarioService.createReservation(formattedData).subscribe({
       next: () => {
         this.loadReservations();
@@ -110,7 +106,7 @@ export class GradeHorarioComponent implements OnInit {
   // Método para editar uma reserva
   editReservation(reservation: Reservation): void {
     this.isEditing = true;
-    this.form = { 
+    this.form = {
       teacher: reservation.teacher,
       subject: reservation.subject,
       time: reservation.time,
@@ -166,12 +162,12 @@ export class GradeHorarioComponent implements OnInit {
   // Método para formatar os dados antes de enviar
   formatReservationData(reservationData: ReservationForm): any {
     const finalData = {
-      teacher: Number(reservationData.teacher),
-      subject: Number(reservationData.subject),
-      time: Number(reservationData.time),
+      teacher: { teacherId: Number(reservationData.teacher) },
+      subject: { subjectId: Number(reservationData.subject) },
+      time: { timeId: Number(reservationData.time) },
       date: reservationData.date, // Date continua como string
-      room: Number(reservationData.room),
-      course: Number(reservationData.course),
+      room: { roomId: Number(reservationData.room) },
+      course: { courseId: Number(reservationData.course) }
     };
 
     console.log('Dados enviados para criar ou atualizar reserva:', JSON.stringify(finalData, null, 2));

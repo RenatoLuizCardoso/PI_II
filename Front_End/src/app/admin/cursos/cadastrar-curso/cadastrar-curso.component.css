@@ -33,11 +33,28 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 80%;
   max-width: 500px;
-  overflow-y: auto;
-  max-height: 70vh;
+  height: 60%;  /* Tamanho fixo do modal */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Área de rolagem para a lista de disciplinas */
+.discipline-list {
+  flex-grow: 1; /* Faz a lista crescer para ocupar o espaço disponível */
+  overflow-y: auto; /* Adiciona rolagem vertical */
+  margin-bottom: 20px; /* Espaço abaixo da lista */
 }
 
 /* Estilo para os botões dentro do modal */
 .discipline-menu button {
   margin: 5px;
+}
+
+/* Fixar o botão de confirmação na parte inferior do modal */
+.discipline-menu .confirm-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
 }

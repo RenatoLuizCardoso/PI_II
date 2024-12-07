@@ -1,0 +1,68 @@
+<app-navbar-prof></app-navbar-prof>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6 bg-light">
+      <!-- Barra de pesquisa e filtro -->
+      <div class="search-bar mt-5">
+        <input type="text" [(ngModel)]="searchTerm" placeholder="Pesquisar por professor ou curso" class="form-control">
+      </div>
+
+      <!-- Carregando as reservas -->
+      <div *ngIf="loading" class="loading-indicator">
+        Carregando reservas...
+      </div>
+
+      <!-- Lista de reservas -->
+      <div class="outer-square">
+        <div class="reservations">
+          <div *ngFor="let reservation of filteredReservations" class="reservation-item" (click)="editReservation(reservation)">
+            <!-- Data e horário -->
+            <div class="reservation-header">
+              <span class="reservation-date">{{ reservation.date }}</span>
+              <div class="reservation-time">{{ reservation.time }}</div>
+            </div>
+            <span class="separator"></span>
+
+            <!-- Detalhes: Professor e Curso -->
+            <div class="reservation-details">
+              <div class="reservation-name">
+                <div class="teacher">{{ reservation.teacher }}</div>
+                <div class="course">{{ reservation.course }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <!-- Botão para ir à tela de cadastro -->
+        <div class="d-flex justify-content-end mt-2 mb-2">
+          <button class="btn btn-primary" routerLink="/professor/reservar">Cadastrar Nova Reserva</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detalhes da reserva -->
+    <div class="col-md-6">
+      <div *ngIf="!selectedReservation" class="reservation-detail text-center">
+        <img src="https://th.bing.com/th/id/R.727a9882afde47f14bb4540175c02772?rik=IC6kM8Vq2%2fr9yw&pid=ImgRaw&r=0">
+        <p>Selecione uma reserva para ver os detalhes.</p>
+      </div>
+
+      <div *ngIf="isEditing" class="reservation-detail">
+        <h4>Detalhes da Reserva</h4>
+        <div>
+          <p><strong>Professor:</strong> {{ form.teacher}}</p>
+          <p><strong>Curso:</strong> {{ form.course }}</p>
+          <p><strong>Horário:</strong> {{ form.time}}</p>
+          <p><strong>Sala:</strong> {{ form.room }}</p>
+          <p><strong>Data:</strong> {{ form.date }}</p>
+        </div>
+        <div class="action-buttons">
+          <button type="button" class="btn-delete" (click)="cancel()">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

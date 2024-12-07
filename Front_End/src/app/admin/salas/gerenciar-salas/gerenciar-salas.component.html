@@ -9,7 +9,7 @@
 
       <!-- Campo de pesquisa -->
       <div class="text-center mb-4">
-        <input type="text" class="form-control col-md-12" placeholder="Pesquisar por tipo" [(ngModel)]="pesquisaTipo"
+        <input type="text" class="form-control col-md-12" placeholder="Pesquisar por número" [(ngModel)]="pesquisaTipo"
           (input)="filtrarSalas()" />
       </div>
 
@@ -17,7 +17,7 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>Número</th>
             <th>Tipo</th>
             <th>Capacidade Máxima</th>
             <th>Andar</th>
@@ -28,7 +28,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let sala of salasPaginadas">
-            <td>{{ sala.roomId }}</td>
+            <td>{{ sala.roomNumber }}</td>
             <td>{{ sala.roomType }}</td>
             <td>{{ sala.roomCapacity }}</td>
             <td>{{ sala.roomFloor }}</td>

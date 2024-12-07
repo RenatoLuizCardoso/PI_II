@@ -38,6 +38,16 @@ import { GradeHorarioComponent } from './admin/grade-horario/grade-horario.compo
 import { GradeFixaComponent } from './admin/grade-fixa/grade-fixa.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { SeminavbarComponent } from './seminavbar/seminavbar.component';
+import { TimeFilterPipe } from './pipes/time-filter.pipe';
+import { DayFilterPipe } from './pipes/day-filter.pipe';
+import { CadastroHorarioFixoComponent } from './admin/cadastro-horario-fixo/cadastro-horario-fixo.component';
+import { GradeFixaProfComponent } from './prof/grade-fixa-prof/grade-fixa-prof.component';
+import { ReservarComponent } from './prof/reservar/reservar.component';
+import { VisualizarReservasComponent } from './prof/visualizar-reservas/visualizar-reservas.component';
+import { CadastrarHoraComponent } from './admin/cadastrar-hora/cadastrar-hora.component';
+
+
+
 
 
 
@@ -72,6 +82,14 @@ import { SeminavbarComponent } from './seminavbar/seminavbar.component';
     GradeFixaComponent,
     InicioComponent,
     SeminavbarComponent,
+    TimeFilterPipe,
+    DayFilterPipe,
+    CadastroHorarioFixoComponent,
+    GradeFixaProfComponent,
+    ReservarComponent,
+    VisualizarReservasComponent,
+    CadastrarHoraComponent,
+
   ],
   imports: [
     BrowserModule,

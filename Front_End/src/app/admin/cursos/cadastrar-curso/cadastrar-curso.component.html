@@ -8,16 +8,19 @@
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="mb-3 mt-3">
               <label for="courseName" class="form-label">Nome do Curso</label>
-              <input type="text" class="form-control" id="courseName" formControlName="courseName" placeholder="Nome do Curso">
+              <input type="text" class="form-control" id="courseName" formControlName="courseName"
+                placeholder="Nome do Curso">
               <div *ngIf="f['courseName'].touched && f['courseName'].invalid" class="text-danger">
                 <small *ngIf="f['courseName'].errors?.['required']">Nome do curso é obrigatório.</small>
-                <small *ngIf="f['courseName'].errors?.['pattern']">Nome do curso deve conter apenas letras e espaços.</small>
+                <small *ngIf="f['courseName'].errors?.['pattern']">Nome do curso deve conter apenas letras e
+                  espaços.</small>
               </div>
             </div>
 
             <div class="mb-3 mt-3">
               <label for="courseSemester" class="form-label">Semestre</label>
-              <input type="text" class="form-control" id="courseSemester" formControlName="courseSemester" placeholder="Semestre (Ex: 1° Semestre)">
+              <input type="text" class="form-control" id="courseSemester" formControlName="courseSemester"
+                placeholder="Semestre (Número do Semestre)">
               <div *ngIf="f['courseSemester'].touched && f['courseSemester'].invalid" class="text-danger">
                 <small *ngIf="f['courseSemester'].errors?.['required']">Semestre é obrigatório.</small>
               </div>
@@ -36,27 +39,42 @@
               </div>
             </div>
 
-            <!-- Botão para abrir o menu de seleção de disciplinas -->
+
             <div class="mb-3 mt-3">
-              <label for="courseSubjects" class="form-label">Matérias</label>
-              <button type="button" class="btn btn-secondary" (click)="toggleDisciplineSelection()">
-                Selecionar Disciplinas
-              </button>
+              <label for="disciplineSelection" class="form-label">Matérias</label>
+              <div class="d-grid gap-2 mt-3">
+                <button type="button" class="btn btn-secondary w-100" (click)="toggleDisciplineSelection()">
+                  Selecionar Disciplinas
+                </button>
+              </div>
             </div>
 
+            <!-- Menu de seleção de disciplinas (Modal/Overlay) -->
             <!-- Menu de seleção de disciplinas (Modal/Overlay) -->
             <div *ngIf="disciplineSelectionOpen" class="discipline-overlay" (click)="toggleDisciplineSelection()">
               <div class="discipline-menu" (click)="$event.stopPropagation()">
                 <h5 class="text-center">Selecione as Disciplinas</h5>
-                <div *ngFor="let discipline of disciplines">
-                  <label>
-                    <input type="checkbox" [value]="discipline.subjectId" (change)="onDisciplineChange($event)">
-                    {{ discipline.subjectName }}
-                  </label>
+
+                <!-- Barra de pesquisa -->
+                <div class="mb-3">
+                  <input type="text" class="form-control" placeholder="Pesquisar disciplinas..."
+                    formControlName="searchQuery" (input)="filterDisciplines()">
                 </div>
-                <div class="text-center mt-3">
+
+                <!-- Lista de disciplinas filtrada -->
+                <div class="discipline-list">
+                  <div *ngFor="let discipline of filteredDisciplines">
+                    <label>
+                      <input type="checkbox" [value]="discipline.subjectId" (change)="onDisciplineChange($event)">
+                      {{ discipline.subjectName }}
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Botões de controle do modal -->
+                <div class="text-center">
                   <button class="btn btn-secondary" (click)="toggleDisciplineSelection()">Fechar</button>
-                  <button class="btn btn-primary" (click)="confirmDisciplineSelection()">Confirmar</button>
+                  <button class="btn btn-primary confirm-btn" (click)="confirmDisciplineSelection()">Confirmar</button>
                 </div>
               </div>
             </div>
@@ -69,6 +87,7 @@
             </div>
             <div class="d-grid gap-2 mt-4 mb-3">
               <button type="submit" class="btn btn-verde texto-branco">Registrar</button>
+
             </div>
           </form>
         </div>

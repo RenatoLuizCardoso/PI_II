@@ -14,6 +14,7 @@ export class CadastrarCursoComponent implements OnInit {
   registerError: boolean = false;
   registerSuccess: boolean = false;
   disciplines: any[] = [];  // Para armazenar as disciplinas carregadas
+  filteredDisciplines: any[] = [];  // Para armazenar as disciplinas filtradas com base na pesquisa
   selectedDisciplines: { subjectId: number }[] = [];  // Para armazenar as disciplinas selecionadas como objetos
   disciplineSelectionOpen: boolean = false;  // Controla se o modal está aberto
 
@@ -30,7 +31,8 @@ export class CadastrarCursoComponent implements OnInit {
       courseName: ['', [Validators.required, Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$')]], // Letras e espaços
       courseSemester: ['', [Validators.required]],
       coursePeriod: ['', Validators.required],
-      courseSubjects: ['']  // Campo de matérias será preenchido ao enviar o formulário
+      courseSubjects: [''],  // Campo de matérias será preenchido ao enviar o formulário
+      searchQuery: [''] // Controle de busca dentro do formGroup
     });
 
     this.loadDisciplines();  // Carrega as disciplinas ao iniciar
@@ -43,6 +45,7 @@ export class CadastrarCursoComponent implements OnInit {
     this.ccursoService.getDisciplines().subscribe(
       (response) => {
         this.disciplines = response;  // Armazena as disciplinas no array
+        this.filteredDisciplines = this.disciplines;  // Inicializa a lista filtrada com todas as disciplinas
         console.log('Disciplinas carregadas:', this.disciplines);
       },
       (error) => {
@@ -73,6 +76,14 @@ export class CadastrarCursoComponent implements OnInit {
   confirmDisciplineSelection(): void {
     console.log('Disciplinas confirmadas:', this.selectedDisciplines);
     this.toggleDisciplineSelection();  // Fecha o modal
+  }
+
+  // Função para filtrar as disciplinas com base na pesquisa
+  filterDisciplines(): void {
+    const query = this.registerForm.get('searchQuery')?.value.toLowerCase(); // Obtém o valor da pesquisa
+    this.filteredDisciplines = this.disciplines.filter(discipline => 
+      discipline.subjectName.toLowerCase().includes(query)
+    );
   }
 
   onSubmit(): void {

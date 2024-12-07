@@ -10,8 +10,8 @@
               <label for="roomType" class="form-label">Tipo de Sala</label>
               <select class="form-control" id="roomType" formControlName="roomType">
                 <option value="" disabled>Selecione o tipo de sala</option>
-                <option value=1>Sala</option>
-                <option value=2>Laboratório</option>
+                <option value="1">Sala</option>
+                <option value="2">Laboratório</option>
               </select>
               <div *ngIf="f['roomType'].touched && f['roomType'].invalid" class="text-danger">
                 <small *ngIf="f['roomType'].errors?.['required']">Tipo de sala é obrigatório.</small>
@@ -23,6 +23,13 @@
               <div *ngIf="f['roomCapacity'].touched && f['roomCapacity'].invalid" class="text-danger">
                 <small *ngIf="f['roomCapacity'].errors?.['required']">Capacidade é obrigatória.</small>
                 <small *ngIf="f['roomCapacity'].errors?.['min']">Capacidade deve ser um número positivo.</small>
+              </div>
+            </div>
+            <div class="mb-3 mt-3">
+              <label for="roomNumber" class="form-label">Número da Sala</label>
+              <input type="text" class="form-control" id="roomNumber" formControlName="roomNumber" placeholder="Número da Sala (Ex: 01)">
+              <div *ngIf="f['roomNumber'].touched && f['roomNumber'].invalid" class="text-danger">
+                <small *ngIf="f['roomNumber'].errors?.['required']">Número da sala é obrigatório.</small>
               </div>
             </div>
             <div class="mb-3 mt-3">
@@ -57,8 +64,8 @@
               <label for="roomAvailability" class="form-label">Disponibilidade da Sala</label>
               <select class="form-control" id="roomAvailability" formControlName="roomAvailability">
                 <option value="" disabled>Selecione a disponibilidade</option>
-                <option value="L">Livre</option>
-                <option value="I">Indisponível</option>
+                <option value="Livre">Livre</option>
+                <option value="Indisponível">Indisponível</option>
               </select>
               <div *ngIf="f['roomAvailability'].touched && f['roomAvailability'].invalid" class="text-danger">
                 <small *ngIf="f['roomAvailability'].errors?.['required']">Disponibilidade é obrigatória.</small>

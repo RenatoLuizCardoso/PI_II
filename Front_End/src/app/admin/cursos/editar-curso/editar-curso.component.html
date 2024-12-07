@@ -42,10 +42,15 @@
             <!-- Botão para abrir o menu de seleção de disciplinas -->
             <div class="mb-3 mt-3">
               <label for="disciplineSelection" class="form-label">Matérias</label>
-              <button type="button" class="btn btn-secondary" (click)="toggleDisciplineSelection()">
-                Selecionar Disciplinas
-              </button>
+              <!-- Botão para abrir o menu de seleção de disciplinas com largura 95% -->
+              <div class="d-grid gap-2 mt-3">
+                <button type="button" class="btn btn-secondary w-100" (click)="toggleDisciplineSelection()">
+                  Selecionar Disciplinas
+                </button>
+              </div>
             </div>
+            
+            
 
             <!-- Menu de seleção de disciplinas (Modal/Overlay) -->
             <div *ngIf="disciplineSelectionOpen" class="discipline-overlay" (click)="toggleDisciplineSelection()">
@@ -53,7 +58,7 @@
                 <h5 class="text-center">Selecione as Disciplinas</h5>
                 <div *ngFor="let discipline of disciplines">
                   <label>
-                    <input type="checkbox" [value]="discipline.subjectId" (change)="onDisciplineChange($event)" 
+                    <input type="checkbox" [value]="discipline.subjectId" (change)="onDisciplineChange($event)"
                       [checked]="selectedDisciplines.includes(discipline.subjectId)">
                     {{ discipline.subjectName }}
                   </label>

@@ -37,6 +37,7 @@ public class GetRoomById {
         result.put("roomFloor", room.getRoomFloor());
         result.put("roomResources", room.getRoomResources());
         result.put("roomAvailability", room.getRoomAvailability());
+        result.put("roomNumber", room.getRoomNumber());
 
         RoomTypeEntity roomType = room.getRoomType();
         String roomTypeName = (roomType != null) ? roomType.getRoomTypeDescription() : "Unknown Subject";

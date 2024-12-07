@@ -12,12 +12,18 @@ import { Title } from '@angular/platform-browser';
 export class TelaLoginComponent implements OnInit {
   loginForm!: FormGroup;
   loginError: boolean = false;
+  passwordVisible = false;
+  password: string = '';
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+  }
 
   constructor(
     private fb: FormBuilder,
     private authpService: AuthpService,
     private router: Router,
     private titleService: Title
+    
   ) {}
 
   ngOnInit(): void {

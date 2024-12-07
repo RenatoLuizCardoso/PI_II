@@ -79,7 +79,7 @@ public class RoomController {
     }
 
     @GetMapping("/")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('TEACHER')")
     @Operation(summary = "Lista de sala e laborátorio", description = "Essa função é responsável por listar todas as salas e laborátorios")
     @ApiResponses({
       @ApiResponse(responseCode = "200", content = {
